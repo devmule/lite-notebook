@@ -8,16 +8,17 @@
 // подключение либ
 
 // Ace - встроенный редактор кода
-
-const ace = require("brace");
-require("brace/mode/javascript");
-require("brace/mode/python");
-require("brace/theme/twilight");
+// подключается со странички
+//const ace = require("brace");
+//require("brace/mode/javascript");
+//require("brace/mode/python");
+//require("brace/theme/twilight");
 
 // mathjax - рендер LaTeX математических формул
 // подключается со странички
 
 // pyodide - интерпретатор питона
+// подключается со странички или в воркере
 // require("pyodide");
 
 
@@ -29,17 +30,17 @@ import {renderMD} from "./render/index.js";
 import {pyWorker} from "./pyWorker.js";
 
 const lite_notebook = {
-	
 	// settings
 	root: "",
-	screen: "",
+	screen: null,
+	workerURL: "dist/worker.js",
 	
 	// methods
 	render_path: render_path,
 	
 	// worker
 	get pyWorker() {
-		return pyWorker();
+		return pyWorker(lite_notebook.workerURL);
 	}
 };
 window.lite_notebook = lite_notebook;

@@ -22,13 +22,10 @@ var onmessage = async (event) => {
 		self[key] = context[key];
 	}
 	// Now is the easy part, the one that is similar to working in the main thread:
+	self.pyodide.globals.print = msg => self.postMessage({type: "print", message: msg});
 	try {
-		self.postMessage({
-			results: await self.pyodide.runPythonAsync(python)
-		});
+		self.postMessage({type: "end", results: await self.pyodide.runPythonAsync(python)});
 	} catch (error) {
-		self.postMessage(
-			{error: error.message}
-		);
+		self.postMessage({error: error.message});
 	}
 };
