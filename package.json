@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/DevMule/lite-notebook#readme",
   "devDependencies": {
+    "brace": "^0.11.1",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   }

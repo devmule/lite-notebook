@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>notebook</title>
-    <script type="application/javascript" src="dist/bundle.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.16.1/full/pyodide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="dist/bundle.js"></script>
+    <link rel="stylesheet" href="dist/style.css">
 </head>
-<body onload="">
-<div id="screen"></div>
+<body onload="lite_notebook.render_path('notebooks/test')">
+<div id="screen">
+</div>
 </body>
-<script type="application/javascript">
-	lite_notebook.render_path("notebooks/test");
-</script>
 </html>
