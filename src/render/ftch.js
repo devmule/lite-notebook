@@ -13,6 +13,7 @@ async function loadJS(url) {
 }
 
 async function loadPY(packet) {
+	await languagePluginLoader;
 	return pyodide.loadPackage([packet])
 }
 

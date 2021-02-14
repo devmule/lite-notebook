@@ -8,6 +8,7 @@
 // подключение либ
 
 // Ace - встроенный редактор кода
+
 const ace = require("brace");
 require("brace/mode/javascript");
 require("brace/mode/python");
@@ -22,7 +23,10 @@ require("brace/theme/twilight");
 
 // ================================================================================================================== //
 
+// renderMD - рендер разметки
 import {renderMD} from "./render/index.js";
+// pyWorker - python обработчик, работающий через web worker
+import {pyWorker} from "./pyWorker.js";
 
 const lite_notebook = {
 	
@@ -32,6 +36,11 @@ const lite_notebook = {
 	
 	// methods
 	render_path: render_path,
+	
+	// worker
+	get pyWorker() {
+		return pyWorker();
+	}
 };
 window.lite_notebook = lite_notebook;
 
@@ -42,6 +51,5 @@ async function render_path(root) {
 	let md = await fetch(root + "/notebook");
 	let text = await md.text();
 	
-	await languagePluginLoader;
 	await renderMD(text, lite_notebook.screen);
 }

@@ -1,4 +1,4 @@
-// Setup your project to serve `py-worker.js`. You should also serve
+// Setup your project to serve `pyWorker.js`. You should also serve
 // `pyodide.js`, and all its associated `.asm.js`, `.data`, `.json`,
 // and `.wasm` files as well:
 self.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
@@ -31,4 +31,4 @@ var onmessage = async (event) => {
 			{error: error.message}
 		);
 	}
-}
+};
