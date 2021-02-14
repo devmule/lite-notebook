@@ -1,0 +1,151 @@
+%% md
+# Hello!
+
+<div id="sys-v"></div>
+
+%% py
+import sys
+from js import document
+
+esv = document.getElementById("sys-v")
+esv.innerText = sys.version
+
+%% py
+[0, 1, 32.0, 'foo', {'a': 10, 'b': '20'}]
+
+%% md
+#### Here's a DOM element to manipulate:
+<div id="targetElement">Change me!</div>
+
+%% py
+from js import document
+elt = document.getElementById("targetElement")
+elt.innerText = "I am changed!"
+elt.style.backgroundColor = '#ffcccc'
+
+%% py
+# let's switch it back
+elt.style.backgroundColor = '#ffffff'
+
+%% md
+<button id="click-change"></button>
+
+%% py
+from js import document
+
+button = document.getElementById("click-change")
+button.textContent = "Click me!"
+count = 0
+def onclick(evt):
+    global count
+    if elt.style.backgroundColor == 'rgb(255, 255, 255)':
+        elt.style.backgroundColor = '#ffcccc'
+        elt.innerText = "I've been changed " + str(count) + " times!"
+    else:
+        elt.style.backgroundColor = '#ffffff'
+        elt.innerText = "I've been changed " + str(count) + " times!"
+    count += 1
+button.addEventListener('click', onclick)
+
+%% css
+canvas {
+  border: 2px solid #ddd;
+}
+
+%% fetch
+js: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML
+
+%% md
+<canvas id="canvas"></canvas>
+<p><span class="math display">\[r = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt[]{\sum_{i=1}^{n}(x_i - \bar{x})^2 \sum_{i=1}^{n}(y_i - \bar{y})^2}}\]</span></p>
+
+
+%% py
+from js import document
+
+canvas = document.getElementById("canvas")
+canvas.setAttribute('width', 450)
+canvas.setAttribute('height', 300)
+context = canvas.getContext("2d")
+context.strokeStyle = "#df4b26"
+context.lineJoin = "round"
+context.lineWidth = 8
+pen = False
+lastPoint = (0, 0)
+
+def onmousemove(e):
+  global lastPoint
+  if pen:
+    newPoint = (e.offsetX, e.offsetY)
+    context.beginPath()
+    context.moveTo(lastPoint[0], lastPoint[1])
+    context.lineTo(newPoint[0], newPoint[1])
+    context.closePath()
+    context.stroke()
+    lastPoint = newPoint
+
+def onmousedown(e):
+  global pen, lastPoint
+  pen = True
+  lastPoint = (e.offsetX, e.offsetY)
+
+def onmouseup(e):
+  global pen
+  pen = False
+
+canvas.addEventListener('mousemove', onmousemove)
+canvas.addEventListener('mousedown', onmousedown)
+canvas.addEventListener('mouseup', onmouseup)
+
+
+%% fetch
+js: https://ace.c9.io/build/src-noconflict/ace.js
+
+%% js
+    ace.config.set('modePath', 'https://ace.c9.io/build/src-noconflict/');
+    ace.config.set('themePath', 'https://ace.c9.io/build/src-noconflict/');
+
+%% md
+
+Let's create a `div` right below:
+<div id="editor" style="height: 500px">
+def hello:
+    print("kek lol")
+</div>
+
+...in a moment, we'll put something fancy right above this line.
+
+%% js
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/python");
+
+%% fetch
+py: numpy
+py: matplotlib
+
+%% py
+import numpy as np
+x = np.linspace(0, 2.0 * np.pi, 100)
+y = np.sin(x)
+y
+
+%% py
+from matplotlib import pyplot as plt
+plt.figure()
+plt.plot(x, y)
+plt.show()
+
+%% fetch
+js: https://cdn.plot.ly/plotly-latest.min.js
+
+%% md
+<div id="plotly-test"></div>
+
+%% py
+from js import Plotly
+from js import document
+Plotly.plot(
+    document.getElementById("plotly-test"),
+    [{ 'y': y, 'x': x }],
+)

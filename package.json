@@ -1,0 +1,24 @@
+{
+  "name": "lite-notebook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-prod": "webpack --mode=production",
+    "build-dev": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevMule/lite-notebook.git"
+  },
+  "author": "devmule",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/DevMule/lite-notebook/issues"
+  },
+  "homepage": "https://github.com/DevMule/lite-notebook#readme",
+  "devDependencies": {
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}
