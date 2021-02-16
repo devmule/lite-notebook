@@ -17,6 +17,19 @@ async function loadPY(packet) {
 	return pyodide.loadPackage([packet])
 }
 
+async function loadText(request) {
+	let index = request.indexOf("=");
+	if (index < 0) return;
+	
+	let var_name = request.slice(0, index).trim(),
+		src = request.slice(index + 1, request.length).trim();
+	
+	if (var_name && src) {
+		let md = await fetch(src);
+		self[var_name] = await md.text();
+	}
+}
+
 async function parseLine(line) {
 	let index = line.indexOf(":");
 	if (index < 0) return;
@@ -32,6 +45,9 @@ async function parseLine(line) {
 				break;
 			case "py":
 				await loadPY(src);
+				break;
+			case "text":
+				await loadText(src);
 				break;
 		}
 	}

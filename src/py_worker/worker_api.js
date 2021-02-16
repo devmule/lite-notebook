@@ -1,4 +1,4 @@
-export function pyWorker(url) {
+export function worker_api(url) {
 	return {
 		worker: new Worker(url),
 		listeners: [],

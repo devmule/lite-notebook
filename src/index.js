@@ -27,7 +27,8 @@
 // renderMD - рендер разметки
 import {renderMD} from "./render/index.js";
 // pyWorker - python обработчик, работающий через web worker
-import {pyWorker} from "./pyWorker.js";
+import {worker_api} from "./py_worker/worker_api.js";
+import elements from "./elements/index.js";
 
 const lite_notebook = {
 	// settings
@@ -35,12 +36,15 @@ const lite_notebook = {
 	screen: null,
 	workerURL: "dist/worker.js",
 	
+	// DOM elements
+	elements: elements,
+	
 	// methods
 	render_path: render_path,
 	
 	// worker
 	get pyWorker() {
-		return pyWorker(lite_notebook.workerURL);
+		return worker_api(lite_notebook.workerURL);
 	}
 };
 window.lite_notebook = lite_notebook;

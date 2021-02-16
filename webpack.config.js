@@ -20,8 +20,12 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: path.resolve(__dirname, 'src/worker.js'),
+					from: path.resolve(__dirname, 'src/py_worker/worker.js'),
 					to: path.resolve(__dirname, 'dist/worker.js'),
+				},
+				{
+					from: path.resolve(__dirname, 'src/style.css'),
+					to: path.resolve(__dirname, 'dist/style.css'),
 				},
 			],
 		}),

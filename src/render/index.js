@@ -4,6 +4,7 @@ import js_parser from "./js.js";
 import fetch_parser from "./ftch.js";
 import md_parser from "./md.js";
 import py_parser from "./py.js";
+import editor_parser from "./editor.js";
 
 
 const parsers = [
@@ -11,7 +12,8 @@ const parsers = [
 	js_parser,
 	fetch_parser,
 	md_parser,
-	py_parser
+	py_parser,
+	editor_parser
 ];
 
 
