@@ -12,7 +12,7 @@ const parsers = [
 	js_parser,
 	fetch_parser,
 	md_parser,
-	py_parser,
+	//py_parser,
 	editor_parser
 ];
 
