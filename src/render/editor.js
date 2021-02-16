@@ -17,7 +17,7 @@ async function parse(ch, element) {
 	
 	const editor = ace.edit("editor");
 	editor.getSession().setMode("ace/mode/python");
-	editor.setOptions({maxLines: 40});
+	editor.setOptions({maxLines: 60, minLines: 20});
 }
 
 

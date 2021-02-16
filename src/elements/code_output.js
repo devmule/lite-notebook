@@ -31,10 +31,14 @@ function code_output() {
 		el.addEventListener('onPlay', () => {
 			if (!worker) {
 				worker = lite_notebook.pyWorker;
-				worker.addEventListener("print", (m) => output.innerText += String(m.message).replace(/\\n/g, "<br>") + "\n");
+				worker.addEventListener("print", (m) => {
+					output.innerText += String(m.message).replace(/\\n/g, "<br>") + "\n";
+					output.scrollTop = output.scrollHeight;
+				});
 				worker.run(editor.getValue(), {},
 					(m) => {
 						output.innerText += "process finished" + "\n";
+						output.scrollTop = output.scrollHeight;
 						worker.terminate();
 						worker = null;
 						btn_run.classList.remove('code-btn-stop');
@@ -42,6 +46,7 @@ function code_output() {
 					},
 					(m) => {
 						output.innerText += m.replace(/\\n/g, "<br>") + "\n";
+						output.scrollTop = output.scrollHeight;
 						worker.terminate();
 						worker = null;
 						btn_run.classList.remove('code-btn-stop');
@@ -50,6 +55,7 @@ function code_output() {
 				btn_run.classList.remove('code-btn-play');
 				btn_run.classList.add('code-btn-stop');
 				output.innerText += "run...\n";
+				output.scrollTop = output.scrollHeight;
 			} else {
 				btn_run.classList.remove('code-btn-stop');
 				btn_run.classList.add('code-btn-play');
