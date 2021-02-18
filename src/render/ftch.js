@@ -24,6 +24,8 @@ async function loadText(request) {
 	let var_name = request.slice(0, index).trim(),
 		src = request.slice(index + 1, request.length).trim();
 	
+	if (!src.startsWith('http')) src = lite_notebook.root + "/" + src;
+	
 	if (var_name && src) {
 		let md = await fetch(src);
 		self[var_name] = await md.text();

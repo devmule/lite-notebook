@@ -4,9 +4,13 @@
 Let's create a `div` right below:
 
 %% fetch
-text: ros_txt = notebooks/test/rosenblatt.py
+text: ros_txt = rosenblatt.py
 
 %% code id=editor run
+
+%% md
+![image](/bank.png)
+![image from internet](https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png)
 
 %% js
     var editor = ace.edit("editor");
