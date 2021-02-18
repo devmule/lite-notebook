@@ -1,0 +1,16 @@
+{
+  "src": "notebooks",
+  "name": "Главная страница",
+  "children": [
+    {
+      "src": "test",
+      "name": "Тестовый ноутбук",
+      "children": []
+    },
+    {
+      "src": "decision_tree",
+      "name": "Дерево решений",
+      "children": []
+    }
+  ]
+}

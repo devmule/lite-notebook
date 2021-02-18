@@ -33,6 +33,7 @@ import elements from "./elements/index.js";
 const lite_notebook = {
 	// settings
 	root: "",
+	hierarchy: {},
 	screen: null,
 	workerURL: "dist/worker.js",
 	
@@ -41,6 +42,7 @@ const lite_notebook = {
 	
 	// methods
 	render_path: render_path,
+	load_hierarchy: load_hierarchy,
 	
 	// worker
 	get pyWorker() {
@@ -49,12 +51,58 @@ const lite_notebook = {
 };
 window.lite_notebook = lite_notebook;
 
-async function render_path(root) {
-	lite_notebook.root = root;
-	lite_notebook.screen = document.getElementById("screen");
+async function render_path(path) {
+	let {node, root} = await get_hierarchy_node(path);
+	if (node) {
+		document.title = node.name;
+		
+		const url = window.location.href.split('?');
+		window.history.pushState(null, null, url[0] + '?page=' + root);
+		
+		lite_notebook.root = root;
+		lite_notebook.screen = document.getElementById("screen");
+		
+		let md = await fetch(root + "/notebook");
+		let text = await md.text();
+		
+		await renderMD(text, lite_notebook.screen);
+		
+	} else {
+		await render_path("notebooks");
+	}
 	
-	let md = await fetch(root + "/notebook");
-	let text = await md.text();
+}
+
+async function load_hierarchy(src) {
+	let hi_file = await fetch(src);
+	let hi_text = await hi_file.text();
 	
-	await renderMD(text, lite_notebook.screen);
+	if (hi_text) {
+		lite_notebook.hierarchy = JSON.parse(hi_text);
+		
+		let url = new URL(window.location.href);
+		let root = url.searchParams.get('page') || "notebooks";
+		await render_path(root);
+	}
+}
+
+async function get_hierarchy_node(root) {
+	let path = root.split('/');
+	let node = lite_notebook.hierarchy; // корень иерархии
+	let real_path = [node.src];
+	let depth = 0;
+	
+	while (node.src === path[depth]) {
+		depth++;
+		if (depth < path.length) {
+			let src = path[depth];
+			let child = node.children.find(c => c.src === src);
+			if (child) {
+				node = child;
+				real_path.push(node.src)
+			} else break;
+		} else break;
+	}
+	
+	return {node, root: real_path.join('/')};
 }
