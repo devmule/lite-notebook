@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>notebook</title>
+
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://ace.c9.io/build/src-min-noconflict/ace.js"></script>
+
     <script src="dist/bundle.js"></script>
     <link rel="stylesheet" href="dist/style.css">
 </head>
 <body onload="lite_notebook.load_hierarchy('notebooks/hierarchy.json')">
-<div id="screen">
-</div>
+<div id="menu"></div>
+<div id="screen"></div>
 </body>
 </html>

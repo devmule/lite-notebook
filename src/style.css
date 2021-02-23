@@ -1,6 +1,42 @@
 /*
     стили моих объектов
 */
+#menu {
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    overflow-y: scroll;
+    background-color: #f1f1f1;
+}
+
+.menu-elem {
+    margin: 2px 0;
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.menu-elem:hover {
+    color: #24292e;
+    background-color: #c6cbd1;
+}
+
+.menu-elem.active {
+    background-color: aquamarine !important;
+}
+
+#screen {
+    position: absolute;
+    left: 200px;
+    width: calc(100% - 200px);
+    height: 100%;
+    overflow-y: scroll;
+}
+
+
+body {
+    margin: 0px 0px;
+}
+
 .code-btn {
     width: 24px;
     height: 24px;

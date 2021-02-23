@@ -9,8 +9,19 @@
     },
     {
       "src": "decision_tree",
-      "name": "Дерево решений",
-      "children": []
+      "name": "Решающие деревья",
+      "children": [
+        {
+          "src": "intro",
+          "name": "Введение",
+          "children": []
+        },
+        {
+          "src": "decision_tree",
+          "name": "Решающие деревья",
+          "children": []
+        }
+      ]
     }
   ]
 }
