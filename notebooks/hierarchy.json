@@ -12,13 +12,23 @@
       "name": "Решающие деревья",
       "children": [
         {
-          "src": "intro",
-          "name": "Введение",
+          "src": "gini",
+          "name": "Критерий Джини",
           "children": []
         },
         {
-          "src": "decision_tree",
-          "name": "Решающие деревья",
+          "src": "build",
+          "name": "Построение дерева",
+          "children": []
+        },
+        {
+          "src": "classification",
+          "name": "Классификация",
+          "children": []
+        },
+        {
+          "src": "solving_problems",
+          "name": "Решение задач",
           "children": []
         }
       ]

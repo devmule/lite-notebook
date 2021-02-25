@@ -75,6 +75,8 @@ async function render_path(path) {
 		
 		await renderMD(text, lite_notebook.screen);
 		
+		await MathJax.typesetPromise();
+		
 	} else {
 		await render_path("notebooks");
 	}
