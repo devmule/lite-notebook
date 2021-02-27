@@ -11,18 +11,26 @@ async function loadPythonPackages() {
 	pythonLoading = self.pyodide.loadPackage(['numpy', 'pytz']);
 }
 
-var onmessage = async (event) => {
+// todo разделить события сообщения и чистить воркер чтобы
+//  не создавать по воркеру на каждый запуск
+self.onmessage = async (event) => {
+	// дождаться загрузки питона и библиотек
 	await languagePluginLoader;
-	// since loading package is asynchronous, we need to make sure loading is done:
 	await pythonLoading;
-	// Don't bother yet with this line, suppose our API is built in such a way:
-	const {python, ...context} = event.data;
-	// The worker copies the context in its own "memory" (an object mapping name to values)
-	for (const key of Object.keys(context)) {
-		self[key] = context[key];
+	
+	
+	const {python, context} = event.data;
+	
+	// инициализировать переменные в питоне
+	for (const key of Object.keys(context.variables))
+		self.pyodide.globals[key] = context.variables[key];
+	
+	// инициализировать функции в питоне
+	for (let i = 0; i < context.events.length; i++) {
+		let key = context.events[i];
+		self.pyodide.globals[key] = (...message) => self.postMessage({type: key, message: JSON.parse(JSON.stringify([...message]))});
 	}
-	// Now is the easy part, the one that is similar to working in the main thread:
-	self.pyodide.globals.print = msg => self.postMessage({type: "print", message: msg});
+	
 	try {
 		self.postMessage({type: "end", results: await self.pyodide.runPythonAsync(python)});
 	} catch (error) {

@@ -32,10 +32,13 @@ function code_output() {
 			if (!worker) {
 				worker = lite_notebook.pyWorker;
 				worker.addEventListener("print", (m) => {
-					output.innerText += String(m.message).replace(/\\n/g, "<br>") + "\n";
+					let pieces = m.message;
+					let text = pieces.join(" ");
+					text = text.replace(/\\n/g, "<br>") + "\n";
+					output.innerText += text;
 					output.scrollTop = output.scrollHeight;
 				});
-				worker.run(editor.getValue(), {},
+				worker.run(editor.getValue(),
 					(m) => {
 						output.innerText += "process finished" + "\n";
 						output.scrollTop = output.scrollHeight;

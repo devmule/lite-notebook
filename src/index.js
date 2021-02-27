@@ -32,6 +32,7 @@ import elements from "./elements/index.js";
 
 const lite_notebook = {
 	// settings
+	v: '0.0.5',
 	root: "",
 	hierarchy: {},
 	screen: null,
