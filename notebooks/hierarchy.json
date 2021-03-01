@@ -17,6 +17,11 @@
           "children": []
         },
         {
+          "src": "split",
+          "name": "Разделение выборки",
+          "children": []
+        },
+        {
           "src": "build",
           "name": "Построение дерева",
           "children": []

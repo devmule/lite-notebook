@@ -131,7 +131,13 @@ $$I(\beta, X^ℓ) = \sharp \lbrace (X_i, X_j):\beta(X_i) \neq beta(X_j) \space �
 3. **Энтропийный критерий** - выглядит очень сложно, но на практике работает примерно как критерий Джини.
 Чтобы вы всё-таки немножко ужаснулись я оставлю формулу:
 $$I(\beta, X^ℓ) = \sum_{C \epsilon Y} h(\frac{P_c}{ℓ})-\frac{p}{ℓ}h(\frac{p_c}{P}) - \frac{ℓ - p}{ℓ}h(\frac{P_c - p_c}{ℓ - p}),$$
-$$где \space P_c = \sharp \lbrace X_i: Y_i = C \rbrace , \space P = \sharp \lbrace X_i: \beta(X_i) = 1 \rbrace , \space h(z) \Xi -zlog_2z $$
+$$
+ где \space
+ P_c = \sharp \lbrace X_i: Y_i = C \rbrace , \space
+ p_c = \sharp \lbrace X_i: Y_i = C \space и \space \beta(X_i) = 1 \rbrace , \space
+ p = \sharp \lbrace X_i: \beta(X_i) = 1 \rbrace , \space
+ h(z) \Xi -zlog_2z
+$$
 
 
 
