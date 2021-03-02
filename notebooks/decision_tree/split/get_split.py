@@ -1,3 +1,13 @@
+# Внутренний узел
+class InnerNode:
+    def __init__(self, criterion, value, groups):
+        # содержит в себе предикат, который состоит из
+        self.criterion = criterion  # критерия
+        self.value = value  # и значения критерия
+
+        self.left, self.right = groups  # ссылки на последующие узлы
+
+
 # Выбрать лучшее разбиение для датасета
 def get_split(dataset):
     class_values = list(set(row[-1] for row in dataset))
@@ -25,4 +35,4 @@ def get_split(dataset):
                 best_groups = groups
 
     # возвращаем лучшее разбиение и его предикат
-    return best_criterion, best_value, best_groups
+    return InnerNode(best_criterion, best_value, best_groups)

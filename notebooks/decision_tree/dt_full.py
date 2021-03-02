@@ -45,13 +45,23 @@ def test_split(index, value, dataset):
     # проверяем каждый элемент выборки на соответствие заданному предикату
     # предикат состоит из критерия - index и значения критерия - value
     for row in dataset:
-        if row[index] < value:  # если не соответствует предикату
-            left.append(row)  # то отправляем в левое поддерево
-        else:  # а если соответствует предикату
+        if row[index] < value:  # если соответствует предикату
             right.append(row)  # то отправляем в правое поддерево
+        else:  # а если не соответствует предикату
+            left.append(row)  # то отправляем в левое поддерево
 
     # возвращаем наше разбиение
     return left, right
+
+
+# Внутренний узел
+class InnerNode:
+    def __init__(self, criterion, value, groups):
+        # содержит в себе предикат, который состоит из
+        self.criterion = criterion  # критерия
+        self.value = value  # и значения критерия
+
+        self.left, self.right = groups  # ссылки на последующие узлы
 
 
 # Выбрать лучшее разбиение для датасета
@@ -81,4 +91,51 @@ def get_split(dataset):
                 best_groups = groups
 
     # возвращаем лучшее разбиение и его предикат
-    return best_criterion, best_value, best_groups
+    return InnerNode(best_criterion, best_value, best_groups)
+
+
+class TerminalNode:
+    def __init__(self, group):
+        # достанем из выборки список классов
+        outcomes = [row[-1] for row in group]
+        # записываем наиболее часто встречающийся класс
+        self.class_val = max(set(outcomes), key=outcomes.count)
+
+
+# Решаем строить дерево дальше или создать терминальный узел
+def split(node,  # текущий узел
+          max_depth,  # максимальная глубина дерева
+          min_size,  # минимальное количество элементов в подвыборке
+          depth  # текущая глубина дерева
+          ):
+    # если не было разделения - все элементы ушли в одну сторону
+    if not node.left or not node.right:
+        node.left = node.right = TerminalNode(node.left + node.right)
+        return
+
+    # если достигнута максимальная глубина, то строим терминальные узлы
+    if depth >= max_depth:
+        node.left = TerminalNode(node.left)
+        node.right = TerminalNode(node.right)
+        return
+
+    # строим левое дочернее дерево
+    if len(node.left) <= min_size:
+        node.left = TerminalNode(node.left)
+    else:
+        node.left = get_split(node.left)
+        split(node.left, max_depth, min_size, depth + 1)
+
+    # строим правое дочернее дерево
+    if len(node.right) <= min_size:
+        node.right = to_terminal(node.right)
+    else:
+        node.right = get_split(node.right)
+        split(node.right, max_depth, min_size, depth + 1)
+
+
+# построим дерево начиная от корневого узла
+def build_tree(train, max_depth, min_size):
+    root = get_split(train)
+    split(root, max_depth, min_size, 1)
+    return root

@@ -45,13 +45,23 @@ def test_split(index, value, dataset):
     # проверяем каждый элемент выборки на соответствие заданному предикату
     # предикат состоит из критерия - index и значения критерия - value
     for row in dataset:
-        if row[index] < value:  # если не соответствует предикату
-            left.append(row)  # то отправляем в левое поддерево
-        else:  # а если соответствует предикату
+        if row[index] < value:  # если соответствует предикату
             right.append(row)  # то отправляем в правое поддерево
+        else:  # а если не соответствует предикату
+            left.append(row)  # то отправляем в левое поддерево
 
     # возвращаем наше разбиение
     return left, right
+
+
+# Внутренний узел
+class InnerNode:
+    def __init__(self, criterion, value, groups):
+        # содержит в себе предикат, который состоит из
+        self.criterion = criterion  # критерия
+        self.value = value  # и значения критерия
+
+        self.left, self.right = groups  # ссылки на последующие узлы
 
 
 # Выбрать лучшее разбиение для датасета
@@ -81,4 +91,4 @@ def get_split(dataset):
                 best_groups = groups
 
     # возвращаем лучшее разбиение и его предикат
-    return best_criterion, best_value, best_groups
+    return InnerNode(best_criterion, best_value, best_groups)
