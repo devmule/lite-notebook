@@ -33,4 +33,4 @@ def gini_index(groups,  # список подвыборок
         # к итоговому значению индекса Джини
         gini += (1 - score) * (group_size / total_samples)
 
-    return gini  # вернуть критерий джини для данного разделения
+    return gini  # критерий джини для данного разделения

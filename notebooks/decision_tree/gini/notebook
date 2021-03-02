@@ -94,13 +94,28 @@ gini_2 = (1 - (0*0 + 1*1))) * 2/4 = 0 * 0.5 = 0
 
 %% fetch
 text: gini_txt = gini.py
-%% code id=gini_editor run
+text: test_txt = test.py
+%% code id=gini_editor
+%% md
+
+### Давай протестируем реализацию:
+
+Вообще, если хочешь, можешь поправить код как сверху, так и снизу и посмотреть как он будет работать **:)**
+
+%% code id=test_editor
 %% js
-    var editor = ace.edit("gini_editor");
-    editor.getSession().setValue(gini_txt)
+    var gini_editor = ace.edit("gini_editor");
+    gini_editor.getSession().setValue(gini_txt)
+
+    var test_editor = ace.edit("test_editor");
+    test_editor.getSession().setValue(test_txt)
 
     let gini_code_output = lite_notebook.elements.code_output();
     lite_notebook.screen.appendChild(gini_code_output);
 
-    gini_code_output.attachEditor(editor);
+    gini_code_output.attachEditor(test_editor);
+
+    gini_code_output.before_launch = () => {
+        gini_code_output.pre_codes = [gini_editor.getValue()];
+    }
 

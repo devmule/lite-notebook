@@ -55,7 +55,7 @@ body {
 }
 
 .code-btn-container {
-    width: 100%;
+    width: calc(100% - 6px);
     height: 28px;
     display: flex;
     flex-direction: row;
@@ -77,7 +77,7 @@ body {
 
 .code-output {
     max-width: 800px;
-    margin: auto;
+    margin: 16px auto;
     background-color: #24292e;
     color: #eeeeee;
     display: flex;
@@ -102,6 +102,11 @@ Ace фикс
     color: inherit;
 }
 
+
+.ace_editor {
+    max-width: 800px;
+    margin: 16px auto;
+}
 
 /*
   DEFAULT PRESENTATION
@@ -131,7 +136,6 @@ lets us create full width divs using css if necessary, while still
 retaining the narrower column view for readability and flow.
 */
 
-.ace_editor,
 .user-markdown p,
 .user-markdown h1,
 .user-markdown h2,
