@@ -24,19 +24,19 @@ function code_output() {
 	btn_run.addEventListener('click', () => el.dispatchEvent(new Event('onPlay')));
 	btn_clear.addEventListener('click', () => el.dispatchEvent(new Event('onClear')));
 
+	el.py_worker = null;
 	el.output = output;
     el.pre_codes = [];
     el.after_codes = [];
     el.before_launch = () => null;
 	el.attachEditor = (editor) => {
-		let worker = null;
 
 		el.addEventListener('onPlay', () => {
-			if (!worker) {
+			if (!el.py_worker) {
+				el.py_worker = lite_notebook.pyWorker;
 			    if (el.before_launch instanceof Function) el.before_launch();
 
-				worker = lite_notebook.pyWorker;
-				worker.addEventListener("print", (m) => {
+				el.py_worker.addEventListener("print", (m) => {
 					let pieces = m.message;
 					let text = pieces.join(" ");
 					text = text.replace(/\\n/g, "<br>") + "\n";
@@ -46,20 +46,20 @@ function code_output() {
 
 				let code = [...el.pre_codes, editor.getValue(), ...el.after_codes].join("\n\n");
 
-				worker.run(code,
+				el.py_worker.run(code,
 					(m) => {
 						output.innerText += "process finished" + "\n";
 						output.scrollTop = output.scrollHeight;
-						worker.terminate();
-						worker = null;
+						el.py_worker.terminate();
+						el.py_worker = null;
 						btn_run.classList.remove('code-btn-stop');
 						btn_run.classList.add('code-btn-play');
 					},
 					(m) => {
 						output.innerText += m.replace(/\\n/g, "<br>") + "\n";
 						output.scrollTop = output.scrollHeight;
-						worker.terminate();
-						worker = null;
+						el.py_worker.terminate();
+						el.py_worker = null;
 						btn_run.classList.remove('code-btn-stop');
 						btn_run.classList.add('code-btn-play');
 					});

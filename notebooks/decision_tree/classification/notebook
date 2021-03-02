@@ -1,3 +1,67 @@
 %% md
 
 # Классификация
+
+Теперь у нас есть алгоритм построения дерева. Отлично!
+Значит мы можем построить решающее дерево и приступить к классификации.
+
+Принятие решений бинарным решающим деревом описывается простым алгоритмом:
+
+- Есть объект X, который необходимо классифицировать.
+- Мы пропускаем объект по дереву, начиная с корневой вершины.
+- В каждой внутренней вершине объект X проверяется на соответствие предикату.
+- Если значение предиката "истина", то объект отправляется в правую ветку, если "ложь", то в левую.
+- Так продолжается до листовой вершины. Объект X относится к классу, определённому в листовой вершине.
+
+
+%% code id=predict_editor
+%% md
+
+### Принимать решение может только обученное (построенное) дерево.
+
+## Построение дерева. Опять...
+
+Для построения дерева будем использовать данные для задачи **Ирисы Фишера**.
+Но на этот раз будем использовать полную выборку.
+
+Выборка хранится в текстовом виде в формате **CSV** в переменной `iris`.
+
+Сама выборка хранится [в файле по ссылке](iris.csv).
+
+%% fetch
+text: iris_txt = iris.csv
+text: build_txt = build.py
+text: do_build_txt = do_build.py
+text: predict_txt = predict.py
+text: test_txt = test.py
+
+%% code id=build_editor
+%% md
+
+%% code id=test_editor
+%% md
+
+%% js
+
+    var predict_editor = ace.edit("predict_editor");
+    predict_editor.getSession().setValue(predict_txt)
+
+    var build_editor = ace.edit("build_editor");
+    build_editor.getSession().setValue(do_build_txt)
+    build_editor.setOptions({maxLines: 60, minLines: 8});
+
+    var test_editor = ace.edit("test_editor");
+    test_editor.getSession().setValue(test_txt)
+    test_editor.setOptions({maxLines: 60, minLines: 8});
+
+    let test_code_output = lite_notebook.elements.code_output();
+    lite_notebook.screen.appendChild(test_code_output);
+    test_code_output.attachEditor(test_editor);
+    test_code_output.before_launch = () => {
+        test_code_output.pre_codes = [
+            build_txt,
+            predict_editor.getValue(),
+            build_editor.getValue(),
+        ];
+        test_code_output.py_worker.addVariable("iris",iris_txt);
+    }
