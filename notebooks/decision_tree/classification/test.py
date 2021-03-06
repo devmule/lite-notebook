@@ -5,4 +5,4 @@ test_dataset = [[5.1, 3.5, 1.4, 0.2, "setosa"],
 
 for row in test_dataset:
     prediction = predict(tree, row)
-    print('ожидалось:', row[-1], 'получено:', prediction)
+    print('ожидалось:', row[-1], ', получено:', prediction)

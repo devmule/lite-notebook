@@ -37,6 +37,32 @@
           "children": []
         }
       ]
+    },
+    {
+      "src": "perceptron",
+      "name": "Персептроны",
+      "children": [
+        {
+          "src": "feedforward",
+          "name": "Прямое распространение сигнала",
+          "children": []
+        },
+        {
+          "src": "back_propagation",
+          "name": "Обратное распространение ошибки",
+          "children": []
+        },
+        {
+          "src": "saddle_points",
+          "name": "Застревание",
+          "children": []
+        },
+        {
+          "src": "solving_problems",
+          "name": "Решение задач",
+          "children": []
+        }
+      ]
     }
   ]
 }
