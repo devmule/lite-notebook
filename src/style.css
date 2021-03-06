@@ -108,6 +108,12 @@ Ace фикс
     margin: 16px auto;
 }
 
+
+.user-markdown img[src$="center"] {
+    display:block;
+    margin: 0 auto;
+}
+
 /*
   DEFAULT PRESENTATION
 
