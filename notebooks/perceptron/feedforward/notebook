@@ -11,7 +11,6 @@ ___
 ### Как происходит эта передача?
 
 Мы мельком рассматривали процесс под названием **feedforward** раньше. Давайте повторим его на примере.
-Пока без нейронов смещения.
 
 Допустим, у нас есть персептрон без скрытых слоёв. Всего два слоя - входной и выходной.
 
@@ -59,19 +58,33 @@ ___
 
 ## Реализация
 
-%% code id=editor run
 %% fetch
 text: ff1_txt = ff1.py
+text: ff2_txt = ff2.py
 
-%% code id=editor run
-
+%% code id=editor_1 run
 %% js
-    var editor = ace.edit("editor");
-    editor.getSession().setValue(ff1_txt)
+    var editor_1 = ace.edit("editor_1");
+    editor_1.getSession().setValue(ff1_txt)
 
-    let code_output = lite_notebook.elements.code_output();
-    lite_notebook.screen.appendChild(code_output);
+    let code_output_1 = lite_notebook.elements.code_output();
+    lite_notebook.screen.appendChild(code_output_1);
 
-    code_output.attachEditor(editor);
+    code_output_1.attachEditor(editor_1);
 
 
+%% md
+
+### А если слоёв несколько?
+
+Если слоёва несколько, то для каждого нового слоя используются активиованные значения предыдущего слоя!
+
+%% code id=editor_2 run
+%% js
+    var editor_2 = ace.edit("editor_2");
+    editor_2.getSession().setValue(ff2_txt)
+
+    let code_output_2 = lite_notebook.elements.code_output();
+    lite_notebook.screen.appendChild(code_output_2);
+
+    code_output_2.attachEditor(editor_2);

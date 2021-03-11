@@ -4,19 +4,12 @@
 self.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
 importScripts('https://cdn.jsdelivr.net/pyodide/v0.16.1/full/pyodide.js');
 
-let pythonLoading;
-
-async function loadPythonPackages() {
-	await languagePluginLoader;
-	pythonLoading = self.pyodide.loadPackage(['numpy', 'pytz']);
-}
 
 // todo разделить события сообщения и чистить воркер чтобы
 //  не создавать по воркеру на каждый запуск
 self.onmessage = async (event) => {
 	// дождаться загрузки питона и библиотек
 	await languagePluginLoader;
-	await pythonLoading;
 	
 	
 	const {python, context} = event.data;
