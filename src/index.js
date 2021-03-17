@@ -64,8 +64,8 @@ async function render_path(path) {
 		
 		document.title = node.name;
 		
-		const url = window.location.href.split('?');
-		window.history.pushState(null, null, url[0] + '?page=' + root);
+		let url = window.location.href.split('?')[0];
+		window.history.pushState(null, null, `${url}?page=${root}`);
 		
 		lite_notebook.root = root;
 		lite_notebook.screen = document.getElementById("screen");
@@ -124,6 +124,8 @@ async function get_hierarchy_node(root) {
 }
 
 async function load_menu() {
+	let url = window.location.href.split('?')[0];
+	
 	let menu = document.getElementById("menu");
 	menu.innerHTML = "";
 	
@@ -134,10 +136,10 @@ async function load_menu() {
 		el.classList.add("menu-elem");
 		menu.appendChild(el);
 		
-		let notebook_path = path + node.src;
-		el.onclick = () => render_path(notebook_path);
-		el.setAttribute("path", notebook_path);
-		for (let i = 0; i < node.children.length; i++) draw_hi(node.children[i], depth + 1, notebook_path + "/");
+		let root = path + node.src;
+		el.onclick = () => window.location.href = `${url}?page=${root}`;
+		el.setAttribute("path", root);
+		for (let i = 0; i < node.children.length; i++) draw_hi(node.children[i], depth + 1, root + "/");
 	}
 	
 	draw_hi(lite_notebook.hierarchy, 1, "");

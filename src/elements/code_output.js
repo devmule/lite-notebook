@@ -68,6 +68,10 @@ function code_output() {
 				output.innerText += "run...\n";
 				output.scrollTop = output.scrollHeight;
 			} else {
+				output.innerText += "process finished by user" + "\n";
+				output.scrollTop = output.scrollHeight;
+				el.py_worker.terminate();
+				el.py_worker = null;
 				btn_run.classList.remove('code-btn-stop');
 				btn_run.classList.add('code-btn-play');
 			}
