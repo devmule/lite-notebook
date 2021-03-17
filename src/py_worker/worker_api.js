@@ -10,17 +10,17 @@ export function worker_api(url) {
 			events: ['print']
 		},
 		
-		addVariable: function (name, value) {
+		addVariable (name, value) {
 			this.context.variables[name] = value
 		},
-		addFunction: function (name) {
+		addFunction (name) {
 			this.context.events.push(name)
 		},
-		addEventListener: function (type, listener) {
+		addEventListener (type, listener) {
 			this.listeners.push({type, listener});
 		},
-		
-		run: function (script, onSuccess, onError) {
+
+		run (script, onSuccess, onError) {
 			this.worker.onerror = onError;
 			this.worker.onmessage = e => {
 				const {error} = e.data;
@@ -37,9 +37,6 @@ export function worker_api(url) {
 			};
 			
 			this.worker.postMessage({context: this.context, python: script});
-		},
-		asyncRun: function (script, context) {
-			return new Promise((onSuccess, onError) => this.run(script, context, onSuccess, onError));
 		},
 		terminate() {
 			this.worker.terminate();
