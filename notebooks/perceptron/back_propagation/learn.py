@@ -12,7 +12,7 @@ def learn(inp, out,  # пары входных - выходных значени
     out = np.array(out)
 
     for epoch in range(epochs):
-        # проход по эпохам, в результате
+        # проход по эпохам, в результате прохода получаем ошибку
         err = backprop(inp, out, synapses, lr)
         # выводим ошибку в консоль
         if not (epoch % err_print_frequency): print("Loss: ", str(err))

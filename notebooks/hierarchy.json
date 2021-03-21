@@ -58,6 +58,16 @@
           "children": []
         },
         {
+          "src": "bias",
+          "name": "Улучшение: нейрон смещения",
+          "children": []
+        },
+        {
+          "src": "mini_batch",
+          "name": "Улучшение: мини-пакеты",
+          "children": []
+        },
+        {
           "src": "solving_problems",
           "name": "Решение задач",
           "children": []

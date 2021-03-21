@@ -1,3 +1,46 @@
 %% md
 
 # Застревание
+
+Т.к. изменение весов расчитывается по производной от функции ошибки,
+то есть вероятность во время обучения попасть в место рядом с точкой, где производная равна нулю:
+
+![точки с нулевой производной](minmaxsaddle.png?style=center)
+
+Рядом с этой точкой обучение замедлится или, если подобраться к ней слишком близко, совсем остановится.
+
+___
+
+## Давай рассмотрим пример с застреванием!
+
+Код персептрона без улучшений:
+
+%% fetch
+text: perceptron_txt = perceptron.py
+text: test_txt = test.py
+
+%% code id=perceptron_editor
+%% md
+
+А вот случай с застреванием:
+
+%% code id=test_editor
+%% md
+
+
+%% js
+    var perceptron_editor = ace.edit("perceptron_editor");
+    perceptron_editor.getSession().setValue(perceptron_txt);
+    perceptron_editor.setOptions({maxLines: 40, minLines: 20});
+
+    var test_editor = ace.edit("test_editor");
+    test_editor.getSession().setValue(test_txt);
+
+    let test_code_output = lite_notebook.elements.code_output();
+    lite_notebook.screen.appendChild(test_code_output);
+    test_code_output.attachEditor(test_editor);
+    test_code_output.before_launch = () => {
+        test_code_output.pre_codes = [
+            perceptron_editor.getValue()
+        ];
+    }
