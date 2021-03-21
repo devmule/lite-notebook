@@ -128,7 +128,7 @@ rum.learn(
     [[0, 0], [0, 1], [1, 0], [1, 1]],
     [[0],    [1],    [1],    [0]   ],
     learning_rate = .5,
-    epochs = 100000,
+    epochs = 10000,
     err_print_frequency = 100
 )
 

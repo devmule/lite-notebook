@@ -1,5 +1,10 @@
 import numpy as np
 
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
 # матрицы синапсов
 synapses = [
     np.array([
@@ -18,19 +23,19 @@ synapses = [
     ])
 ]
 
-# вектор входных значений
-input = np.array([0.5, 1])
-
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
 
 # итеративно расчитаем значения всех слоёв до выходного слоя включительно
-li = input  # первый слой - входной
-for synapse in synapses:
-    li = sigmoid(synapse.dot(li))
+def feedforward(inp, synapses):
+    li = inp  # первый слой - входной
+    for synapse in synapses:
+        li = sigmoid(synapse.dot(li))
+    return li
+
+
+# вектор входных значений
+inp = np.array([0.5, 1])
+out = feedforward(inp, synapses)
 
 # распечатаем выходные значения - последний слой
-print("\nactivated\n", str(li))
+print("\nactivated\n", str(out))
 print("\n")
