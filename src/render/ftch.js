@@ -12,11 +12,6 @@ async function loadJS(url) {
 	});
 }
 
-async function loadPY(packet) {
-	await languagePluginLoader;
-	return pyodide.loadPackage([packet])
-}
-
 async function loadText(request) {
 	let index = request.indexOf("=");
 	if (index < 0) return;
@@ -44,9 +39,6 @@ async function parseLine(line) {
 		switch (type) {
 			case "js":
 				await loadJS(src);
-				break;
-			case "py":
-				await loadPY(src);
 				break;
 			case "text":
 				await loadText(src);

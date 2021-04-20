@@ -1,9 +1,6 @@
-// Setup your project to serve `pyWorker.js`. You should also serve
-// `pyodide.js`, and all its associated `.asm.js`, `.data`, `.json`,
-// and `.wasm` files as well:
-self.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
 importScripts('https://cdn.jsdelivr.net/pyodide/v0.16.1/full/pyodide.js');
 
+self.languagePluginUrl = 'https://cdn.jsdelivr.net/pyodide/v0.16.1/full/';
 
 // todo разделить события сообщения и чистить воркер чтобы
 //  не создавать по воркеру на каждый запуск
@@ -21,7 +18,8 @@ self.onmessage = async (event) => {
 	// инициализировать функции в питоне
 	for (let i = 0; i < context.events.length; i++) {
 		let key = context.events[i];
-		self.pyodide.globals[key] = (...message) => self.postMessage({type: key, message: JSON.parse(JSON.stringify([...message]))});
+		self.pyodide.globals[key] = (...message) =>
+			self.postMessage({type: key, message: JSON.parse(JSON.stringify([...message]))});
 	}
 	
 	try {

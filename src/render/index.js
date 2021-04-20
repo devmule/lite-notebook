@@ -1,9 +1,11 @@
-import iomd from "./iomd.js";
+// общий парсер - разделитель
+import parse_string from "./chunks_parser.js";
+
+// разные парсеры
 import css_parser from "./css.js";
 import js_parser from "./js.js";
 import fetch_parser from "./ftch.js";
 import md_parser from "./md.js";
-import py_parser from "./py.js";
 import editor_parser from "./editor.js";
 
 
@@ -12,13 +14,12 @@ const parsers = [
 	js_parser,
 	fetch_parser,
 	md_parser,
-	//py_parser,
 	editor_parser
 ];
 
 
 export async function renderMD(md, element) {
-	let chunks = iomd.parse(md);
+	let chunks = parse_string(md);
 	
 	for (let i = 0; i < chunks.length; i++) {
 		let ch = chunks[i];
