@@ -5,16 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>notebook</title>
+    <script src="dist/main-bundle.js"></script>
 
-    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://ace.c9.io/build/src-min-noconflict/ace.js"></script>
+    <!-- todo вынести во внешний файл -->
+    <style>
+        body {
+            margin: 0;
+        }
 
-    <script src="dist/bundle.js"></script>
-    <link rel="stylesheet" href="dist/style.css">
+        iframe {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            position: absolute;
+            left: 200px;
+            width: calc(100% - 200px);
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        #menu {
+            width: 200px;
+            height: 100%;
+            position: absolute;
+            overflow-y: scroll;
+            background-color: #f1f1f1;
+        }
+
+        .menu-elem {
+            margin: 2px 0;
+            padding: 4px 0;
+            cursor: pointer;
+        }
+
+        .menu-elem:hover {
+            color: #24292e;
+            background-color: #c6cbd1;
+        }
+
+        .menu-elem.active {
+            background-color: aquamarine !important;
+        }
+
+        #screen {
+        }
+
+    </style>
 </head>
-<body onload="lite_notebook.load_hierarchy('notebooks/hierarchy.json')">
+<body onload="main.load_hierarchy('./notebooks/hierarchy.json')">
 <div id="menu"></div>
-<div id="screen"></div>
+<iframe id="render-frame" src="frame.html">
+
+</iframe>
 </body>
 </html>
