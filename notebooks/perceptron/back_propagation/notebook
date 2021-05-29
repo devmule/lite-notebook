@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Обратное распространение ошибки
 
@@ -19,22 +19,22 @@ $$ \frac{ \Delta Loss }{\Delta W} = 2( \hat{y} - y ) * σ'(z_i) * y_{i-1},$$
 Заодно вспомним саму функцию сигмоиды и функцию прямого распространения. Они нам пригодятся!
 
 
-%% fetch
+>>> fetch
 text: sigmoid_txt = sigmoid.py
 text: backprop_txt = backprop.py
 text: learn_txt = learn.py
 text: test_txt = test.py
 
-%% code id=editor_sigmoid run
-%% md
+>>> code id=editor_sigmoid run
+>>> md
 ### Теперь само обратное распространение ошибки
 
 Вот очень советую сравнить то что происходит в коде и в формуле. Может тогда формула понятнее станет)
 
 Обучение у нас проходит по типу "пакетного метода". Это легко реализовать с помощью `numpy` и многомерных матриц - **тензоров**.
 
-%% code id=editor_backprop run
-%% md
+>>> code id=editor_backprop run
+>>> md
 ### Ок, это один проход. Но ведь их нужно несколько?
 Да! Для полного обучения выборке сделаем отдельную функцию. В ней будут всякие условия для завершения обучения:
 
@@ -43,8 +43,8 @@ text: test_txt = test.py
 
 Позже в эту функцию можно добавить улучшения, например **"mini-batching"** - **мини-пакетный** метод.
 
-%% code id=editor_learn run
-%% md
+>>> code id=editor_learn run
+>>> md
 
 ___
 
@@ -67,8 +67,8 @@ ___
 А вот если оставить только один слой синапсов `2 нейрона -> 1 нейрон`,
 то персептрон станет линейным и не сможет обучиться :) Попробуй обучить!
 
-%% code id=editor_test run
-%% js
+>>> code id=editor_test run
+>>> js
     var editor_sigmoid = ace.edit("editor_sigmoid");
     editor_sigmoid.getSession().setValue(sigmoid_txt);
     editor_sigmoid.setOptions({maxLines: 60, minLines: 14});
@@ -93,4 +93,4 @@ ___
     }
 
 
-%% md
+>>> md

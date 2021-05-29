@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Застревание
 
@@ -15,23 +15,23 @@ ___
 
 Код персептрона без улучшений:
 
-%% fetch
+>>> fetch
 text: perceptron_txt = perceptron.py
 text: test_txt = test.py
 
-%% code id=perceptron_editor
-%% md
+>>> code id=perceptron_editor
+>>> md
 
 А вот банальный случай с застреванием:
 
 Это случай седловой точки из примера выше! С данными синапсами, ошибка так и будет крутиться около `0.4`
 Если задать случайные синапсы, то персептрон сможет показать результат получше :)
 
-%% code id=test_editor
-%% md
+>>> code id=test_editor
+>>> md
 
 
-%% js
+>>> js
     var perceptron_editor = ace.edit("perceptron_editor");
     perceptron_editor.getSession().setValue(perceptron_txt);
     perceptron_editor.setOptions({maxLines: 40, minLines: 20});

@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Улучшение: Мини-пакеты
 
@@ -25,10 +25,10 @@ ___
 **Пакетный** метод. А если задать `mini_batch_len = 1`, то будет работать как **Стохастический** метод, т.к. будет
 делать проход для каждого элемента выборки отдельно. В других же случаях она будет работать как **Мини-пакетный** метод.
 
-%% fetch
+>>> fetch
 text: mb_txt = mb.py
 
-%% code id=mini_batch
-%% js
+>>> code id=mini_batch
+>>> js
     var mini_batch = ace.edit("mini_batch");
     mini_batch.getSession().setValue(mb_txt);

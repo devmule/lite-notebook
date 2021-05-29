@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 ### Что это такое и зачем оно нам надо?
 
@@ -92,18 +92,18 @@ gini_2 = (1 - (0*0 + 1*1))) * 2/4 = 0 * 0.5 = 0
 
 теперь сам код:
 
-%% fetch
+>>> fetch
 text: gini_txt = gini.py
 text: test_txt = test.py
-%% code id=gini_editor
-%% md
+>>> code id=gini_editor
+>>> md
 
 ### Давай протестируем реализацию:
 
 Вообще, если хочешь, можешь поправить код как сверху, так и снизу и посмотреть как он будет работать **:)**
 
-%% code id=test_editor
-%% js
+>>> code id=test_editor
+>>> js
     var gini_editor = ace.edit("gini_editor");
     gini_editor.getSession().setValue(gini_txt)
 

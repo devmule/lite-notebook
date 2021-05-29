@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Улучшение: Нейроны смещения
 
@@ -42,22 +42,22 @@ ___
 
 ## Нейрон смещения при прямом распространении
 
-%% fetch
+>>> fetch
 text: ff_txt = ff.py
 text: bp_txt = bp.py
 
-%% code id=ff
-%% md
+>>> code id=ff
+>>> md
 
 ___
 
 ## Нейрон смещения при обратном распространении ошибки
 
-%% code id=bp
-%% md
+>>> code id=bp
+>>> md
 
 
-%% js
+>>> js
     var ff = ace.edit("ff");
     ff.getSession().setValue(ff_txt);
     ff.setOptions({maxLines: 60, minLines: 8});

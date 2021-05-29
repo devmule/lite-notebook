@@ -1,4 +1,4 @@
-%% md
+>>> md
 # Hello!
 
 ![image from notebook root](/bank.png)
@@ -6,12 +6,12 @@
 
 Let's create a `div` right below:
 
-%% fetch
+>>> fetch
 text: ros_txt = rosenblatt.py
 
-%% code id=editor run
+>>> code id=editor run
 
-%% js
+>>> js
     var editor = ace.edit("editor");
     editor.getSession().setValue(ros_txt)
 

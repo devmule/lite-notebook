@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Прямое распространение сигнала
 
@@ -58,12 +58,12 @@ ___
 
 ## Реализация
 
-%% fetch
+>>> fetch
 text: ff1_txt = ff1.py
 text: ff2_txt = ff2.py
 
-%% code id=editor_1 run
-%% js
+>>> code id=editor_1 run
+>>> js
     var editor_1 = ace.edit("editor_1");
     editor_1.getSession().setValue(ff1_txt)
 
@@ -73,14 +73,14 @@ text: ff2_txt = ff2.py
     code_output_1.attachEditor(editor_1);
 
 
-%% md
+>>> md
 
 ### А если слоёв несколько?
 
 Если слоёва несколько, то для каждого нового слоя используются активиованные значения предыдущего слоя!
 
-%% code id=editor_2 run
-%% js
+>>> code id=editor_2 run
+>>> js
     var editor_2 = ace.edit("editor_2");
     editor_2.getSession().setValue(ff2_txt)
 

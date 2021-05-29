@@ -1,5 +1,4 @@
-%% md
-[](https://github.com/halimb/MNIST-txt)
+>>> md
 
 # Решение задач
 
@@ -9,9 +8,9 @@
 
 В самом низу есть отдельное поле для настройки дерева и тестирования по тестовой выборке.
 
-%% code id=dt_full_editor
+>>> code id=dt_full_editor
 
-%% md
+>>> md
 
 Теперь попробуй построить дерево так, чтобы при тестировании каждая строчка была `success`!
 Я вырезал элементы тестовой выборки из общей, так что они не встречаются в датасете для обучения.
@@ -20,15 +19,15 @@
 
 ### Удачи!
 
-%% code id=test_editor
+>>> code id=test_editor
 
-%% fetch
+>>> fetch
 text: dt_full_txt = dt_full.py
 text: test_txt = test.py
 text: iris_test_txt = iris_test.csv
 text: iris_learn_txt = iris_learn.csv
 
-%% js
+>>> js
 
     var dt_full_editor = ace.edit("dt_full_editor");
     dt_full_editor.getSession().setValue(dt_full_txt);

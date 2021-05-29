@@ -1,4 +1,4 @@
-%% md
+>>> md
 
 # Классификация
 
@@ -14,8 +14,8 @@
 - Так продолжается до листовой вершины. Объект X относится к классу, определённому в листовой вершине.
 
 
-%% code id=predict_editor
-%% md
+>>> code id=predict_editor
+>>> md
 
 ### Принимать решение или классифицировать может только обученное (построенное) дерево.
 
@@ -23,15 +23,15 @@
 
 Для построения дерева будем использовать данные для задачи **Ирисы Фишера**:
 
-%% fetch
+>>> fetch
 text: iris_txt = iris.csv
 text: build_txt = build.py
 text: do_build_txt = do_build.py
 text: predict_txt = predict.py
 text: test_txt = test.py
 
-%% code id=build_editor
-%% md
+>>> code id=build_editor
+>>> md
 
 ## Классификация объекта
 
@@ -41,10 +41,10 @@ text: test_txt = test.py
 
 У последнего объекта класс неизвестен. Пусть дерево решит к какому классу он относится!
 
-%% code id=test_editor
-%% md
+>>> code id=test_editor
+>>> md
 
-%% js
+>>> js
 
     var predict_editor = ace.edit("predict_editor");
     predict_editor.getSession().setValue(predict_txt)
