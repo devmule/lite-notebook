@@ -1,23 +1,20 @@
+
 >>> md
-# Hello!
+# Hello, world!
 
-![image from notebook root](/bank.png)
-![image from internet](https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png)
+![image](image.png)
 
-Let's create a `div` right below:
+**bold text** and default text
+<div id="customdiv" style="background: blue;">even html</div>
 
 >>> fetch
-text: ros_txt = rosenblatt.py
+text: code = somecode.py
 
->>> code id=editor run
+>>> code id=editor
 
 >>> js
-    var editor = ace.edit("editor");
-    editor.getSession().setValue(ros_txt)
+console.log("Hello, world!")
 
-    let code_output = lite_notebook.elements.code_output();
-    lite_notebook.screen.appendChild(code_output);
-
-    code_output.attachEditor(editor);
-
+var editor = ace.edit("editor");
+editor.getSession().setValue(code);
 
