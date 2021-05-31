@@ -101,6 +101,7 @@ async function call_render(path) {
 		
 		// show state in history
 		window.history.pushState({}, node.name, `${main.root}?page=${root}`);
+		document.title = node.name;
 		
 		// reload iframe
 		await waitFrameReload(main.frame);
