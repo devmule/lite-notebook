@@ -100,8 +100,8 @@ async function call_render(path) {
 		let text = await file.text(); // todo file.json(); ???
 		
 		// show state in history
-		window.history.pushState({}, node.name, `${main.root}?page=${root}`);
 		document.title = node.name;
+		window.history.pushState({}, node.name, `${main.root}?page=${root}`);
 		
 		// reload iframe
 		await waitFrameReload(main.frame);
