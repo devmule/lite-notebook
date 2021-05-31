@@ -28,6 +28,10 @@ module.exports = {
 					from: path.resolve(__dirname, 'src/frame/style.css'),
 					to: path.resolve(__dirname, 'dist/ltn-style.css'),
 				},
+				{
+					from: path.resolve(__dirname, 'src/main/style.css'),
+					to: path.resolve(__dirname, 'dist/main-style.css'),
+				},
 			],
 		}),
 	],
