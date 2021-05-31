@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>notebook</title>
-
-    <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://ace.c9.io/build/src-min-noconflict/ace.js"></script>
-
-    <script src="dist/bundle.js"></script>
-    <link rel="stylesheet" href="dist/style.css">
+    <script src="dist/main-bundle.js"></script>
+    <link rel="stylesheet" href="dist/main-style.css">
 </head>
-<body onload="lite_notebook.load_hierarchy('notebooks/hierarchy.json')">
+<body onload="main.on_loaded()">
 <div id="menu"></div>
-<div id="screen"></div>
+<iframe id="render-frame" src="frame.html">
+</iframe>
+<div id="loader" class="loader-back">
+    <div class="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 </body>
 </html>

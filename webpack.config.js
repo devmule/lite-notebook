@@ -3,7 +3,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	entry: {
-		bundle: './src/index.js',
+		"ltn-bundle": './src/frame/index.js',
+		"main-bundle": './src/main/index.js',
 	},
 	module: {
 		rules: [],
@@ -20,12 +21,16 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: path.resolve(__dirname, 'src/py_worker/worker.js'),
-					to: path.resolve(__dirname, 'dist/worker.js'),
+					from: path.resolve(__dirname, 'src/frame/py_worker/worker.js'),
+					to: path.resolve(__dirname, 'dist/ltn-py-worker.js'),
 				},
 				{
-					from: path.resolve(__dirname, 'src/style.css'),
-					to: path.resolve(__dirname, 'dist/style.css'),
+					from: path.resolve(__dirname, 'src/frame/style.css'),
+					to: path.resolve(__dirname, 'dist/ltn-style.css'),
+				},
+				{
+					from: path.resolve(__dirname, 'src/main/style.css'),
+					to: path.resolve(__dirname, 'dist/main-style.css'),
 				},
 			],
 		}),
