@@ -70,9 +70,11 @@ async function receiveMessage(e) {
 			lite_notebook.screen.innerHTML = "";
 			lite_notebook.root = data.root;
 			await renderMD(data.text, lite_notebook.screen);
-			await MathJax.typesetPromise();
+			await MathJax.typesetPromise(); // todo use MathJax ver that dont needs to refresh ????
 			break;
 		default:
 			throw new Error(`Unknown message type \"${data.type}\"`);
 	}
+	
+	e.source.postMessage(JSON.stringify({uid: data.uid}), e.origin);
 }

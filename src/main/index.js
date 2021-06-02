@@ -7,7 +7,11 @@
 import {MD_EVENTS} from "../ENUMS.js";
 
 window.main = {
-	root: "",
+	get root() {
+		let path = window.location.href.split('?')[0];
+		if (path.includes("index.html")) path = path.substring(0, path.lastIndexOf("/"));
+		return path;
+	},
 	
 	frame_src: "frame.html",
 	frame_id: "render-frame",
@@ -90,9 +94,8 @@ let IS_WAITING_RENDER = false;
 async function call_render(path) {
 	if (!IS_WAITING_RENDER) {
 		IS_WAITING_RENDER = true;
-		main.loader.style.visibility = 'visible';
+		main.loader.classList.remove("loader-hidden");
 		
-		main.root = window.location.href.split('?')[0];
 		
 		let {node, root} = await get_hierarchy_node(path);
 		
@@ -108,7 +111,8 @@ async function call_render(path) {
 		// do render
 		// todo wait until render ending
 		let data = {type: MD_EVENTS.RENDER, text: text, root: root}
-		main.frame.contentWindow.postMessage(JSON.stringify(data), window.location.href);
+		await sendSyncMessage(main.frame, data);
+		//main.frame.contentWindow.postMessage(JSON.stringify(data), window.location.href);
 		
 		// activate buttons
 		let menu_elements = document.getElementById("menu").getElementsByClassName("menu-elem");
@@ -119,17 +123,40 @@ async function call_render(path) {
 		}
 		
 		IS_WAITING_RENDER = false;
-		main.loader.style.visibility = 'hidden';
+		main.loader.classList.add("loader-hidden");
 	}
 }
 
 async function waitFrameReload(iFrame) {
-	return new Promise((res, rej) => {
-		try {
-			iFrame.contentWindow.location.reload();
-			iFrame.onload = () => res();
-		} catch (e) {
-			rej();
-		}
+	return new Promise((resolve) => {
+		iFrame.contentWindow.location.reload();
+		iFrame.onload = () => resolve();
 	});
+}
+
+
+// sync messages
+let messageUID = 0;
+const messageEvents = {};
+
+async function sendSyncMessage(iFrame, data) {
+	return new Promise((resolve) => {
+		data.uid = messageUID++;
+		iFrame.contentWindow.postMessage(JSON.stringify(data), window.location.href);
+		messageEvents[data.uid] = () => resolve();
+	});
+}
+
+window.addEventListener("message", receiveMessage, false);
+
+async function receiveMessage(e) {
+	try {
+		let data = JSON.parse(e.data);
+		let fn = messageEvents[data.uid];
+		if (fn && fn instanceof Function) {
+			fn();
+			delete messageEvents[data.uid];
+		}
+	} catch (e) {
+	}
 }
