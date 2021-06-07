@@ -26,7 +26,7 @@
 
 // renderMD - рендер разметки
 import {renderMD} from "./render";
-// pyWorker - python обработчик, работающий через web worker
+// worker_api - python обработчик, работающий через web worker
 import {worker_api} from "./py_worker/worker_api.js";
 import elements from "./elements";
 import {MD_EVENTS} from "../ENUMS";

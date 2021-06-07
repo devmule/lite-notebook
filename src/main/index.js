@@ -75,7 +75,7 @@ async function load_menu() {
 	
 	let draw_hi = (node, depth, path) => {
 		let el = document.createElement("p");
-		el.style.paddingLeft = `${12 * depth}px`
+		el.style.paddingLeft = `${12 * depth}px`;
 		el.innerText = node.name;
 		el.classList.add("menu-elem");
 		menu.appendChild(el);
@@ -84,7 +84,7 @@ async function load_menu() {
 		el.setAttribute("path", root); // сохраняется для выделения
 		el.onclick = async () => await call_render(root);
 		for (let i = 0; i < node.children.length; i++) draw_hi(node.children[i], depth + 1, root + "/");
-	}
+	};
 	
 	draw_hi(main.hierarchy, 1, "");
 }
@@ -108,9 +108,8 @@ async function call_render(path) {
 		
 		// reload iframe
 		await waitFrameReload(main.frame);
-		// do render
-		// todo wait until render ending
-		let data = {type: MD_EVENTS.RENDER, text: text, root: root}
+		// do render, wait until render ending
+		let data = {type: MD_EVENTS.RENDER, text: text, root: root};
 		await sendSyncMessage(main.frame, data);
 		//main.frame.contentWindow.postMessage(JSON.stringify(data), window.location.href);
 		
