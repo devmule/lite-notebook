@@ -1,35 +1,34 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
 	entry: {
-		"ltn-bundle": './src/frame/index.js',
-		"main-bundle": './src/main/index.js',
-		"ltn-py-worker.js": './src/frame/py_worker/worker.js',
+		"index": './src/main.js',
+		"frame": './src/frame.js',
 	},
 	module: {
-		rules: [],
+		rules: [
+			{test: /\.(jpe?g|png|gif|ico)$/i, loader: 'file?name=[name].[ext]'},
+			{test: /\.css$/i, use: ['style-loader', 'css-loader'],}
+		]
 	},
-	resolve: {
-		extensions: ['.js'],
-	},
+	resolve: {extensions: ['.js', '.css']},
 	output: {
 		filename: '[name].js',
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'dist/web'),
 	},
-	
 	plugins: [
-		new CopyPlugin({
-			patterns: [
-				{
-					from: path.resolve(__dirname, 'src/frame/style.css'),
-					to: path.resolve(__dirname, 'dist/ltn-style.css'),
-				},
-				{
-					from: path.resolve(__dirname, 'src/main/style.css'),
-					to: path.resolve(__dirname, 'dist/main-style.css'),
-				},
-			],
+		new HtmlWebpackPlugin({
+			chunks: ['index'],
+			favicon: './src/favicon.ico',
+			title: 'lite notebook',
+			filename: 'index.html',
+			template: 'src/index.html'
 		}),
+		new HtmlWebpackPlugin({
+			chunks: ['frame'],
+			filename: 'frame.html',
+			template: 'src/frame.html'
+		})
 	],
 };
