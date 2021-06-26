@@ -1,4 +1,4 @@
-import chunks from "./Chunk.js";
+import chunks from "./chunks/Chunk.js";
 
 export class Notebook {
 	constructor() {
