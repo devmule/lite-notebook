@@ -1,0 +1,55 @@
+.ltn-block {
+    width: 100%;
+}
+
+/* ------------------------------------- */
+
+.ltn-block-content {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    min-height: calc(var(--settings-box-size) + 2 * var(--settings-offset));
+
+    transition: background-color 0.1s linear;
+}
+
+.ltn-block:hover > .ltn-block-content {
+    background-color: var(--hover-color);
+}
+
+/* ------------------------------------- */
+
+.ltn-settings {
+    width: var(--settings-box-size);
+    height: var(--settings-box-size);
+
+    margin: var(--settings-offset);
+
+    position: absolute;
+    left: var(--settings-position);
+
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: opacity 0.1s linear;
+}
+
+.ltn-settings {
+    opacity: 0.15;
+}
+
+.ltn-settings:hover {
+    cursor: pointer;
+    opacity: 0.75 !important;
+}
+
+.ltn-block:hover > .ltn-settings {
+    opacity: 0.35;
+}
+
+.ltn-settings.burger {
+    background-image: var(--svg-icon-burger);
+}
+
+.ltn-settings.plus {
+    background-image: var(--svg-icon-plus);
+}

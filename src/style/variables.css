@@ -1,0 +1,30 @@
+:root {
+
+    /* размеры */
+    --content-max-width: 800px;
+
+    --settings-box-size: 24px;
+    --settings-offset: 3px;
+    --settings-position: max(
+            (100% - var(--content-max-width)) / 2 - var(--settings-box-size) - 2 * var(--settings-offset),
+            var(--settings-offset));
+
+
+    /* цвета */
+    --hover-color: rgba(216, 255, 252, 0.36);
+
+
+    /* иконки */
+    /* цвет заливки определяется в теге "path" > "fill" */
+    --svg-icon-plus: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M24 9h-9v-9h-6v9h-9v6h9v9h6v-9h9z"/></svg>');
+    --svg-icon-burger: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z"/></svg>');
+
+
+    /* шрифты */
+    --default-font-family: "Lucida Console", "Courier New", monospace;
+    --default-font-size: 12px;
+
+
+    /* разное */
+    --top-box-shadow: 0 13px 7px -5px rgba(26, 38, 49, 0.09), 6px 15px 34px -6px rgba(33, 48, 73, 0.32);
+}
