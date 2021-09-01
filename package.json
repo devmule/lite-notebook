@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build-web-prod": "webpack --mode=production",
-    "build-web-dev": "webpack --mode=development",
-    "build-nwjs": ""
+    "test": "echo \"no tests\""
   },
   "repository": {
     "type": "git",
@@ -16,12 +14,5 @@
   "bugs": {
     "url": "https://github.com/DevMule/lite-notebook/issues"
   },
-  "homepage": "https://github.com/DevMule/lite-notebook#readme",
-  "devDependencies": {
-    "html-webpack-plugin": "^4.5.2",
-    "css-loader": "^5.2.6",
-    "style-loader": "^2.0.0",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
-  }
+  "homepage": "https://github.com/DevMule/lite-notebook#readme"
 }
