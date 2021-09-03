@@ -12,10 +12,6 @@
     transition: background-color 0.1s linear;
 }
 
-.ltn-block:hover > .ltn-block-content {
-    background-color: var(--hover-color);
-}
-
 /* ------------------------------------- */
 
 .ltn-settings {
