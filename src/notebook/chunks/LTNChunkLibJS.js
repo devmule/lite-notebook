@@ -11,6 +11,7 @@ export default class LTNChunkLibJS extends LTNChunk {
 	}
 	
 	async renderEditor() {
+		return document.createElement('input')
 	}
 	
 	async renderReport() {

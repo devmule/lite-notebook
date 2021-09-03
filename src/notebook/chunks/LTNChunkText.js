@@ -1,6 +1,7 @@
 import LTNChunk from "./LTNChunk.js";
 
 export default class LTNChunkText extends LTNChunk {
+	// todo use https://prosemirror.net/
 	
 	async init(data) {
 	}

@@ -5,6 +5,7 @@ export default class LTNChunkExecJS extends LTNChunk {
 	}
 	
 	async renderEditor() {
+		return document.createElement('input')
 	}
 	
 	async renderReport() {
