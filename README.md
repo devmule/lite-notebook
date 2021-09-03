@@ -1,3 +1,3 @@
 # lite-notebook
 
-[> run](https://devmule.github.io/lite-notebook/dist/web/)
+[> run](https://devmule.github.io/lite-notebook/src/)

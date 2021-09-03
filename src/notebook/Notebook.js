@@ -45,7 +45,6 @@ export class Notebook {
 		
 		/**
 		 * @type {LTNChunk[]}
-		 * @private
 		 * */
 		this.chunks = [];
 		

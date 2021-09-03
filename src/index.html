@@ -13,29 +13,14 @@
         }
     </style>
 </head>
-<body>
-<div id="editor" class="ltn-screen">
+<body></body>
+<script type="module">
 
-    <div class="ltn-block">
-        <div class="ltn-settings burger"></div>
-        <div class="ltn-block-content"></div>
-    </div>
+	import Screen from "./screen/Screen.js";
 
-    <div class="ltn-block">
-        <div class="ltn-settings burger"></div>
-        <div class="ltn-block-content"></div>
-    </div>
+	const screen = new Screen(true);
 
-    <div class="ltn-block">
-        <div class="ltn-settings plus"></div>
-    </div>
+	document.body.appendChild(screen.element);
 
-    <div class="ltn-option-list ltn-noselect">
-        <div class="title">Добавить элемент</div>
-        <p>Вариант 1</p>
-        <p>Вариант 2</p>
-        <p>Вариант 3</p>
-    </div>
-</div>
-</body>
+</script>
 </html>

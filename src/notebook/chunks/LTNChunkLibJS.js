@@ -1,4 +1,4 @@
-import LTNChunk from "./LTNChunk";
+import LTNChunk from "./LTNChunk.js";
 
 export default class LTNChunkLibJS extends LTNChunk {
 	constructor() {
