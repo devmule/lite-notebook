@@ -33,7 +33,6 @@ export class Notebook {
 		/**
 		 * Словарь обработчиков, заданных по принципу {name: constructor...}.
 		 * @type {{name: string, constructor: typeof LTNChunk}[]}
-		 * @private
 		 * */
 		this.handlers = [];
 		

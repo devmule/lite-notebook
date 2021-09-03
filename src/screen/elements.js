@@ -26,18 +26,19 @@ export function createEmptyBlock() {
 
 /**
  * @param {HTMLElement} content
- * @param {boolean} needOptions
- * @param {function(any)} [onOptionsClick=undefined]
+ * @param {function(HTMLElement)} [onOptionsClick=undefined]
  * @return {HTMLDivElement}
  * */
-export function createContentBlock(content, needOptions, onOptionsClick = undefined) {
+export function createContentBlock(content, onOptionsClick = undefined) {
 	
 	let elemContentBlock = createEmptyBlock();
 	
-	if (needOptions) {
+	if (typeof onOptionsClick === 'function') {
 		let elemOptions = document.createElement('div');
 		elemOptions.classList.add(CLASS_SETTINGS, CLASS_IMG_BURGER);
-		if (typeof onOptionsClick === 'function') elemOptions.addEventListener('click', onOptionsClick);
+		if (typeof onOptionsClick === 'function') {
+			elemOptions.addEventListener('click', onOptionsClick.bind(this, elemOptions));
+		}
 		elemContentBlock.appendChild(elemOptions);
 	}
 	
@@ -52,7 +53,7 @@ export function createContentBlock(content, needOptions, onOptionsClick = undefi
 
 
 /**
- * @param {?function(any)} onOptionsClick
+ * @param {function(HTMLElement)} onOptionsClick
  * @return {HTMLDivElement}
  * */
 export function createNewBlock(onOptionsClick) {
@@ -61,17 +62,18 @@ export function createNewBlock(onOptionsClick) {
 	
 	let elemOptions = document.createElement('div');
 	elemOptions.classList.add(CLASS_SETTINGS, CLASS_IMG_PLUS);
-	if (typeof onOptionsClick === 'function') elemOptions.addEventListener('click', onOptionsClick);
+	if (typeof onOptionsClick === 'function') {
+		elemOptions.addEventListener('click', onOptionsClick.bind(this, elemOptions));
+	}
 	elemNewBlock.appendChild(elemOptions);
 	
 	return elemNewBlock;
 	
 }
 
-
 /**
  * @param {string} title
- * @param {Object.<string, function(any)>} options
+ * @param {{name:string, func: function(any)}[]} options
  * @return HTMLDivElement
  * */
 export function createOptionsList(title, options) {
@@ -82,12 +84,17 @@ export function createOptionsList(title, options) {
 	let elemTitle = document.createElement('div');
 	elemTitle.classList.add(CLASS_TITLE);
 	elemTitle.innerText = title;
+	elemOptionList.appendChild(elemTitle);
 	
 	
-	for (const [optName, optFunc] of Object.entries(options)) {
+	for (let i = 0; i < options.length; i++) {
+		
+		let optName = options[i].name;
+		let optFunc = options[i].func;
+		
 		let elemOption = document.createElement('p');
 		elemOption.innerText = optName;
-		elemOption.addEventListener('click', /** @type {function(any)} */optFunc);
+		elemOption.addEventListener('click', optFunc);
 		
 		elemOptionList.appendChild(elemOption);
 	}
