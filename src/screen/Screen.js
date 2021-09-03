@@ -78,15 +78,63 @@ export default class Screen {
 	
 	/**
 	 * @param {LTNChunk} chunk
-	 * @param {HTMLElement} content
+	 * */
+	async renderChunk(chunk) {
+		
+		let content;
+		
+		try {
+			content = this.isEditor ? await chunk.renderEditor() : await chunk.renderReport();
+		} catch (e) {
+			console.error(e); // todo вывести ошибку рендера на экран
+		}
+		
+		if (this.isEditor && !(content instanceof HTMLElement)) {
+			throw new Error(`${chunk.constructor.name} must return an HTMLElement on editor rendering mode`);
+		}
+		
+		
+		if (content instanceof HTMLElement) {
+			
+			let block = elements.createContentBlock(content, this.onBlockOptionsClick.bind(this, chunk));
+			chunk.container = block;
+			this.element.appendChild(block);
+			
+		}
+		
+	}
+	
+	/**
+	 * @void
+	 * */
+	updateBlocksPositions() {
+		if (this.newBlock instanceof HTMLElement) {
+			this.newBlock.remove();
+			this.element.appendChild(this.newBlock);
+		}
+	}
+	
+	
+	/**
+	 * @param {boolean} val
+	 * */
+	set loading(val) {
+	
+	}
+	
+	
+	// ==============================================================================
+	// EDITOR ONLY
+	
+	/**
+	 * @param {LTNChunk} chunk
 	 * @param {HTMLElement} elemOptBtn
 	 * */
-	onBlockOptionsClick(chunk, content, elemOptBtn) {
+	onBlockOptionsClick(chunk, elemOptBtn) {
 		this.createOptions(elemOptBtn,
-			"Создать блок",
+			"Настройки блока",
 			[
-				{name: "log1", func: () => console.log(123)},
-				{name: "log2", func: () => console.log(321)}
+				{name: "удалить", func: this.deleteChunk.bind(this, chunk)}
 			]
 		);
 	}
@@ -141,6 +189,26 @@ export default class Screen {
 	
 	
 	/**
+	 * @param {LTNChunk} chunk
+	 * */
+	deleteChunk(chunk) {
+		
+		this.removeOptions();
+		
+		let index = this.notebook.chunks.indexOf(chunk);
+		let block = chunk.container;
+		
+		if (index < 0) throw new Error();
+		if (!(block instanceof HTMLElement)) throw new Error();
+		
+		this.notebook.chunks.splice(index, 1);
+		block.remove();
+		
+		this.updateBlocksPositions();
+		
+	}
+	
+	/**
 	 * @param {typeof LTNChunk} chunkConstructor
 	 * */
 	createChunk(chunkConstructor) {
@@ -162,48 +230,6 @@ export default class Screen {
 			
 		})();
 		
-	}
-	
-	/**
-	 * @param {LTNChunk} chunk
-	 * */
-	async renderChunk(chunk) {
-		try {
-			
-			const content = this.isEditor ? await chunk.renderEditor() : await chunk.renderReport();
-			
-			if (content instanceof HTMLElement) {
-				let block = elements.createContentBlock(
-					content,
-					this.onBlockOptionsClick.bind(this, chunk, content));
-				
-				// todo chunk.container = block; ??
-				
-				this.element.appendChild(block);
-			}
-			
-		} catch (e) {
-			// todo вывести ошибку на экран
-			console.error(e);
-		}
-	}
-	
-	/**
-	 * @void
-	 * */
-	updateBlocksPositions() {
-		if (this.newBlock instanceof HTMLElement) {
-			this.newBlock.remove();
-			this.element.appendChild(this.newBlock);
-		}
-	}
-	
-	
-	/**
-	 * @param {boolean} val
-	 * */
-	set loading(val) {
-	
 	}
 	
 }

@@ -15,6 +15,14 @@ const UNIMPLEMENTED_ERROR = 'Method must be implemented in child class!';
  */
 export default class LTNChunk {
 	
+	constructor() {
+		
+		/**
+		 * @type {HTMLElement|undefined};
+		 * */
+		this.container = undefined;
+	}
+	
 	/**
 	 * @abstract
 	 * @param {LTNChunkData} data
@@ -33,14 +41,17 @@ export default class LTNChunk {
 	}
 	
 	/**
+	 * При рендере редактора чанк обязан вернуть элемент.
 	 * @abstract
-	 * @return {Promise.<HTMLElement|undefined>}
+	 * @return {Promise.<HTMLElement>}
 	 * */
 	async renderEditor() {
 		throw new Error(UNIMPLEMENTED_ERROR);
 	}
 	
 	/**
+	 * При рендере репорта чанк может не возвращать элемент для визуализации,
+	 * но, например, сделать определённые фоновые вычисления.
 	 * @abstract
 	 * @return {Promise.<HTMLElement|undefined>}
 	 * */
