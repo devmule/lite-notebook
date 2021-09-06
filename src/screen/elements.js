@@ -11,7 +11,7 @@ const CLASS_BLOCK_CONTENT = 'ltn-block-content';
 const CLASS_BLOCK_HEADER = 'ltn-block-header';
 const CLASS_BLOCK_HEADER_HIDED = 'hided';
 
-const CLASS_SETTINGS = 'ltn-settings';
+const CLASS_MINI_BTN = 'ltn-mini-btn';
 const CLASS_OPTIONS_LIST = 'ltn-option-list';
 const CLASS_NOSELECT = 'ltn-noselect';
 const CLASS_TITLE = 'title';
@@ -35,66 +35,69 @@ export function createEmptyBlock() {
 
 /**
  * @param {HTMLElement} content
+ * @param {boolean} isEditor
  * @return {HTMLDivElement}
  * */
-export function createContentBlock(content) {
+export function createContentBlock(content, isEditor) {
 	
-	let elemContentBlock = createEmptyBlock();
+	let elemBlock = createEmptyBlock();
 	
-	let elemBlockContent = document.createElement('div');
-	elemBlockContent.classList.add(CLASS_BLOCK_CONTENT);
+	// content itself
+	let elemContent = document.createElement('div');
+	elemContent.classList.add(CLASS_BLOCK_CONTENT);
 	
-	let elemOptions = document.createElement('div');
-	elemOptions.classList.add(CLASS_SETTINGS, CLASS_IMG_BURGER);
-	elemOptions.addEventListener('click', () => {
-		elemContentBlock.dispatchEvent(new Event('options'));
-	});
-	
-	let elemBlockHeader = document.createElement('div');
-	elemBlockHeader.classList.add(CLASS_BLOCK_HEADER);
-	
-	let elemButtonHide = document.createElement('div');
-	elemButtonHide.classList.add(CLASS_SETTINGS, CLASS_IMG_HIDE);
-	elemButtonHide.addEventListener('click', () => {
+	if (isEditor) {
 		
-		if (elemButtonHide.classList.contains(CLASS_BLOCK_HEADER_HIDED)) {
-			elemButtonHide.classList.remove(CLASS_BLOCK_HEADER_HIDED);
-			elemBlockContent.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+		// begin options and header
+		let elemBtnOptions = document.createElement('div');
+		elemBtnOptions.classList.add(CLASS_MINI_BTN, CLASS_IMG_BURGER);
+		elemBtnOptions.addEventListener('click', () => elemBlock.dispatchEvent(new Event('options')));
+		
+		let elemHeader = document.createElement('div');
+		elemHeader.classList.add(CLASS_BLOCK_HEADER);
+		
+		let elemBtnHide = document.createElement('div');
+		elemBtnHide.classList.add(CLASS_MINI_BTN, CLASS_IMG_HIDE);
+		elemBtnHide.addEventListener('click', () => {
 			
-		} else {
-			elemButtonHide.classList.add(CLASS_BLOCK_HEADER_HIDED);
-			elemBlockContent.classList.add(CLASS_BLOCK_HEADER_HIDED);
-		}
-	});
+			if (elemBtnHide.classList.contains(CLASS_BLOCK_HEADER_HIDED)) {
+				elemBtnHide.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+				elemContent.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+				
+			} else {
+				elemBtnHide.classList.add(CLASS_BLOCK_HEADER_HIDED);
+				elemContent.classList.add(CLASS_BLOCK_HEADER_HIDED);
+			}
+		});
+		// end options and header
+		
+		elemBlock.appendChild(elemBtnOptions);
+		
+		elemBlock.appendChild(elemHeader);
+		elemHeader.appendChild(elemBtnOptions);
+		elemHeader.appendChild(elemBtnHide);
+	}
 	
-	elemContentBlock.appendChild(elemOptions);
+	elemBlock.appendChild(elemContent);
 	
-	elemContentBlock.appendChild(elemBlockHeader);
-	elemBlockHeader.appendChild(elemOptions);
-	elemBlockHeader.appendChild(elemButtonHide);
+	elemContent.appendChild(content);
 	
-	elemContentBlock.appendChild(elemBlockContent);
-	
-	elemBlockContent.appendChild(content);
-	
-	return elemContentBlock;
+	return elemBlock;
 	
 }
 
 
 /**
- * @param {function(HTMLElement)} onOptionsClick
  * @return {HTMLDivElement}
  * */
-export function createPlusBlock(onOptionsClick) {
+export function createPlusBlock() {
 	
 	let elemNewBlock = createEmptyBlock();
 	
 	let elemOptions = document.createElement('div');
-	elemOptions.classList.add(CLASS_SETTINGS, CLASS_IMG_PLUS);
-	if (typeof onOptionsClick === 'function') {
-		elemOptions.addEventListener('click', onOptionsClick.bind(this, elemOptions));
-	}
+	elemOptions.classList.add(CLASS_MINI_BTN, CLASS_IMG_PLUS);
+	elemOptions.addEventListener('click', () => elemNewBlock.dispatchEvent(new Event('plus')));
+	
 	elemNewBlock.appendChild(elemOptions);
 	
 	return elemNewBlock;

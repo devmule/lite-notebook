@@ -64,7 +64,8 @@ export default class Screen {
 			// Если происходит отрисовка в режиме редактора,
 			// то нужно добавить элемент создания.
 			if (this.isEditor) {
-				this.plusBlock = elements.createPlusBlock(this.onPlusClick.bind(this));
+				this.plusBlock = elements.createPlusBlock();
+				this.plusBlock.addEventListener('plus', this.onPlusClick.bind(this));
 				this.element.appendChild(this.plusBlock);
 			}
 			
@@ -98,11 +99,10 @@ export default class Screen {
 		
 		if (content instanceof HTMLElement) {
 			
-			let block = elements.createContentBlock(content);
-			block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
+			chunk.block = elements.createContentBlock(content, this.isEditor);
+			chunk.block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
 			
-			chunk.block = block;
-			this.element.appendChild(block);
+			this.element.appendChild(chunk.block);
 			
 		}
 		
@@ -145,10 +145,9 @@ export default class Screen {
 	
 	
 	/**
-	 * @param {HTMLElement} elemOptBtn
 	 * @void
 	 * */
-	onPlusClick(elemOptBtn) {
+	onPlusClick() {
 		
 		let options = [];
 		for (let i = 0; i < this.notebook.handlers.length; i++) {
@@ -156,7 +155,7 @@ export default class Screen {
 			options.push({name: handler.name, func: this.createChunk.bind(this, handler.constructor)});
 		}
 		
-		this.createOptions(elemOptBtn, "Создать блок", options);
+		this.createOptions(this.plusBlock, "Создать блок", options);
 	}
 	
 	/**

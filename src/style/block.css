@@ -24,7 +24,7 @@
 
 /* ------------------------------------- */
 
-.ltn-settings {
+.ltn-mini-btn {
     width: var(--settings-size);
     height: var(--settings-size);
 
@@ -38,24 +38,24 @@
     opacity: 0.15;
 }
 
-.ltn-settings:hover {
+.ltn-mini-btn:hover {
     cursor: pointer;
     opacity: 0.75 !important;
 }
 
-.ltn-block:hover > .ltn-settings {
+.ltn-block:hover > .ltn-mini-btn {
     opacity: 0.35;
 }
 
-.ltn-settings.burger {
+.ltn-mini-btn.burger {
     background-image: var(--svg-icon-burger);
 }
 
-.ltn-settings.plus {
+.ltn-mini-btn.plus {
     background-image: var(--svg-icon-plus);
 }
 
-.ltn-settings.hide {
+.ltn-mini-btn.hide {
     background-image: var(--svg-icon-hide);
 
     -webkit-transform: rotate(90deg);
@@ -70,7 +70,7 @@
     transition: transform 0.1s linear;
 }
 
-.ltn-settings.hide.hided {
+.ltn-mini-btn.hide.hided {
     -webkit-transform: rotate(0deg);
     -moz-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
