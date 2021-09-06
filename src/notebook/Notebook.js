@@ -1,6 +1,3 @@
-import LTNChunk from "./chunks/LTNChunk.js";
-
-
 /**
  * @typedef {Object} NotebookOptions
  * @property {Object<string, typeof LTNChunk>} handlers
@@ -18,7 +15,7 @@ import LTNChunk from "./chunks/LTNChunk.js";
  * @module Notebook
  * @class
  */
-export class Notebook {
+export default class Notebook {
 	
 	/**
 	 * @constructor

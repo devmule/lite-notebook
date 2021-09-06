@@ -21,6 +21,10 @@ export default class LTNChunkCSS extends LTNChunk {
 		this.CSSEditor = null;
 	}
 	
+	static get title() {
+		return "CSS";
+	}
+	
 	/**
 	 * @param {LTNChunkCSSData} data
 	 * */

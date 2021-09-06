@@ -1,13 +1,7 @@
 import * as elements from "./elements.js";
+import chunks from "../notebook/chunks.js";
 
-import {Notebook} from "../notebook/Notebook.js";
-
-
-// todo import from one file as an array of chunk constructors
-import LTNChunkCSS from "../notebook/chunks/LTNChunkCSS.js";
-import LTNChunkExecJS from "../notebook/chunks/LTNChunkExecJS.js";
-import LTNChunkLibJS from "../notebook/chunks/LTNChunkLibJS.js";
-import LTNChunkText from "../notebook/chunks/LTNChunkText.js";
+import Notebook from "../notebook/Notebook.js";
 
 export default class Screen {
 	
@@ -22,14 +16,7 @@ export default class Screen {
 		
 		this.isEditor = isEditor;
 		
-		this.notebook = new Notebook({
-			handlers: {
-				LTNChunkCSS,
-				LTNChunkExecJS,
-				LTNChunkLibJS,
-				LTNChunkText
-			}
-		});
+		this.notebook = new Notebook({handlers: chunks});
 		
 		/**
 		 * @type {HTMLElement|undefined}
@@ -152,7 +139,7 @@ export default class Screen {
 		let options = [];
 		for (let i = 0; i < this.notebook.handlers.length; i++) {
 			let handler = this.notebook.handlers[i];
-			options.push({name: handler.name, func: this.createChunk.bind(this, handler.constructor)});
+			options.push({name: handler.constructor.title, func: this.createChunk.bind(this, handler.constructor)});
 		}
 		
 		this.createOptions(this.plusBlock, "Создать блок", options);

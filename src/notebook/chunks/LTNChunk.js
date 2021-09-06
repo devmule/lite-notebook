@@ -9,7 +9,6 @@ const UNIMPLEMENTED_ERROR = 'Method must be implemented in child class!';
  * */
 
 /**
- * Абстрактный класс {@link LTNChunk}.
  * @module LTNChunk
  * @class
  */
@@ -21,6 +20,15 @@ export default class LTNChunk {
 		 * @type {HTMLElement|undefined};
 		 * */
 		this.block = undefined;
+	}
+	
+	/**
+	 * @static
+	 * @abstract
+	 * @return {string}
+	 * */
+	static get title() {
+		throw new Error(UNIMPLEMENTED_ERROR);
 	}
 	
 	/**

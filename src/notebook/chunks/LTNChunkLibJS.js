@@ -6,6 +6,10 @@ export default class LTNChunkLibJS extends LTNChunk {
 		this.urls = [];
 	}
 	
+	static get title() {
+		return "JavaScript lib";
+	}
+	
 	
 	async init(data) {
 	}
