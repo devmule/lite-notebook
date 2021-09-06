@@ -4,21 +4,31 @@
 
 /* ------------------------------------- */
 
+.ltn-block-header {
+    height: var(--settings-size);
+}
+
+/* ------------------------------------- */
+
 .ltn-block-content {
     max-width: var(--content-max-width);
     margin: 0 auto;
-    min-height: calc(var(--settings-box-size) + 2 * var(--settings-offset));
+    min-height: var(--settings-size);
+    transition: all 0.1s linear
+}
 
-    transition: background-color 0.1s linear;
+.ltn-block-content.hided {
+    overflow: hidden;
+    min-height: 0;
+    max-height: 0;
+    height: 0;
 }
 
 /* ------------------------------------- */
 
 .ltn-settings {
-    width: var(--settings-box-size);
-    height: var(--settings-box-size);
-
-    margin: var(--settings-offset);
+    width: var(--settings-size);
+    height: var(--settings-size);
 
     position: absolute;
     left: var(--settings-position);
@@ -27,9 +37,7 @@
     background-repeat: no-repeat;
 
     transition: opacity 0.1s linear;
-}
 
-.ltn-settings {
     opacity: 0.15;
 }
 
@@ -48,4 +56,22 @@
 
 .ltn-settings.plus {
     background-image: var(--svg-icon-plus);
+}
+
+.ltn-settings.hide {
+    background-image: var(--svg-icon-hide);
+
+    transition: -webkit-transform 0.1s linear;
+    transition: -moz-transform 0.1s linear;
+    transition: -ms-transform 0.1s linear;
+    transition: -o-transform 0.1s linear;
+    transition: transform 0.1s linear;
+}
+
+.ltn-settings.hide.hided {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
 }

@@ -3,11 +3,8 @@
     /* размеры */
     --content-max-width: 800px;
 
-    --settings-box-size: 24px;
-    --settings-offset: 3px;
-    --settings-position: max(
-            (100% - var(--content-max-width)) / 2 - var(--settings-box-size) - 2 * var(--settings-offset),
-            var(--settings-offset));
+    --settings-size: 24px;
+    --settings-position: max((100% - var(--content-max-width)) / 2 - var(--settings-size), 0px);
 
 
     /* цвета */
@@ -18,6 +15,7 @@
     /* цвет заливки определяется в теге "path" > "fill" */
     --svg-icon-plus: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M24 9h-9v-9h-6v9h-9v6h9v9h6v-9h9z"/></svg>');
     --svg-icon-burger: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z"/></svg>');
+    --svg-icon-hide: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg>');
 
 
     /* шрифты */

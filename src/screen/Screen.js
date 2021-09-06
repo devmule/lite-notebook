@@ -2,6 +2,8 @@ import * as elements from "./elements.js";
 
 import {Notebook} from "../notebook/Notebook.js";
 
+
+// todo import from one file as an array of chunk constructors
 import LTNChunkCSS from "../notebook/chunks/LTNChunkCSS.js";
 import LTNChunkExecJS from "../notebook/chunks/LTNChunkExecJS.js";
 import LTNChunkLibJS from "../notebook/chunks/LTNChunkLibJS.js";
@@ -18,7 +20,7 @@ export default class Screen {
 		
 		this.element = elements.createScreen();
 		
-		this.isEditor = isEditor
+		this.isEditor = isEditor;
 		
 		this.notebook = new Notebook({
 			handlers: {
@@ -40,7 +42,7 @@ export default class Screen {
 		 * @type {HTMLElement|undefined}
 		 * @private
 		 * */
-		this.newBlock = undefined;
+		this.plusBlock = undefined;
 		
 		
 		// Сейчас нужно вызвать ряд асинхронных функций для инициализации ноутбка и экрана.
@@ -62,8 +64,8 @@ export default class Screen {
 			// Если происходит отрисовка в режиме редактора,
 			// то нужно добавить элемент создания.
 			if (this.isEditor) {
-				this.newBlock = elements.createNewBlock(this.onPlusClick.bind(this));
-				this.element.appendChild(this.newBlock);
+				this.plusBlock = elements.createPlusBlock(this.onPlusClick.bind(this));
+				this.element.appendChild(this.plusBlock);
 			}
 			
 			this.updateBlocksPositions();
@@ -96,7 +98,9 @@ export default class Screen {
 		
 		if (content instanceof HTMLElement) {
 			
-			let block = elements.createContentBlock(content, this.onBlockOptionsClick.bind(this, chunk));
+			let block = elements.createContentBlock(content);
+			block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
+			
 			chunk.container = block;
 			this.element.appendChild(block);
 			
@@ -108,9 +112,9 @@ export default class Screen {
 	 * @void
 	 * */
 	updateBlocksPositions() {
-		if (this.newBlock instanceof HTMLElement) {
-			this.newBlock.remove();
-			this.element.appendChild(this.newBlock);
+		if (this.plusBlock instanceof HTMLElement) {
+			this.plusBlock.remove();
+			this.element.appendChild(this.plusBlock);
 		}
 	}
 	
