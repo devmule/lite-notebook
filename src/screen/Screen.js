@@ -86,8 +86,9 @@ export default class Screen {
 		
 		if (content instanceof HTMLElement) {
 			
-			chunk.block = elements.createContentBlock(content, this.isEditor);
+			chunk.block = elements.createContentBlock(content, this.isEditor, chunk.userTitle);
 			chunk.block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
+			chunk.block.addEventListener('title', (e) => chunk.userTitle = e.title);
 			
 			this.element.appendChild(chunk.block);
 			
@@ -210,6 +211,7 @@ export default class Screen {
 			this.loading = true;
 			
 			const chunk = new chunkConstructor();
+			chunk.userTitle = chunkConstructor.title;
 			this.notebook.chunks.push(chunk);
 			
 			await this.renderChunk(chunk);

@@ -36,9 +36,10 @@ export function createEmptyBlock() {
 /**
  * @param {HTMLElement} content
  * @param {boolean} isEditor
+ * @param {string} title
  * @return {HTMLDivElement}
  * */
-export function createContentBlock(content, isEditor) {
+export function createContentBlock(content, isEditor, title) {
 	
 	let elemBlock = createEmptyBlock();
 	
@@ -48,7 +49,6 @@ export function createContentBlock(content, isEditor) {
 	
 	if (isEditor) {
 		
-		// begin options and header
 		let elemBtnOptions = document.createElement('div');
 		elemBtnOptions.classList.add(CLASS_MINI_BTN, CLASS_IMG_BURGER);
 		elemBtnOptions.addEventListener('click', () => elemBlock.dispatchEvent(new Event('options')));
@@ -69,13 +69,40 @@ export function createContentBlock(content, isEditor) {
 				elemContent.classList.add(CLASS_BLOCK_HEADER_HIDED);
 			}
 		});
-		// end options and header
+		
+		const CHAR_LEN = 24;
+		let elemTitle = document.createElement('textarea');
+		elemTitle.rows = 1;
+		elemTitle.cols = 24;
+		elemTitle.charswidth = CHAR_LEN;
+		elemTitle.value = title.substr(0, CHAR_LEN);
+		let prevText = elemTitle.value;
+		let onTitleChange = () => {
+			let text = elemTitle.value.replace(/(\r\n|\n|\r)/gm, "");
+			if (text.length > CHAR_LEN) {
+				text = prevText;
+			} else {
+				prevText = text;
+			}
+			elemTitle.value = text;
+			let e = new Event('title');
+			e.title = elemTitle.value.trim();
+			elemBlock.dispatchEvent(e);
+		};
+		
+		elemTitle.addEventListener('change', onTitleChange);
+		elemTitle.addEventListener('keyup', onTitleChange);
+		elemTitle.addEventListener('keydown', onTitleChange);
+		elemTitle.addEventListener('keypress', onTitleChange);
+		elemTitle.addEventListener('paste', onTitleChange);
+		
 		
 		elemBlock.appendChild(elemBtnOptions);
 		
 		elemBlock.appendChild(elemHeader);
 		elemHeader.appendChild(elemBtnOptions);
 		elemHeader.appendChild(elemBtnHide);
+		elemHeader.appendChild(elemTitle);
 	}
 	
 	elemBlock.appendChild(elemContent);

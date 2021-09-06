@@ -13,12 +13,21 @@
         }
     </style>
 </head>
-<body></body>
+<body>
+<button id="save_btn">save</button>
+</body>
 <script type="module">
 
 	import Screen from "./screen/Screen.js";
 
+	let data = undefined;
+
 	const screen = new Screen(true);
+	let save = document.getElementById('save_btn');
+	save.addEventListener('click', async () => {
+		data = await screen.notebook.save();
+		console.log(data);
+	});
 
 	document.body.appendChild(screen.element);
 

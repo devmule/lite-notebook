@@ -7,6 +7,7 @@
  * @typedef {Object} NotebookChunkData		- Прослойка данных для определения обработчика.
  * @property {LTNChunkData} data			- Данные текущего чанка.
  * @property {string} name					- Идентификатор типа обработчика, его название.
+ * @property {string} title					-
  * */
 
 /**
@@ -78,6 +79,7 @@ export default class Notebook {
 			
 			/** @type {NotebookChunkData} */
 			let aNotebookChunkData = {
+				title: ch.userTitle,
 				name: handler.name,
 				data: await ch.save(),
 			}
@@ -112,7 +114,9 @@ export default class Notebook {
 			const aChunk = new handlerClass();
 			this.chunks.push(aChunk);
 			
+			aChunk.userTitle = aNotebookChunkData.title;
 			await aChunk.init(aNotebookChunkData.data);
+			
 		}
 	}
 }

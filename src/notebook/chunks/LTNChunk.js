@@ -20,6 +20,11 @@ export default class LTNChunk {
 		 * @type {HTMLElement|undefined};
 		 * */
 		this.block = undefined;
+		
+		/**
+		 * @type {string};
+		 * */
+		this.userTitle = 'default';
 	}
 	
 	/**
