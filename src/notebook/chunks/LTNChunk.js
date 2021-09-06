@@ -20,7 +20,7 @@ export default class LTNChunk {
 		/**
 		 * @type {HTMLElement|undefined};
 		 * */
-		this.container = undefined;
+		this.block = undefined;
 	}
 	
 	/**

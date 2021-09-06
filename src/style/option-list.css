@@ -6,7 +6,6 @@
     margin: 0;
 
     position: absolute;
-    left: var(--settings-position);
 
     box-shadow: var(--top-box-shadow);
     border-radius: 4px;

@@ -70,6 +70,7 @@ export function createContentBlock(content) {
 	elemContentBlock.appendChild(elemOptions);
 	
 	elemContentBlock.appendChild(elemBlockHeader);
+	elemBlockHeader.appendChild(elemOptions);
 	elemBlockHeader.appendChild(elemButtonHide);
 	
 	elemContentBlock.appendChild(elemBlockContent);

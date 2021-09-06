@@ -4,7 +4,6 @@
     --content-max-width: 800px;
 
     --settings-size: 24px;
-    --settings-position: max((100% - var(--content-max-width)) / 2 - var(--settings-size), 0px);
 
 
     /* цвета */

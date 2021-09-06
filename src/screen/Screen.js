@@ -101,7 +101,7 @@ export default class Screen {
 			let block = elements.createContentBlock(content);
 			block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
 			
-			chunk.container = block;
+			chunk.block = block;
 			this.element.appendChild(block);
 			
 		}
@@ -132,10 +132,10 @@ export default class Screen {
 	
 	/**
 	 * @param {LTNChunk} chunk
-	 * @param {HTMLElement} elemOptBtn
+	 * @void
 	 * */
-	onBlockOptionsClick(chunk, elemOptBtn) {
-		this.createOptions(elemOptBtn,
+	onBlockOptionsClick(chunk) {
+		this.createOptions(chunk.block,
 			"Настройки блока",
 			[
 				{name: "удалить", func: this.deleteChunk.bind(this, chunk)}
@@ -171,18 +171,19 @@ export default class Screen {
 	
 	
 	/**
-	 * @param {HTMLElement} elemOptBtn
+	 * @param {HTMLElement} block
 	 * @param {string} title
 	 * @param {{name:string, func: function(any)}[]} options
 	 * @void
 	 * */
-	createOptions(elemOptBtn, title, options) {
+	createOptions(block, title, options) {
 		
 		this.removeOptions();
 		
 		let opt = elements.createOptionsList(title, options);
-		let rect = elemOptBtn.getBoundingClientRect();
+		let rect = block.getBoundingClientRect();
 		opt.style.top = `${rect.top}px`;
+		opt.style.left = `${rect.left}px`;
 		
 		opt.addEventListener("pointerleave", this.removeOptions.bind(this));
 		
@@ -200,13 +201,12 @@ export default class Screen {
 		this.removeOptions();
 		
 		let index = this.notebook.chunks.indexOf(chunk);
-		let block = chunk.container;
 		
-		if (index < 0) throw new Error();
-		if (!(block instanceof HTMLElement)) throw new Error();
+		if (index < 0) throw new Error('Given chunk is not defined in a notebook!');
+		if (!(chunk.block instanceof HTMLElement)) throw new Error('Block is not an instance of an HTMLElement!');
 		
 		this.notebook.chunks.splice(index, 1);
-		block.remove();
+		chunk.block.remove();
 		
 		this.updateBlocksPositions();
 		
