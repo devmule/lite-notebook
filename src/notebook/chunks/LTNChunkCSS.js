@@ -1,7 +1,7 @@
 import LTNChunk from "./LTNChunk.js";
 
 /**
- * @typedef {Object} LTNChunkCSSData
+ * @typedef {LTNChunkData} LTNChunkCSSData
  * @property {string} text
  * */
 

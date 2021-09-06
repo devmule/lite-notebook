@@ -4,9 +4,15 @@
  * */
 
 /**
- * @typedef {Object} NotebookData
- * @property {LTNChunkData[]} chunks	- список чанков в сыром виде
- * @property {number} creationTime		- timestamp время создания
+ * @typedef {Object} NotebookChunkData		- Прослойка данных для определения обработчика.
+ * @property {LTNChunkData} data			- Данные текущего чанка.
+ * @property {string} name					- Идентификатор типа обработчика, его название.
+ * */
+
+/**
+ * @typedef {Object} NotebookData			- Данные ноутбука в сыром виде.
+ * @property {NotebookChunkData[]} chunks	- Список чанков в сыром виде.
+ * @property {number} creationTime			- Timestamp, время создания {@link Notebook}.
  * */
 
 
@@ -67,8 +73,16 @@ export default class Notebook {
 		for (let i = 0; i < this.chunks.length; i++) {
 			const ch = this.chunks[i];
 			
+			const handler = this.handlers.find(c => c.constructor === ch.constructor);
+			if (!handler) throw new TypeError(`Unknown handler type \"${ch.constructor.name}\"`)
 			
-			aNotebookData.chunks.push(await ch.save());
+			/** @type {NotebookChunkData} */
+			let aNotebookChunkData = {
+				name: handler.name,
+				data: await ch.save(),
+			}
+			
+			aNotebookData.chunks.push(aNotebookChunkData);
 		}
 		
 		return aNotebookData;
@@ -85,10 +99,11 @@ export default class Notebook {
 		
 		for (let i = 0; i < aNotebookData.chunks.length; i++) {
 			
-			const aChunkData = aNotebookData.chunks[i];
+			/** @type {NotebookChunkData} */
+			const aNotebookChunkData = aNotebookData.chunks[i];
 			
-			const handler = this.handlers.find(c => c.name === aChunkData.name);
-			if (!handler) throw new TypeError(`Unknown type \"${aChunkData.type}\"`)
+			const handler = this.handlers.find(c => c.name === aNotebookChunkData.name);
+			if (!handler) throw new TypeError(`Unknown handler type \"${aNotebookChunkData.name}\"`)
 			
 			/** @type {typeof LTNChunk} */
 			const handlerClass = handler.constructor;
@@ -97,7 +112,7 @@ export default class Notebook {
 			const aChunk = new handlerClass();
 			this.chunks.push(aChunk);
 			
-			await aChunk.init(aChunkData);
+			await aChunk.init(aNotebookChunkData.data);
 		}
 	}
 }

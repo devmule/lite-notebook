@@ -4,6 +4,8 @@ import LTNChunkLibJS from "../notebook/chunks/LTNChunkLibJS.js";
 import LTNChunkMarkdown from "../notebook/chunks/LTNChunkMarkdown.js";
 
 /**
+ * Данный словарь определяет имена/идентификаторы для обработчиков.
+ * Этим именем будет определяться тип данных {@link NotebookChunkData}.
  * @type {Object<string, typeof LTNChunk>}
  * */
 const chunks = {
