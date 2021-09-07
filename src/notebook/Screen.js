@@ -1,7 +1,7 @@
 import * as elements from "./elements.js";
-import chunks from "../notebook/chunks.js";
+import chunks from "./chunks.js";
 
-import Notebook from "../notebook/Notebook.js";
+import Notebook from "./Notebook.js";
 
 export default class Screen {
 	

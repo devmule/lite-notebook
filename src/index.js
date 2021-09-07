@@ -1,6 +1,6 @@
-import './style/main.css';
+import './notebook/style/main.css';
 
-import Screen from "./screen/Screen.js";
+import Screen from "./notebook/Screen.js";
 
 const screen = new Screen(true);
 
