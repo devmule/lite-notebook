@@ -1,7 +1,7 @@
 import LTNChunkCSS from "../notebook/chunks/LTNChunkCSS.js";
 import LTNChunkExecJS from "../notebook/chunks/LTNChunkExecJS.js";
 import LTNChunkLibJS from "../notebook/chunks/LTNChunkLibJS.js";
-import LTNChunkMarkdown from "./chunks/LTNChunkMarkdown/LTNChunkMarkdown.js";
+import LTNChunkText from "./chunks/LTNChunkText/LTNChunkText.js";
 
 /**
  * Данный словарь определяет имена/идентификаторы для обработчиков.
@@ -12,7 +12,7 @@ const chunks = {
 	CSS: LTNChunkCSS,
 	JS: LTNChunkExecJS,
 	JSLib: LTNChunkLibJS,
-	MD: LTNChunkMarkdown
+	TEXT: LTNChunkText
 };
 
 export default chunks;

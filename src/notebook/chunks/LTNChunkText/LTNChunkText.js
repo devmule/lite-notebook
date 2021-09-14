@@ -7,7 +7,7 @@ import {exampleSetup} from "prosemirror-example-setup"
 
 import LTNChunk from "../LTNChunk";
 
-export default class LTNChunkMarkdown extends LTNChunk {
+export default class LTNChunkText extends LTNChunk {
 	
 	constructor() {
 		super();
@@ -16,7 +16,7 @@ export default class LTNChunkMarkdown extends LTNChunk {
 	}
 	
 	static get title() {
-		return "Markdown";
+		return "Text";
 	}
 	
 	async renderEditor() {
