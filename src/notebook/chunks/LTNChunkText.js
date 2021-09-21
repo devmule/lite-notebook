@@ -1,11 +1,11 @@
-import "./editor.css";
+import "./prosemirror.css";
 import {EditorState} from "prosemirror-state"
 import {EditorView} from "prosemirror-view"
 import {schema} from "prosemirror-schema-basic"
 import {exampleSetup} from "prosemirror-example-setup"
 
 
-import LTNChunk from "../LTNChunk";
+import LTNChunk from "./LTNChunk";
 
 export default class LTNChunkText extends LTNChunk {
 	
