@@ -1,6 +1,5 @@
 import LTNChunkCSS from "./chunks/LTNChunkCSS.js";
 import LTNChunkExecJS from "./chunks/LTNChunkExecJS.js";
-import LTNChunkLibJS from "./chunks/LTNChunkLibJS.js";
 import LTNChunkText from "./chunks/LTNChunkText.js";
 import LTNChunkHTML from "./chunks/LTNChunkHTML";
 
@@ -13,6 +12,5 @@ export default {
 	CSS: LTNChunkCSS,
 	HTML: LTNChunkHTML,
 	JS: LTNChunkExecJS,
-	JSLib: LTNChunkLibJS,
 	TEXT: LTNChunkText
 };
