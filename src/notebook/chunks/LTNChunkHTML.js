@@ -1,49 +1,79 @@
+import {EditorView} from "@codemirror/next/view";
+import {EditorState} from "@codemirror/next/state";
+import {html, htmlSyntax} from "@codemirror/next/lang-html";
+import {lineNumbers} from "@codemirror/next/gutter";
+import {specialChars} from "@codemirror/next/special-chars";
+import {history, redo, redoSelection, undo, undoSelection} from "@codemirror/next/history";
+import {foldCode, foldGutter, unfoldCode} from "@codemirror/next/fold";
+import {defaultHighlighter} from "@codemirror/next/highlight";
+import {keymap} from "@codemirror/next/keymap";
+import {baseKeymap, indentSelection} from "@codemirror/next/commands";
+import {linter, openLintPanel} from "@codemirror/next/lint";
+import {esLint} from "@codemirror/next/lang-javascript";
+import Linter from "eslint4b-prebuilt";
+
 import LTNChunk from "./LTNChunk.js";
 
-/**
- * @typedef {LTNChunkData} LTNChunkHTMLData
- * @property {string} text
- * */
-
+const IS_MAC = /Mac/.test(navigator.platform);
 
 export default class LTNChunkHTML extends LTNChunk {
-	// todo use https://codemirror.net/6/
 	
 	constructor() {
 		super();
 		
-		/**
-		 * @type {string}
-		 * @private
-		 * */
-		this.text = '';
+		/** @type {EditorView} */
+		this.view = null;
+		
+		/** @type {string} */
+		this.doc = '';
 	}
 	
 	static get title() {
 		return "HTML";
 	}
 	
-	/**
-	 * @param {LTNChunkHTMLData} data
-	 * */
 	async init(data) {
+		this.doc = data.doc;
 	}
 	
-	/**
-	 * @return {Promise.<HTMLInputElement>}
-	 * */
 	async renderEditor() {
+		this.view = new EditorView({
+			state: EditorState.create({
+				doc: this.doc,
+				extensions: [
+					lineNumbers(),
+					specialChars(),
+					history(),
+					foldGutter(),
+					html(),
+					linter(esLint(new Linter())),
+					defaultHighlighter,
+					keymap({
+						"Mod-z": undo,
+						"Mod-Shift-z": redo,
+						"Mod-u": view => undoSelection(view) || true,
+						[IS_MAC ? "Mod-Shift-u" : "Alt-u"]: redoSelection,
+						"Ctrl-y": IS_MAC ? undefined : redo,
+						"Shift-Tab": indentSelection,
+						"Mod-Alt-[": foldCode,
+						"Mod-Alt-]": unfoldCode,
+						"Shift-Mod-m": openLintPanel
+					}),
+					keymap(baseKeymap)
+				]
+			})
+		});
+		
+		return this.view.dom;
 	}
 	
-	/**
-	 * @return {Promise.<undefined>}
-	 * */
 	async renderReport() {
+		let div = document.createElement('div');
+		div.innerHTML = this.doc;
+		return div;
 	}
 	
-	/**
-	 * @return {Promise.<LTNChunkHTMLData>}
-	 * */
 	async save() {
+		return {doc: this.view.state.toJSON().doc};
 	}
 }
