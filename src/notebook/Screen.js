@@ -1,4 +1,5 @@
 import * as elements from "./elements.js";
+import localizations from "./localizations.js";
 import chunks from "./chunks.js";
 
 import Notebook from "./Notebook.js";
@@ -124,9 +125,9 @@ export default class Screen {
 	 * */
 	onBlockOptionsClick(chunk) {
 		this.createOptions(chunk.block,
-			"Настройки блока",
+			localizations.option_block_settings,
 			[
-				{name: "удалить", func: this.deleteChunk.bind(this, chunk)}
+				{name: localizations.option_delete_block, func: this.deleteChunk.bind(this, chunk)}
 			]
 		);
 	}
@@ -143,7 +144,7 @@ export default class Screen {
 			options.push({name: handler.constructor.title, func: this.createChunk.bind(this, handler.constructor)});
 		}
 		
-		this.createOptions(this.plusBlock, "Создать блок", options);
+		this.createOptions(this.plusBlock, localizations.option_create_block, options);
 	}
 	
 	/**
