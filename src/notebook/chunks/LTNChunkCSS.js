@@ -17,8 +17,6 @@ export default class LTNChunkCSS extends LTNChunk {
 	constructor() {
 		super();
 		
-		console.log(cssSyntax)
-		
 		/** @type {EditorView} */
 		this.view = null;
 		
