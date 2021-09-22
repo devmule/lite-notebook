@@ -1,54 +1,65 @@
+import {EditorView} from "@codemirror/next/view";
+import {EditorState} from "@codemirror/next/state";
+import {lineNumbers} from "@codemirror/next/gutter";
+import {specialChars} from "@codemirror/next/special-chars";
+import {history, redo, redoSelection, undo, undoSelection} from "@codemirror/next/history";
+import {foldCode, foldGutter, unfoldCode} from "@codemirror/next/fold";
+import {css, cssSyntax} from "@codemirror/next/lang-css";
+import {defaultHighlighter} from "@codemirror/next/highlight";
+import {keymap} from "@codemirror/next/keymap";
+import {baseKeymap, indentSelection} from "@codemirror/next/commands";
+
 import LTNChunk from "./LTNChunk.js";
 
-/**
- * @typedef {LTNChunkData} LTNChunkCSSData
- * @property {string} text
- * */
-
+const IS_MAC = /Mac/.test(navigator.platform);
 
 export default class LTNChunkCSS extends LTNChunk {
-	// todo use https://codemirror.net/6/
-	
 	constructor() {
 		super();
 		
-		/**
-		 * @type {string}
-		 * @private
-		 * */
-		this.text = '';
+		console.log(cssSyntax)
 		
-		this.CSSEditor = null;
+		/** @type {EditorView} */
+		this.view = null;
+		
+		/** @type {string} */
+		this.text = '';
 	}
 	
 	static get title() {
 		return "CSS";
 	}
 	
-	/**
-	 * @param {LTNChunkCSSData} data
-	 * */
 	async init(data) {
 		this.text = data.text;
 	}
 	
-	/**
-	 * @return {Promise.<HTMLInputElement>}
-	 * */
 	async renderEditor() {
+		this.view = new EditorView({
+			state: EditorState.create({
+				doc: this.text,
+				extensions: [
+					lineNumbers(), specialChars(),
+					history(), foldGutter(), css(),
+					defaultHighlighter,
+					keymap({
+						"Mod-z": undo,
+						"Mod-Shift-z": redo,
+						"Mod-u": view => undoSelection(view) || true,
+						[IS_MAC ? "Mod-Shift-u" : "Alt-u"]: redoSelection,
+						"Ctrl-y": IS_MAC ? undefined : redo,
+						"Shift-Tab": indentSelection,
+						"Mod-Alt-[": foldCode,
+						"Mod-Alt-]": unfoldCode,
+					}),
+					keymap(baseKeymap)
+				]
+			})
+		});
 		
-		if (this.CSSEditor != null) throw new Error('Something went wrong! Can not render twice!');
-		
-		this.CSSEditor = document.createElement('input');
-		this.CSSEditor.addEventListener('change', () => this.text = this.CSSEditor.value);
-		
-		return this.CSSEditor;
-		
+		return this.view.dom;
 	}
 	
-	/**
-	 * @return {Promise.<undefined>}
-	 * */
 	async renderReport() {
 		
 		let head = document.head || document.getElementsByTagName('head')[0];
@@ -66,10 +77,7 @@ export default class LTNChunkCSS extends LTNChunk {
 		
 	}
 	
-	/**
-	 * @return {Promise.<LTNChunkCSSData>}
-	 * */
 	async save() {
-		return {text: this.text};
+		return {text: this.view.state.toJSON().doc};
 	}
 }
