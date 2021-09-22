@@ -8,9 +8,6 @@ import {foldCode, foldGutter, unfoldCode} from "@codemirror/next/fold";
 import {defaultHighlighter} from "@codemirror/next/highlight";
 import {keymap} from "@codemirror/next/keymap";
 import {baseKeymap, indentSelection} from "@codemirror/next/commands";
-import {linter, openLintPanel} from "@codemirror/next/lint";
-import {esLint} from "@codemirror/next/lang-javascript";
-import Linter from "eslint4b-prebuilt";
 
 import LTNChunk from "./LTNChunk.js";
 
@@ -46,7 +43,6 @@ export default class LTNChunkHTML extends LTNChunk {
 					history(),
 					foldGutter(),
 					html(),
-					linter(esLint(new Linter())),
 					defaultHighlighter,
 					keymap({
 						"Mod-z": undo,
@@ -57,7 +53,6 @@ export default class LTNChunkHTML extends LTNChunk {
 						"Shift-Tab": indentSelection,
 						"Mod-Alt-[": foldCode,
 						"Mod-Alt-]": unfoldCode,
-						"Shift-Mod-m": openLintPanel
 					}),
 					keymap(baseKeymap)
 				]
