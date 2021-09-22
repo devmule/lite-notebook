@@ -9,12 +9,10 @@ import LTNChunkHTML from "./chunks/LTNChunkHTML";
  * Этим именем будет определяться тип данных {@link NotebookChunkData}.
  * @type {Object<string, typeof LTNChunk>}
  * */
-const chunks = {
+export default {
 	CSS: LTNChunkCSS,
 	HTML: LTNChunkHTML,
 	JS: LTNChunkExecJS,
 	JSLib: LTNChunkLibJS,
 	TEXT: LTNChunkText
 };
-
-export default chunks;

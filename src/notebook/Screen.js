@@ -1,7 +1,6 @@
 import * as elements from "./elements.js";
 import localizations from "./localizations.js";
 import chunks from "./chunks.js";
-
 import Notebook from "./Notebook.js";
 
 export default class Screen {
