@@ -36,7 +36,7 @@ export default class LTNChunkExecJS extends LTNChunk {
 	}
 	
 	async init(data) {
-		this.code = data.state;
+		this.code = data.code;
 	}
 	
 	static get title() {
@@ -111,6 +111,6 @@ export default class LTNChunkExecJS extends LTNChunk {
 	}
 	
 	async save() {
-		return {state: this.view.state.toJSON()};
+		return {code: this.view.state.toJSON().doc};
 	}
 }
