@@ -11,8 +11,12 @@ export default class LTNChunkText extends LTNChunk {
 	
 	constructor() {
 		super();
+		
 		/** @type {EditorView} */
 		this.view = null;
+		
+		/** @type {any} */
+		this.doc = '';
 	}
 	
 	static get title() {
@@ -23,7 +27,7 @@ export default class LTNChunkText extends LTNChunk {
 		let div = document.createElement('div');
 		
 		let state = EditorState.create({
-			schema: schema, doc: '',
+			schema: schema, doc: this.doc,
 			plugins: exampleSetup({schema: schema}) // подключить редактор
 		});
 		this.view = new EditorView(div, {state: state, contentEditable: true});
@@ -34,17 +38,17 @@ export default class LTNChunkText extends LTNChunk {
 	async renderReport() {
 		let div = document.createElement('div');
 		
-		let state = EditorState.create({schema: schema, doc: ''});
+		let state = EditorState.create({schema: schema, doc: this.doc});
 		this.view = new EditorView(div, {state: state, contentEditable: false});
 		
 		return div;
 	}
 	
 	async init(data) {
-		this.view.state.fromJSON(data.state);
+		this.doc = data.doc;
 	}
 	
 	async save() {
-		return {state: this.view.state.toJSON()};
+		return {doc: this.view.state.toJSON().doc};
 	}
 }
