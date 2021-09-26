@@ -111,7 +111,7 @@ export default class Screen {
 	 * @param {boolean} val
 	 * */
 	set loading(val) {
-	
+		// todo loading element
 	}
 	
 	
