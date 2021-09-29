@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
 	entry: {
-		index: path.resolve(__dirname, './src/index.js'),
+		index: path.resolve(__dirname, './src/application/index.js'),
 		frame: path.resolve(__dirname, './src/notebook/index.js'),
 	},
 	output: {
@@ -23,13 +23,13 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			chunks: ['index'],
 			favicon: './src/favicon.ico',
-			template: './src/index.html',
 			filename: 'index.html',
+			title: 'lite-notebook'
 		}),
 		new HtmlWebpackPlugin({
 			chunks: ['frame'],
-			template: './src/notebook/index.html',
 			filename: 'frame.html',
+			title: 'lite-frame'
 		})
 	],
 };
