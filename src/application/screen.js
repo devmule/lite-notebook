@@ -7,12 +7,16 @@ export class Screen {
 		this.element = document.createElement('div');
 		this.element.innerHTML = screenHtml;
 		
+		/** @private
+		 * @type {HTMLDivElement} */
+		this._screensContainer = this.element.querySelector('.screen');
+		
 		/** @type {HTMLIFrameElement} */
-		this.editor = this.element.querySelector('#screen-editor');
+		this.editor = this.element.querySelector('#screen-editor-frame');
 		this.editor.src = './frame.html?isEditor=1';
 		
 		/** @type {HTMLIFrameElement} */
-		this.report = this.element.querySelector('#screen-report');
+		this.report = this.element.querySelector('#screen-report-frame');
 		this.report.src = './frame.html?isEditor=0';
 	}
 	
@@ -31,12 +35,20 @@ export class Screen {
 	
 	/**
 	 * @param {HTMLIFrameElement} notebookScreen
-	 * @param {any} aNotebookData
+	 * @param {Promise.<any>} aNotebookData
 	 * */
 	async renderNotebookOnScreen(notebookScreen, aNotebookData) {
 		await new Promise(resolve => {
 			notebookScreen.contentWindow.location.reload();
 			notebookScreen.onload = resolve;
 		});
+	}
+	
+	showEditorScreen() {
+		this._screensContainer.classList.remove('report');
+	}
+	
+	showReportScreen() {
+		this._screensContainer.classList.add('report');
 	}
 }

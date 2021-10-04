@@ -1,31 +1,35 @@
-#screen {
+.screen {
+    padding: 0;
+    margin: 0;
+    position: absolute;
     overflow: hidden;
-    width: 100%;
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
     height: 100%;
 }
 
 #screen-editor, #screen-report {
+    top: 0;
     width: var(--screen-notebook-width);
     height: var(--screen-notebook-height);
-    border: none;
     position: absolute;
     transition: transform 0.5s;
 }
 
 /* ========================================================== */
 /*     приколы для показа    */
-#screen > #screen-editor {
+.screen > #screen-editor {
     left: 0;
 }
 
-#screen > #screen-report {
+.screen > #screen-report {
     left: var(--screen-notebook-width);
 }
 
-#screen.report > #screen-editor {
+.screen.report > #screen-editor {
     left: calc(-1 * var(--screen-notebook-width));
 }
 
-#screen.report > #screen-report {
+.screen.report > #screen-report {
     left: 0;
 }

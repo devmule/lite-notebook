@@ -3,4 +3,10 @@
     /* размеры */
     --screen-notebook-height: 100%;
     --screen-notebook-width: 100%;
+    --offset-default: 14px;
+
+    --sidebar-width: 240px;
+
+    /* цвета */
+    --sidebar-background-color: #edece9; /* он должен быть непрозрачный ?? */
 }

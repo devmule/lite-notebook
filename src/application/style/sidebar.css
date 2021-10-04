@@ -1,0 +1,13 @@
+.ltn-sidebar {
+
+    left: 0;
+    top: 0;
+
+    width: var(--sidebar-width);
+    height: 100%;
+
+    position: absolute;
+    z-index: 100;
+
+    background-color: var(--sidebar-background-color);
+}

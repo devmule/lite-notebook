@@ -1,5 +1,5 @@
 import * as elements from "./elements.js";
-import localizations from "./localizations.js";
+import localizations from "../localizations.json";
 import chunks from "./chunks.js";
 import Notebook from "./notebook.js";
 

@@ -1,7 +1,10 @@
 @import "screen.css";
+@import "sidebar.css";
+@import "buttons.css";
+@import "utils.css";
 @import "variables.css";
 
-html, body {
+html, body, .main-outer {
     margin: 0;
     padding: 0;
     width: 100vw;
