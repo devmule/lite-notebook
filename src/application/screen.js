@@ -11,6 +11,17 @@ export class Screen {
 		 * @type {HTMLDivElement} */
 		this._screensContainer = this.element.querySelector('.screen');
 		
+		/** @private
+		 * @type {HTMLDivElement} */
+		this._buttonSidebarToggle = this.element.querySelector('#btn-sidebar-toggle');
+		this._buttonSidebarToggle.addEventListener('click', () => {
+			let outer = this.element.children[0]
+			let sidebar_on_class = 'sidebar-on';
+			let wasOpened = outer.classList.contains(sidebar_on_class);
+			if (wasOpened) outer.classList.remove(sidebar_on_class);
+			else outer.classList.add(sidebar_on_class);
+		});
+		
 		/** @type {HTMLIFrameElement} */
 		this.editor = this.element.querySelector('#screen-editor-frame');
 		this.editor.src = './frame.html?isEditor=1';
