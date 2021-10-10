@@ -39,12 +39,14 @@ export class AppScreen extends AppMessenger {
 		let go_render = this.element.querySelector('#go-render');
 		go_render.addEventListener('click', async () => {
 			await this.reloadReport();
+			this.showReportScreen();
 		});
 		
 		let log_data = this.element.querySelector('#log-notebook-data');
 		log_data.addEventListener('click', async () => {
 			let aNotebookData = await this.getNotebookFromScreen('editor');
-			console.log(aNotebookData)
+			console.log(aNotebookData);
+			this.showEditorScreen();
 		});
 	}
 	

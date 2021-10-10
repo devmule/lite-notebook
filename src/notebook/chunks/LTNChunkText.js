@@ -26,8 +26,10 @@ export default class LTNChunkText extends LTNChunk {
 	async renderEditor() {
 		let div = document.createElement('div');
 		
+		let doc = this.doc instanceof Object ? schema.nodeFromJSON(this.doc) : '';
+		
 		let state = EditorState.create({
-			schema: schema, doc: this.doc,
+			schema: schema, doc: doc,
 			plugins: exampleSetup({schema: schema}) // подключить редактор
 		});
 		this.view = new EditorView(div, {state: state, contentEditable: true});
@@ -38,7 +40,9 @@ export default class LTNChunkText extends LTNChunk {
 	async renderReport() {
 		let div = document.createElement('div');
 		
-		let state = EditorState.create({schema: schema, doc: this.doc});
+		let doc = this.doc instanceof Object ? schema.nodeFromJSON(this.doc) : '';
+		
+		let state = EditorState.create({schema: schema, doc: doc});
 		this.view = new EditorView(div, {state: state, contentEditable: false});
 		
 		return div;
