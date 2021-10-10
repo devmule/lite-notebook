@@ -2,15 +2,18 @@ import * as elements from "./elements.js";
 import localizations from "../localizations.json";
 import chunks from "./chunks.js";
 import Notebook from "./notebook.js";
+import NotebookMessenger from "./messenger";
+import EnumsMsg from "../utils/EnumsMsg";
 
-export default class Screen {
+export default class NotebookScreen extends NotebookMessenger {
 	
 	/**
 	 * @constructor
 	 * @param {boolean} isEditor
-	 * @param {?NotebookData} [data=undefined]
+	 * @param {string} senderName
 	 * */
-	constructor(isEditor, data) {
+	constructor(isEditor, senderName) {
+		super(senderName)
 		
 		this.element = elements.createScreen();
 		
@@ -32,39 +35,45 @@ export default class Screen {
 		this.plusBlock = undefined;
 		
 		
-		// Сейчас нужно вызвать ряд асинхронных функций для инициализации ноутбка и экрана.
-		// Конструктор не может быть асинхронным и не может вызвать асинсхронный метод,
-		// чтобы это поправить создаём и вызываем анонимную асинхронную функци.
-		(async () => {
-			
-			this.loading = true;
-			
-			// инициализация чанков, перевод из JSON вида в список обработчиков
-			if (data != null) await this.notebook.init(data);
-			
-			// отрисовать на экране инициализованные чанки
-			for (let i = 0; i < this.notebook.chunks.length; i++) {
-				const chunk = this.notebook.chunks[i];
-				await this.renderChunk(chunk);
-			}
-			
-			// Если происходит отрисовка в режиме редактора,
-			// то нужно добавить элемент создания.
-			if (this.isEditor) {
-				this.plusBlock = elements.createPlusBlock();
-				this.plusBlock.addEventListener('plus', this.onPlusClick.bind(this));
-				this.element.appendChild(this.plusBlock);
-			}
-			
-			this.updateBlocksPositions();
-			
-			this.loading = false;
-			
-		})();
+		if (this.isEditor) {
+			this.plusBlock = elements.createPlusBlock();
+			this.plusBlock.addEventListener('plus', this.onPlusClick.bind(this));
+			this.element.appendChild(this.plusBlock);
+		}
 		
+		
+		this.on(EnumsMsg.INIT_NOTEBOOK, this.init.bind(this));
+		this.on(EnumsMsg.GET_NOTEBOOK, this.getNotebook.bind(this));
 		
 	}
 	
+	/**
+	 * @param {IMessage} message
+	 * */
+	async init(message) {
+		let data = message.data;
+		
+		// инициализация чанков, перевод из JSON вида в список обработчиков
+		await this.notebook.init(data);
+		
+		// отрисовать на экране инициализованные чанки
+		for (let i = 0; i < this.notebook.chunks.length; i++) {
+			const chunk = this.notebook.chunks[i];
+			await this.renderChunk(chunk);
+		}
+		
+		this.updateBlocksPositions();
+		
+		this.response(message);
+	}
+	
+	/**
+	 * @param {IMessage} message
+	 * */
+	async getNotebook(message) {
+		let notebook = await this.notebook.save();
+		this.response(message, notebook);
+	}
 	
 	/**
 	 * @param {LTNChunk} chunk
@@ -104,14 +113,6 @@ export default class Screen {
 			this.plusBlock.remove();
 			this.element.appendChild(this.plusBlock);
 		}
-	}
-	
-	
-	/**
-	 * @param {boolean} val
-	 * */
-	set loading(val) {
-		// todo loading element
 	}
 	
 	
@@ -208,8 +209,6 @@ export default class Screen {
 		
 		(async () => {
 			
-			this.loading = true;
-			
 			const chunk = new chunkConstructor();
 			chunk.userTitle = chunkConstructor.title;
 			this.notebook.chunks.push(chunk);
@@ -217,8 +216,6 @@ export default class Screen {
 			await this.renderChunk(chunk);
 			
 			this.updateBlocksPositions();
-			
-			this.loading = false;
 			
 		})();
 		

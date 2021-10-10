@@ -1,7 +1,10 @@
 import screenHtml from "./screen.html";
+import AppMessenger from "./messenger";
+import EnumsMsg from '../utils/EnumsMsg';
 
-export class Screen {
+export class AppScreen extends AppMessenger {
 	constructor() {
+		super();
 		
 		/** @type {HTMLDivElement} */
 		this.element = document.createElement('div');
@@ -24,35 +27,56 @@ export class Screen {
 		
 		/** @type {HTMLIFrameElement} */
 		this.editor = this.element.querySelector('#screen-editor-frame');
-		this.editor.src = './frame.html?isEditor=1';
+		this.editor.src = './frame.html?isEditor=1&senderName=editor';
+		this.addSender('editor', this.editor);
 		
 		/** @type {HTMLIFrameElement} */
 		this.report = this.element.querySelector('#screen-report-frame');
-		this.report.src = './frame.html?isEditor=0';
+		this.report.src = './frame.html?isEditor=0&senderName=report';
+		this.addSender('report', this.report);
+		
+		
+		let go_render = this.element.querySelector('#go-render');
+		go_render.addEventListener('click', async () => {
+			await this.reloadReport();
+		});
+		
+		let log_data = this.element.querySelector('#log-notebook-data');
+		log_data.addEventListener('click', async () => {
+			let aNotebookData = await this.getNotebookFromScreen('editor');
+			console.log(aNotebookData)
+		});
 	}
 	
 	async reloadReport() {
-		let aNotebookData = await this.getNotebookFromScreen(this.editor);
-		await this.renderNotebookOnScreen(this.report, aNotebookData);
+		let aNotebookData = await this.getNotebookFromScreen('editor');
+		await this.initNotebookOnScreen('report', aNotebookData);
 	}
 	
 	/**
-	 * @param {HTMLIFrameElement} notebookScreen
+	 * @param {string} name
+	 * @return {Promise.<NotebookData>}
+	 * */
+	async getNotebookFromScreen(name) {
+		return /** @type {NotebookData} */ await this.request(name, EnumsMsg.GET_NOTEBOOK);
+	}
+	
+	/**
+	 * @param {string} name
+	 * @param {NotebookData} aNotebookData
 	 * @return {Promise.<any>}
 	 * */
-	async getNotebookFromScreen(notebookScreen) {
-	
-	}
-	
-	/**
-	 * @param {HTMLIFrameElement} notebookScreen
-	 * @param {Promise.<any>} aNotebookData
-	 * */
-	async renderNotebookOnScreen(notebookScreen, aNotebookData) {
+	async initNotebookOnScreen(name, aNotebookData) {
+		
+		if (!this.senders.has(name)) throw new Error(`Name \"${name}\" not exist!`);
+		let notebookScreen = this.senders.get(name);
+		
 		await new Promise(resolve => {
 			notebookScreen.contentWindow.location.reload();
 			notebookScreen.onload = resolve;
 		});
+		
+		await this.request(name, EnumsMsg.INIT_NOTEBOOK, aNotebookData);
 	}
 	
 	showEditorScreen() {

@@ -1,0 +1,6 @@
+export default {
+	
+	GET_NOTEBOOK: 'GET_NOTEBOOK',
+	INIT_NOTEBOOK: 'INIT_NOTEBOOK',
+	
+};

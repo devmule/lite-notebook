@@ -1,6 +1,6 @@
 import './style/main.css';
-import {Screen} from "./screen";
+import {AppScreen} from "./screen";
 
-const screen = new Screen();
+const screen = new AppScreen();
 
 document.body.appendChild(screen.element);
