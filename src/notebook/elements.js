@@ -36,10 +36,11 @@ export function createEmptyBlock() {
 /**
  * @param {HTMLElement} content
  * @param {boolean} isEditor
- * @param {string} title
+ * @param {LTNChunk} chunk
  * @return {HTMLDivElement}
  * */
-export function createContentBlock(content, isEditor, title) {
+export function createContentBlock(content, isEditor, chunk) {
+	
 	
 	let elemBlock = createEmptyBlock();
 	
@@ -58,15 +59,24 @@ export function createContentBlock(content, isEditor, title) {
 		
 		let elemBtnHide = document.createElement('div');
 		elemBtnHide.classList.add(CLASS_MINI_BTN, CLASS_IMG_HIDE);
+		if (chunk.collapsed) {
+			elemBtnHide.classList.add(CLASS_BLOCK_HEADER_HIDED);
+			elemContent.classList.add(CLASS_BLOCK_HEADER_HIDED);
+		} else {
+			elemBtnHide.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+			elemContent.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+		}
 		elemBtnHide.addEventListener('click', () => {
 			
-			if (elemBtnHide.classList.contains(CLASS_BLOCK_HEADER_HIDED)) {
+			if (chunk.collapsed) {
 				elemBtnHide.classList.remove(CLASS_BLOCK_HEADER_HIDED);
 				elemContent.classList.remove(CLASS_BLOCK_HEADER_HIDED);
+				chunk.collapsed = false;
 				
 			} else {
 				elemBtnHide.classList.add(CLASS_BLOCK_HEADER_HIDED);
 				elemContent.classList.add(CLASS_BLOCK_HEADER_HIDED);
+				chunk.collapsed = true;
 			}
 		});
 		
@@ -75,7 +85,7 @@ export function createContentBlock(content, isEditor, title) {
 		elemTitle.rows = 1;
 		elemTitle.cols = 24;
 		elemTitle.charswidth = CHAR_LEN;
-		elemTitle.value = title.substr(0, CHAR_LEN);
+		elemTitle.value = chunk.userTitle.substr(0, CHAR_LEN);
 		let prevText = elemTitle.value;
 		let onTitleChange = () => {
 			let text = elemTitle.value.replace(/(\r\n|\n|\r)/gm, "");

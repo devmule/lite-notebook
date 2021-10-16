@@ -79,7 +79,7 @@ export class AppScreen extends AppMessenger {
 		/** @type {NotebookData}  */
 		const aNotebookData = await this.getNotebookFromScreen('editor');
 		
-		const filename = 'notebook' + FILE_EXT;  // todo aNotebookData.name;
+		const filename = aNotebookData.name + FILE_EXT;
 		const data = JSON.stringify(aNotebookData);  // todo zlib
 		
 		const blob = new Blob([data], {type: 'octet/stream'});

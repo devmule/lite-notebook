@@ -25,6 +25,11 @@ export default class LTNChunk {
 		 * @type {string};
 		 * */
 		this.userTitle = 'default';
+		
+		/**
+		 * @type {boolean}
+		 * */
+		this.collapsed = false;
 	}
 	
 	/**

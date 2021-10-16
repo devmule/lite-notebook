@@ -7,6 +7,8 @@
 
   "option_create_block": "Создать блок",
   "option_delete_block": "Удалить блок",
+  "option_move_block_up": "Переместить вверх",
+  "option_move_block_down": "Переместить вниз",
   "option_block_settings": "Настройки блока"
 
 

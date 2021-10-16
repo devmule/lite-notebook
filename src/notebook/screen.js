@@ -95,7 +95,7 @@ export default class NotebookScreen extends NotebookMessenger {
 		
 		if (content instanceof HTMLElement) {
 			
-			chunk.block = elements.createContentBlock(content, this.isEditor, chunk.userTitle);
+			chunk.block = elements.createContentBlock(content, this.isEditor, chunk);
 			chunk.block.addEventListener('options', this.onBlockOptionsClick.bind(this, chunk));
 			chunk.block.addEventListener('title', (e) => chunk.userTitle = e.title);
 			
@@ -109,6 +109,16 @@ export default class NotebookScreen extends NotebookMessenger {
 	 * @void
 	 * */
 	updateBlocksPositions() {
+		
+		for (let i = 0; i < this.notebook.chunks.length; i++) {
+			let chunk = this.notebook.chunks[i];
+			if (chunk.block instanceof HTMLElement) {
+				chunk.block.remove();
+				this.element.appendChild(chunk.block);
+			}
+		}
+		
+		
 		if (this.plusBlock instanceof HTMLElement) {
 			this.plusBlock.remove();
 			this.element.appendChild(this.plusBlock);
@@ -127,7 +137,9 @@ export default class NotebookScreen extends NotebookMessenger {
 		this.createOptions(chunk.block,
 			localizations.option_block_settings,
 			[
-				{name: localizations.option_delete_block, func: this.deleteChunk.bind(this, chunk)}
+				{name: localizations.option_delete_block, func: this.deleteChunk.bind(this, chunk)},
+				{name: localizations.option_move_block_up, func: this.moveChunk.bind(this, chunk, -1)},
+				{name: localizations.option_move_block_down, func: this.moveChunk.bind(this, chunk, +1)},
 			]
 		);
 	}
@@ -195,6 +207,26 @@ export default class NotebookScreen extends NotebookMessenger {
 		
 		this.notebook.chunks.splice(index, 1);
 		chunk.block.remove();
+		
+		this.updateBlocksPositions();
+		
+	}
+	
+	
+	/**
+	 * */
+	moveChunk(chunk, shift) {
+		
+		this.removeOptions();
+		
+		let oldIndex = this.notebook.chunks.indexOf(chunk);
+		
+		if (oldIndex < 0) throw new Error('Given chunk is not defined in a notebook!');
+		if (!(chunk.block instanceof HTMLElement)) throw new Error('Block is not an instance of an HTMLElement!');
+		
+		let newIndex = Math.max(0, Math.min(this.notebook.chunks.length, oldIndex + shift));
+		
+		this.notebook.chunks.splice(newIndex, 0, this.notebook.chunks.splice(oldIndex, 1)[0]);
 		
 		this.updateBlocksPositions();
 		
