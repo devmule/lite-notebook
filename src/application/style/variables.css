@@ -6,11 +6,13 @@
     --offset-default: 14px;
 
     --sidebar-toggle-button-size: 24px;
+    --sidebar-option-button-size: 18px;
 
     --sidebar-width: 240px;
 
     /* цвета */
     --sidebar-background-color: #f1f1f1; /* он должен быть непрозрачный ?? */
+    --hover-color: rgba(93, 109, 99, 0.17);
 
 
     /* иконки */

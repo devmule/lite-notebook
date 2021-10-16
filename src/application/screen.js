@@ -2,6 +2,10 @@ import screenHtml from "./screen.html";
 import AppMessenger from "./messenger";
 import EnumsMsg from '../utils/EnumsMsg';
 
+
+const FILE_EXT = ".ltn";
+
+
 export class AppScreen extends AppMessenger {
 	constructor() {
 		super();
@@ -36,18 +40,72 @@ export class AppScreen extends AppMessenger {
 		this.addSender('report', this.report);
 		
 		
-		let go_render = this.element.querySelector('#go-render');
-		go_render.addEventListener('click', async () => {
-			await this.reloadReport();
-			this.showReportScreen();
-		});
+		let go_editor = this.element.querySelector('#go-editor');
+		go_editor.addEventListener('click', this.showEditorScreen.bind(this));
 		
-		let log_data = this.element.querySelector('#log-notebook-data');
-		log_data.addEventListener('click', async () => {
-			let aNotebookData = await this.getNotebookFromScreen('editor');
-			console.log(aNotebookData);
-			this.showEditorScreen();
-		});
+		let go_report = this.element.querySelector('#go-report');
+		go_report.addEventListener('click', this.showReportScreen.bind(this));
+		
+		let do_render = this.element.querySelector('#do-render');
+		do_render.addEventListener('click', this.reloadReport.bind(this));
+		
+		let load_notebook = this.element.querySelector('#load-notebook');
+		load_notebook.addEventListener('click', this.loadNotebook.bind(this));
+		
+		let save_notebook = this.element.querySelector('#save-notebook');
+		save_notebook.addEventListener('click', this.saveNotebook.bind(this));
+	}
+	
+	async loadNotebook() {
+		
+		const input = document.createElement('input');
+		input.accept = FILE_EXT;
+		input.type = 'file';
+		input.multiple = false;
+		
+		document.body.appendChild(input);
+		
+		try {
+			input.click();
+			input.onchange = (e) => {
+				let file = input.files[0];
+				
+				if (!file) return;
+				
+				let fileReader = new FileReader();
+				fileReader.onload = (e) => {
+					let /**@type {string} */ res = fileReader.result
+					let /**@type {NotebookData}  */ aNotebookData = JSON.parse(res);
+					this.initNotebookOnScreen('editor', aNotebookData);
+					
+				};
+				
+				fileReader.readAsText(file);
+				
+			}
+		} catch (e) {
+			console.error(e);
+		}
+		
+		input.remove();
+		
+	}
+	
+	async saveNotebook() {
+		
+		/** @type {NotebookData}  */
+		const aNotebookData = await this.getNotebookFromScreen('editor');
+		
+		const filename = 'notebook' + FILE_EXT;  // todo aNotebookData.name;
+		const data = JSON.stringify(aNotebookData);  // todo zlib
+		
+		const blob = new Blob([data], {type: 'octet/stream'});
+		
+		const elem = window.document.createElement('a');
+		elem.href = window.URL.createObjectURL(blob);
+		elem.download = filename;
+		elem.click();
+		
 	}
 	
 	async reloadReport() {

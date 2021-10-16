@@ -49,3 +49,18 @@
 .main-outer.sidebar-on > .ltn-sidebar > .ltn-sidebar-button {
     right: var(--offset-default);
 }
+
+
+/* ================= */
+.ltn-sidebar-button-option {
+    cursor: pointer;
+
+    height: var(--sidebar-option-button-size);
+    padding: 8px;
+    margin: 0;
+    display: block;
+}
+
+.ltn-sidebar-button-option:hover {
+    background-color: var(--hover-color);
+}
