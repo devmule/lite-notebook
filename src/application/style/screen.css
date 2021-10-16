@@ -15,7 +15,7 @@
     width: calc(var(--screen-notebook-width) - 2 * var(--offset-default));
     height: calc(var(--screen-notebook-height) - 2 * var(--offset-default));
     position: absolute;
-    transition: transform 0.5s;
+    transition: left 0.2s ease-in-out;
 }
 
 /* ========================================================== */
