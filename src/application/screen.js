@@ -1,6 +1,7 @@
 import screenHtml from "./screen.html";
 import AppMessenger from "./messenger";
 import EnumsMsg from '../utils/EnumsMsg';
+import {loadFiles} from "../utils/files";
 
 
 const FILE_EXT = ".ltn";
@@ -58,36 +59,18 @@ export class AppScreen extends AppMessenger {
 	
 	async loadNotebook() {
 		
-		const input = document.createElement('input');
-		input.accept = FILE_EXT;
-		input.type = 'file';
-		input.multiple = false;
+		let files = await loadFiles(false, [FILE_EXT]);
+		let file = files[0];
+		if (!file) return;
 		
-		document.body.appendChild(input);
+		let fileReader = new FileReader();
+		fileReader.onload = async (e) => {
+			let /**@type {string} */ res = fileReader.result
+			let /**@type {NotebookData}  */ aNotebookData = JSON.parse(res);
+			await this.initNotebookOnScreen('editor', aNotebookData);
+		};
 		
-		try {
-			input.click();
-			input.onchange = (e) => {
-				let file = input.files[0];
-				
-				if (!file) return;
-				
-				let fileReader = new FileReader();
-				fileReader.onload = (e) => {
-					let /**@type {string} */ res = fileReader.result
-					let /**@type {NotebookData}  */ aNotebookData = JSON.parse(res);
-					this.initNotebookOnScreen('editor', aNotebookData);
-					
-				};
-				
-				fileReader.readAsText(file);
-				
-			}
-		} catch (e) {
-			console.error(e);
-		}
-		
-		input.remove();
+		fileReader.readAsText(file);
 		
 	}
 	
