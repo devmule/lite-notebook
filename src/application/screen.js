@@ -1,6 +1,7 @@
 import screenHtml from "./screen.html";
 import AppMessenger from "./messenger";
 import EnumsMsg from '../utils/EnumsMsg';
+import localizations from "../localizations.json";
 import {loadFiles} from "../utils/files";
 
 
@@ -42,18 +43,23 @@ export class AppScreen extends AppMessenger {
 		
 		
 		let go_editor = this.element.querySelector('#go-editor');
+		go_editor.innerHTML = localizations.button_screen_go_editor;
 		go_editor.addEventListener('click', this.showEditorScreen.bind(this));
 		
 		let go_report = this.element.querySelector('#go-report');
+		go_report.innerHTML = localizations.button_screen_go_report;
 		go_report.addEventListener('click', this.showReportScreen.bind(this));
 		
 		let do_render = this.element.querySelector('#do-render');
+		do_render.innerHTML = localizations.button_screen_do_render;
 		do_render.addEventListener('click', this.reloadReport.bind(this));
 		
 		let load_notebook = this.element.querySelector('#load-notebook');
+		load_notebook.innerHTML = localizations.button_screen_load_notebook;
 		load_notebook.addEventListener('click', this.loadNotebook.bind(this));
 		
 		let save_notebook = this.element.querySelector('#save-notebook');
+		save_notebook.innerHTML = localizations.button_screen_save_notebook;
 		save_notebook.addEventListener('click', this.saveNotebook.bind(this));
 	}
 	

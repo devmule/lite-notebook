@@ -214,6 +214,8 @@ export default class NotebookScreen extends NotebookMessenger {
 	
 	
 	/**
+	 * @param {LTNChunk} chunk
+	 * @param {number} shift
 	 * */
 	moveChunk(chunk, shift) {
 		
