@@ -23,13 +23,7 @@ export class AppScreen extends AppMessenger {
 		/** @private
 		 * @type {HTMLDivElement} */
 		this._buttonSidebarToggle = this.element.querySelector('#btn-sidebar-toggle');
-		this._buttonSidebarToggle.addEventListener('click', () => {
-			let outer = this.element.children[0]
-			let sidebar_on_class = 'sidebar-on';
-			let wasOpened = outer.classList.contains(sidebar_on_class);
-			if (wasOpened) outer.classList.remove(sidebar_on_class);
-			else outer.classList.add(sidebar_on_class);
-		});
+		this._buttonSidebarToggle.addEventListener('click', this.sidebarToggle.bind(this));
 		
 		/** @type {HTMLIFrameElement} */
 		this.editor = this.element.querySelector('#screen-editor-frame');
@@ -61,6 +55,14 @@ export class AppScreen extends AppMessenger {
 		let save_notebook = this.element.querySelector('#save-notebook');
 		save_notebook.innerHTML = localizations.button_screen_save_notebook;
 		save_notebook.addEventListener('click', this.saveNotebook.bind(this));
+	}
+	
+	async sidebarToggle() {
+		let outer = this.element.children[0]
+		let sidebar_on_class = 'sidebar-on';
+		let wasOpened = outer.classList.contains(sidebar_on_class);
+		if (wasOpened) outer.classList.remove(sidebar_on_class);
+		else outer.classList.add(sidebar_on_class);
 	}
 	
 	async loadNotebook() {
