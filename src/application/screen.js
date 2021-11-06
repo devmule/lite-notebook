@@ -37,23 +37,23 @@ export class AppScreen extends AppMessenger {
 		
 		
 		let go_editor = this.element.querySelector('#go-editor');
-		go_editor.innerHTML = localizations.button_screen_go_editor;
+		go_editor.innerHTML = "<i class=\"fas fa-edit\"></i> " + localizations.button_screen_go_editor;
 		go_editor.addEventListener('click', this.showEditorScreen.bind(this));
 		
 		let go_report = this.element.querySelector('#go-report');
-		go_report.innerHTML = localizations.button_screen_go_report;
+		go_report.innerHTML = "<i class=\"fas fa-poll\"></i> " + localizations.button_screen_go_report;
 		go_report.addEventListener('click', this.showReportScreen.bind(this));
 		
 		let do_render = this.element.querySelector('#do-render');
-		do_render.innerHTML = localizations.button_screen_do_render;
+		do_render.innerHTML = "<i class=\"fas fa-magic\"></i> " + localizations.button_screen_do_render;
 		do_render.addEventListener('click', this.reloadReport.bind(this));
 		
 		let load_notebook = this.element.querySelector('#load-notebook');
-		load_notebook.innerHTML = localizations.button_screen_load_notebook;
+		load_notebook.innerHTML = "<i class=\"fas fa-upload\"></i> " + localizations.button_screen_load_notebook;
 		load_notebook.addEventListener('click', this.loadNotebook.bind(this));
 		
 		let save_notebook = this.element.querySelector('#save-notebook');
-		save_notebook.innerHTML = localizations.button_screen_save_notebook;
+		save_notebook.innerHTML = "<i class=\"fas fa-download\"></i> " + localizations.button_screen_save_notebook;
 		save_notebook.addEventListener('click', this.saveNotebook.bind(this));
 	}
 	

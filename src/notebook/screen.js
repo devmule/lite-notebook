@@ -1,6 +1,6 @@
 import * as elements from "./elements.js";
 import localizations from "../localizations.json";
-import chunks from "./chunks.js";
+import chunks from "./chunks";
 import Notebook from "./notebook.js";
 import NotebookMessenger from "./messenger";
 import EnumsMsg from "../utils/EnumsMsg";

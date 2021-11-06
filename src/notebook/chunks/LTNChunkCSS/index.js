@@ -1,3 +1,4 @@
+import "./codemirror.css";
 import {EditorView} from "@codemirror/next/view";
 import {EditorState} from "@codemirror/next/state";
 import {lineNumbers} from "@codemirror/next/gutter";
@@ -9,7 +10,7 @@ import {defaultHighlighter} from "@codemirror/next/highlight";
 import {keymap} from "@codemirror/next/keymap";
 import {baseKeymap, indentSelection} from "@codemirror/next/commands";
 
-import LTNChunk from "./LTNChunk.js";
+import LTNChunk from "../LTNChunk.js";
 
 const IS_MAC = /Mac/.test(navigator.platform);
 

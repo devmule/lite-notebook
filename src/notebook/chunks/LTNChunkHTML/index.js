@@ -9,7 +9,7 @@ import {defaultHighlighter} from "@codemirror/next/highlight";
 import {keymap} from "@codemirror/next/keymap";
 import {baseKeymap, indentSelection} from "@codemirror/next/commands";
 
-import LTNChunk from "./LTNChunk.js";
+import LTNChunk from "../LTNChunk.js";
 
 const IS_MAC = /Mac/.test(navigator.platform);
 

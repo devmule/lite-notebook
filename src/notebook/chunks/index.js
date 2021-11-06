@@ -1,7 +1,7 @@
-import LTNChunkCSS from "./chunks/LTNChunkCSS.js";
-import LTNChunkExecJS from "./chunks/LTNChunkExecJS.js";
-import LTNChunkText from "./chunks/LTNChunkText.js";
-import LTNChunkHTML from "./chunks/LTNChunkHTML";
+import LTNChunkCSS from "./LTNChunkCSS";
+import LTNChunkExecJS from "./LTNChunkExecJS";
+import LTNChunkText from "./LTNChunkText";
+import LTNChunkHTML from "./LTNChunkHTML";
 
 /**
  * Данный словарь определяет имена/идентификаторы для обработчиков.

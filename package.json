@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DevMule/lite-notebook#readme",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "css-loader": "^5.2.6",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^4.5.2",

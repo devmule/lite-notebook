@@ -5,7 +5,7 @@ import {schema} from "prosemirror-schema-basic"
 import {exampleSetup} from "prosemirror-example-setup"
 
 
-import LTNChunk from "./LTNChunk";
+import LTNChunk from "../LTNChunk";
 
 export default class LTNChunkText extends LTNChunk {
 	
