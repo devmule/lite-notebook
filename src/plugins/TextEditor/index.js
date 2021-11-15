@@ -4,13 +4,9 @@ import {EditorView} from "prosemirror-view"
 import {schema} from "prosemirror-schema-basic"
 import {exampleSetup} from "prosemirror-example-setup"
 
-
-import LTNChunk from "../LTNChunk";
-
-export default class LTNChunkText extends LTNChunk {
+export default class LTNChunkText {
 	
 	constructor() {
-		super();
 		
 		/** @type {EditorView} */
 		this.view = null;

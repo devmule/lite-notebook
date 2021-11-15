@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"no tests\"",
-    "dev": "webpack --mode=development",
-    "build": "webpack --mode=production"
+    "build-client": "webpack --config webpack.client.config.js",
+    "build-plugins": "webpack --config webpack.plugins.config.js"
   },
   "repository": {
     "type": "git",

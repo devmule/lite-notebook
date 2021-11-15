@@ -27,12 +27,12 @@ export class AppScreen extends AppMessenger {
 		
 		/** @type {HTMLIFrameElement} */
 		this.editor = this.element.querySelector('#screen-editor-frame');
-		this.editor.src = './frame.html?isEditor=1&senderName=editor';
+		this.editor.src = './client/frame.html?isEditor=1&senderName=editor';
 		this.addSender('editor', this.editor);
 		
 		/** @type {HTMLIFrameElement} */
 		this.report = this.element.querySelector('#screen-report-frame');
-		this.report.src = './frame.html?isEditor=0&senderName=report';
+		this.report.src = './client/frame.html?isEditor=0&senderName=report';
 		this.addSender('report', this.report);
 		
 		

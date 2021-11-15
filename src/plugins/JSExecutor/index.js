@@ -16,8 +16,6 @@ import {esLint} from "@codemirror/next/lang-javascript";
 import Linter from "eslint4b-prebuilt";
 import {linter, openLintPanel} from "@codemirror/next/lint";
 
-import LTNChunk from "../LTNChunk.js";
-
 const IS_MAC = /Mac/.test(navigator.platform);
 const ITEMS = [
 	"function", "let", "const", "var",
@@ -25,9 +23,8 @@ const ITEMS = [
 	// todo use already typed keys
 ];
 
-export default class LTNChunkExecJS extends LTNChunk {
+export default class LTNChunkExecJS {
 	constructor() {
-		super();
 		/** @type {EditorView} */
 		this.view = null;
 		

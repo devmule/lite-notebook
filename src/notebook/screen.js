@@ -1,9 +1,35 @@
 import * as elements from "./elements.js";
 import localizations from "../localizations.json";
-import chunks from "./chunks";
 import Notebook from "./notebook.js";
 import NotebookMessenger from "./messenger";
 import EnumsMsg from "../utils/EnumsMsg";
+
+/**
+ * @typedef {any} LTNChunkData
+ * */
+
+/**
+ * @typedef {Class} LTNChunk
+ * @property {string} constructor.title
+ *
+ * @property {HTMLElement|undefined} block
+ * @property {string} userTitle
+ * @property {boolean} collapsed
+ *
+ * @property {function(data: LTNChunkData): Promise.<any>} init
+ *
+ * @property {function(): Promise.<LTNChunkData>} save
+ *
+ * @property {function(): Promise.<HTMLElement>} renderEditor
+ * При рендере редактора чанк обязан вернуть элемент.
+ *
+ * @property {function(): Promise.<HTMLElement|undefined>} renderReport
+ * При рендере репорта чанк может не возвращать элемент для визуализации,
+ * но, например, сделать определённые фоновые вычисления.
+ * */
+
+
+
 
 export default class NotebookScreen extends NotebookMessenger {
 	
@@ -11,8 +37,9 @@ export default class NotebookScreen extends NotebookMessenger {
 	 * @constructor
 	 * @param {boolean} isEditor
 	 * @param {string} senderName
+	 * @param {Object.<string, LTNChunk>} chunks
 	 * */
-	constructor(isEditor, senderName) {
+	constructor(isEditor, senderName, chunks) {
 		super(senderName)
 		
 		this.element = elements.createScreen();

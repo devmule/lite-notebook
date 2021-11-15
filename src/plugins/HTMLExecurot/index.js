@@ -1,45 +1,45 @@
-import "./codemirror.css";
 import {EditorView} from "@codemirror/next/view";
 import {EditorState} from "@codemirror/next/state";
+import {html, htmlSyntax} from "@codemirror/next/lang-html";
 import {lineNumbers} from "@codemirror/next/gutter";
 import {specialChars} from "@codemirror/next/special-chars";
 import {history, redo, redoSelection, undo, undoSelection} from "@codemirror/next/history";
 import {foldCode, foldGutter, unfoldCode} from "@codemirror/next/fold";
-import {css, cssSyntax} from "@codemirror/next/lang-css";
 import {defaultHighlighter} from "@codemirror/next/highlight";
 import {keymap} from "@codemirror/next/keymap";
 import {baseKeymap, indentSelection} from "@codemirror/next/commands";
 
-import LTNChunk from "../LTNChunk.js";
-
 const IS_MAC = /Mac/.test(navigator.platform);
 
-export default class LTNChunkCSS extends LTNChunk {
+export default class LTNChunkHTML {
+	
 	constructor() {
-		super();
 		
 		/** @type {EditorView} */
 		this.view = null;
 		
 		/** @type {string} */
-		this.text = '';
+		this.doc = '';
 	}
 	
 	static get title() {
-		return "CSS";
+		return "HTML";
 	}
 	
 	async init(data) {
-		this.text = data.text;
+		this.doc = data.doc;
 	}
 	
 	async renderEditor() {
 		this.view = new EditorView({
 			state: EditorState.create({
-				doc: this.text,
+				doc: this.doc,
 				extensions: [
-					lineNumbers(), specialChars(),
-					history(), foldGutter(), css(),
+					lineNumbers(),
+					specialChars(),
+					history(),
+					foldGutter(),
+					html(),
 					defaultHighlighter,
 					keymap({
 						"Mod-z": undo,
@@ -60,23 +60,12 @@ export default class LTNChunkCSS extends LTNChunk {
 	}
 	
 	async renderReport() {
-		
-		let head = document.head || document.getElementsByTagName('head')[0];
-		let style = document.createElement('style');
-		
-		head.appendChild(style);
-		
-		style.type = 'text/css';
-		if (style.styleSheet) {
-			// This is required for IE8 and below.
-			style.styleSheet.cssText = this.text;
-		} else {
-			style.appendChild(document.createTextNode(this.text));
-		}
-		
+		let div = document.createElement('div');
+		div.innerHTML = this.doc;
+		return div;
 	}
 	
 	async save() {
-		return {text: this.view.state.toJSON().doc};
+		return {doc: this.view.state.toJSON().doc};
 	}
 }
