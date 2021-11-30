@@ -31,3 +31,64 @@ export function loadFiles(multiple = false, extensions = null) {
 	});
 	
 }
+
+/**
+ * @param {string} [url]
+ * @return {Promise.<any>}
+ * */
+export function loadJson(url) {
+	
+	return new Promise((resolve, reject) => {
+		
+		let req = new XMLHttpRequest();
+		req.crossOrigin = 'anonymous';
+		req.responseType = 'text';
+		req.overrideMimeType('text/plain');
+		req.onload = event => {
+			if (req.status === 200 || req.status === 0) {
+				resolve(JSON.parse(req.responseText));
+			} else {
+				reject(`cannot load file, status \"${req.status}\" given`);
+			}
+		};
+		req.onerror = event => {
+			reject(`cannot load file ${url}`);
+		}
+		req.open('GET', url, true);
+		req.send(null);
+		
+	});
+	
+}
+
+
+export function loadPlugins(names) {
+	
+	return new Promise((resolve, reject) => {
+		
+		let count = 0;
+		
+		for (let i = 0; i < names.length; i++) {
+			
+			count++;
+			
+			let name = names[i];
+			let url = `../plugins/${name}/index.js`;
+			
+			let scriptTag = document.createElement('script');
+			document.head.appendChild(scriptTag);
+			
+			scriptTag.src = url;
+			scriptTag.async = true;
+			
+			scriptTag.onload = () => {
+				count--;
+				if (count === 0) resolve();
+			};
+			scriptTag.onerror = reject;
+			
+		}
+		
+	});
+	
+}

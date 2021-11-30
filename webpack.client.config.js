@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
 
@@ -8,8 +9,7 @@ const output_path = "./public";
 const client_path = "./client";
 
 const common_options = {
-	// mode: "production",
-	mode: "development",
+	mode: "production",
 	module: {
 		rules: [
 			{test: /\.(jpe?g|png|gif|ico)$/i, loader: 'file?name=[name].[ext]'},
@@ -17,6 +17,7 @@ const common_options = {
 			{test: /\.html$/, loader: 'html-loader'},
 		]
 	},
+	cache: false,
 	resolve: {extensions: ['.js', '.css', 'html']},
 }
 
@@ -34,12 +35,23 @@ const index = {
 	...common_options,
 	entry: path.resolve(__dirname, index_input_path),
 	output: {path: path.resolve(__dirname, output_path, client_path), filename: 'index.js'},
-	plugins: [new HtmlWebpackPlugin({
-		...html_options,
-		favicon: './src/favicon.ico',
-		filename: '../index.html',
-		title: 'lite-notebook'
-	}),
+	plugins: [
+		new HtmlWebpackPlugin({
+			...html_options,
+			favicon: './src/favicon.ico',
+			filename: '../index.html',
+			title: 'lite-notebook'
+		}),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: "./src/config.json",
+					to: "../",
+					force: true,
+					noErrorOnMissing: true
+				},
+			],
+		})
 	],
 };
 
@@ -54,6 +66,5 @@ const frame = {
 		title: 'lite-frame'
 	})],
 }
-
 
 module.exports = [index, frame]

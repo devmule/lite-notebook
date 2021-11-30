@@ -11,7 +11,7 @@ import {baseKeymap, indentSelection} from "@codemirror/next/commands";
 
 const IS_MAC = /Mac/.test(navigator.platform);
 
-export default class LTNChunkHTML {
+class LTNChunkHTML {
 	
 	constructor() {
 		
@@ -69,3 +69,5 @@ export default class LTNChunkHTML {
 		return {doc: this.view.state.toJSON().doc};
 	}
 }
+
+LTN.chunks.LTNChunkHTML = LTNChunkHTML;

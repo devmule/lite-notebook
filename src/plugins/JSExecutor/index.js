@@ -111,3 +111,5 @@ export default class LTNChunkExecJS {
 		return {code: this.view.state.toJSON().doc};
 	}
 }
+
+LTN.chunks.LTNChunkExecJS = LTNChunkExecJS;

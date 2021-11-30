@@ -52,3 +52,5 @@ export default class LTNChunkText {
 		return {doc: this.view.state.toJSON().doc};
 	}
 }
+
+LTN.chunks.LTNChunkText = LTNChunkText;
