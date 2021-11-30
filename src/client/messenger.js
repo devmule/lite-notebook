@@ -53,10 +53,7 @@ export default class AppMessenger extends EventEmitter {
 				this.requests.delete(msg.uid);
 			}
 			
-			this.emit({
-				type: typename(msg.sender, msg.type),
-				msg: msg,
-			});
+			this.emit(typename(msg.sender, msg.type), msg);
 			
 		} catch (e) {
 			console.warn(e);
@@ -96,5 +93,12 @@ export default class AppMessenger extends EventEmitter {
 			
 		});
 		
+	}
+	
+	waitMessage(name, type) {
+		return new Promise(resolve => {
+			let key = typename(name, type);
+			this.once(key, resolve);
+		})
 	}
 }

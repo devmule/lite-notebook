@@ -1,6 +1,7 @@
 import './style/main.css';
 import NotebookScreen from "./screen.js";
 import {loadJson, loadPlugins} from "../utils/files";
+import EnumsMsg from "../utils/EnumsMsg";
 
 const url = new URL(window.location.href)
 const isEditor = url.searchParams.get('isEditor') === '1';
@@ -9,7 +10,10 @@ const senderName = url.searchParams.get('senderName');
 const LTN = {
 	
 	/** элементы для рендера экранов */
-	chunks: []
+	chunks: [],
+	
+	/** @type {NotebookScreen} */
+	screen: null,
 	
 };
 
@@ -21,9 +25,11 @@ global.LTN = LTN;
 	const config = await loadJson("../config.json");
 	await loadPlugins(config.plugins);
 	
-	const screen = new NotebookScreen(isEditor, senderName, LTN.chunks);
+	LTN.screen = new NotebookScreen(isEditor, senderName, LTN.chunks);
 	
-	document.body.appendChild(screen.element);
+	document.body.appendChild(LTN.screen.element);
+	
+	LTN.screen.send(EnumsMsg.NOTEBOOK_IS_READY, "");
 	
 })());
 

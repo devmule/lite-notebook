@@ -122,10 +122,8 @@ export class AppScreen extends AppMessenger {
 		if (!this.senders.has(name)) throw new Error(`Name \"${name}\" not exist!`);
 		let notebookScreen = this.senders.get(name);
 		
-		await new Promise(resolve => {
-			notebookScreen.contentWindow.location.reload();
-			notebookScreen.onload = resolve;
-		});
+		notebookScreen.contentWindow.location.reload();
+		await this.waitMessage(name, EnumsMsg.NOTEBOOK_IS_READY);
 		
 		await this.request(name, EnumsMsg.INIT_NOTEBOOK, aNotebookData);
 	}

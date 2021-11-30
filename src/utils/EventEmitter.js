@@ -1,83 +1,88 @@
+// ================================================================================================================== //
+//                                                                                                                    //
+//                                                   made by devmule                                                  //
+//                                             https://github.com/devmule                                             //
+//                                                      12.11.2021                                                    //
+//                                                                                                                    //
+// ================================================================================================================== //
+
+
 /**
- * @typedef {Object} ICustomEvent
- * @property {string} type
+ * @typedef {string} EventType
  * */
 
 /**
- * @typedef {function(event: ICustomEvent)} IEventHandler
+ * @typedef {function(...*)} ISubscriber
  * */
 
 /**
- * @typedef {Object} IEventListener
- * @property {string} type
- * @property {boolean} once
- * @property {IEventHandler} handler
+ * @typedef {Object} ISubscriberDescription
+ * @property {ISubscriber} subscriber
+ * @property {boolean} [once] - нужно ли удалить после вызова
  * */
-
 
 export default class EventEmitter {
-	
 	constructor() {
-		/** @type IEventListener[] */
-		this.eventListeners = [];
+		/**
+		 * @private
+		 * @type {Map.<string, ISubscriberDescription[]>} */
+		this.events = new Map();
 	}
 	
 	/**
-	 * @param {string} type
-	 * @param {IEventHandler} handler
-	 * */
-	on(type, handler) {
-		this.eventListeners.push({type, handler, once: false});
+	 * Подписаться на событие определённого типа, будет срабатывать каждый раз.
+	 * @param {EventType} type
+	 * @param {ISubscriber} subscriber */
+	on(type, subscriber) {
+		if (!this.events.has(type)) this.events.set(type, []);
+		this.events.get(type).push({subscriber});
 	}
 	
 	/**
-	 * @param {string} type
-	 * @param {IEventHandler} handler
-	 * */
-	once(type, handler) {
-		this.eventListeners.push({type, handler, once: true});
+	 * Подписаться на событие определённого типа, сработает только один раз.
+	 * @param {EventType} type
+	 * @param {ISubscriber} subscriber */
+	once(type, subscriber) {
+		if (!this.events.has(type)) this.events.set(type, []);
+		this.events.get(type).push({subscriber, once: true});
 	}
 	
 	/**
-	 * @param {string} type
-	 * @param {IEventHandler} handler
-	 * */
-	remove(type, handler) {
+	 * Вызвать событие с параметрами для функций-подписчиков.
+	 * @param {EventType} type
+	 * @param {...*} params */
+	emit(type, ...params) {
+		if (!this.events.has(type)) return;
 		
-		const filtered = this.eventListeners.filter((eventListener) => {
-			return eventListener.type === type && (eventListener.handler === handler || handler == null);
-		})
-		
-		for (let i = 0; i < filtered.length; i++) {
-			const index = this.eventListeners.indexOf(filtered[i]);
-			this.eventListeners.splice(index, 1);
+		let list = [...this.events.get(type)];
+		for (let i = 0; i < list.length; i++) {
+			let sub = list[i];
+			if (sub.once === true) {
+				list.splice(i, 1);
+				i--;
+			}
+			sub.subscriber.call(this, ...params);
 		}
 	}
 	
 	/**
-	 * @param {ICustomEvent} event
-	 * */
-	emit(event) {
-		for (let i = 0; i < this.eventListeners.length; i++) {
-			
-			const eventListener = this.eventListeners[i];
-			
-			if (eventListener.type === event.type) {
-				eventListener.handler.call(this, event);
-				if (eventListener.once) {
-					this.eventListeners.splice(i, 1);
-					i--;
-				}
-				
+	 * Удалить все подписки данного типа или все подписки только для определённой функции-подписчика, если она указана.
+	 * @param {EventType} type
+	 * @param {ISubscriber} [subscriber=null] */
+	off(type, subscriber = null) {
+		if (!this.events.has(type)) return;
+		
+		if (subscriber == null) {
+			this.events.delete(type);
+			return;
+		}
+		
+		let list = [...this.events.get(type)];
+		for (let i = 0; i < list.length; i++) {
+			if (list[i].subscriber === subscriber) {
+				list.splice(i, 1);
+				i--;
 			}
 		}
-	}
-	
-	/**
-	 * @param {string} type
-	 * @return boolean
-	 * */
-	has(type) {
-		return !!this.eventListeners.find(el => el.type === type);
 	}
 }

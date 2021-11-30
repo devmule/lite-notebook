@@ -21,7 +21,7 @@ export default class NotebookMessenger extends EventEmitter {
 	onMessage(str) {
 		/** @type {IMessage} */
 		let msg = JSON.parse(str);
-		this.emit(msg);
+		this.emit(msg.type, msg);
 	}
 	
 	/**
