@@ -4,6 +4,7 @@
     "CSSExecutor",
     "HTMLExecutor",
     "JSExecutor",
+    "PythonExecutor",
     "TextEditor"
   ]
 }
