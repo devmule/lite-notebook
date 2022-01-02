@@ -3,6 +3,7 @@
   "plugins": [
     "JSExecutor",
     "HTMLExecutor",
-    "CSSExecutor"
+    "CSSExecutor",
+    "MarkDownExecutor"
   ]
 }
