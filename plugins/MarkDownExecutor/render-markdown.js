@@ -23,8 +23,6 @@ export default async function (text) {
 		let head = document.head || document.getElementsByTagName('head')[0];
 		head.appendChild(style);
 		
-		console.log(style, head);
-		
 		renderer = new marked.Renderer();
 		
 		const originalRendererLink = renderer.link.bind(renderer);
@@ -56,9 +54,7 @@ export default async function (text) {
 	
 	let element = document.createElement('span');
 	element.innerHTML = marked(text, {renderer});
-	console.log(element.innerHTML)
 	renderMathInElement(element);
-	console.log(element.innerHTML)
 	
 	return element;
 	

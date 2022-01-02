@@ -1,6 +1,11 @@
 import buildEditor from "./build-markdown-editor.js";
 import renderMarkdown from "./render-markdown.js";
 
+
+/**
+ * @class {HTMLExecutor}
+ * @implements {LTNChunk}
+ * */
 export default class MarkDownExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/
@@ -9,7 +14,7 @@ export default class MarkDownExecutor {
 	}
 	
 	static get title() {
-		return "Markdown executor";
+		return "Markdown";
 	}
 	
 	async init(data) {

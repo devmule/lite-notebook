@@ -1,5 +1,10 @@
 import buildEditor from "./build-js-editor.js";
 
+
+/**
+ * @class {HTMLExecutor}
+ * @implements {LTNChunk}
+ * */
 export default class JSExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/

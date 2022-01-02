@@ -4,6 +4,7 @@
     "JSExecutor",
     "HTMLExecutor",
     "CSSExecutor",
-    "MarkDownExecutor"
+    "MarkDownExecutor",
+    "LaTeXExecutor"
   ]
 }
