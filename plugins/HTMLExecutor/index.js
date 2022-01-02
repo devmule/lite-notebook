@@ -1,14 +1,14 @@
 import buildEditor from "./build-editor.js";
 
-export default class JSExecutor {
+export default class HTMLExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/
 		this.view = null;
-		this.code = '';
+		this.doc = '';
 	}
 	
 	async init(data) {
-		this.code = data.code;
+		this.doc = data.code;
 	}
 	
 	async save() {
@@ -16,15 +16,15 @@ export default class JSExecutor {
 	}
 	
 	static get title() {
-		return "JavaScript executor";
+		return "HTML executor";
 	}
 	
 	async renderEditor() {
 		
 		this.view = buildEditor();
-		this.view.session.setValue(this.code);
+		this.view.session.setValue(this.doc);
 		this.view.on("change", () => {
-			this.code = this.view.session.getValue();
+			this.doc = this.view.session.getValue();
 		});
 		
 		// возвращаем дом-элемент
@@ -32,14 +32,11 @@ export default class JSExecutor {
 	}
 	
 	async renderReport() {
-		
-		// заданный код исполняется
-		(new Function(this.code))();
-		
-		// чанк не отображается
-		return null;
-		
+		let div = document.createElement('div');
+		div.innerHTML = this.doc;
+		// возвращаем дом-элемент
+		return div;
 	}
 }
 
-LTN.chunks["JSExecutor"] = JSExecutor;
+LTN.chunks["HTMLExecutor"] = HTMLExecutor;
