@@ -1,4 +1,4 @@
-import EventEmitter from "../utils/EventEmitter";
+import EventEmitter from "../utils/EventEmitter.js";
 
 /**
  * @typedef {Object} IMessage
@@ -6,6 +6,7 @@ import EventEmitter from "../utils/EventEmitter";
  * @property {string} type
  * @property {number} [uid]
  * @property {any} data
+ * @property {boolean} ltn
  * */
 
 export default class NotebookMessenger extends EventEmitter {
@@ -16,11 +17,10 @@ export default class NotebookMessenger extends EventEmitter {
 	}
 	
 	/**
-	 * @param {string} str
+	 * @param {IMessage} msg
 	 * */
-	onMessage(str) {
-		/** @type {IMessage} */
-		let msg = JSON.parse(str);
+	onMessage(msg) {
+		if (!msg.ltn) return;
 		this.emit(msg.type, msg);
 	}
 	
@@ -32,10 +32,10 @@ export default class NotebookMessenger extends EventEmitter {
 		
 		/** @type{IMessage} */
 		let msg = {
-			type, data, sender: this.senderName
+			type, data, sender: this.senderName, ltn: true
 		};
 		
-		window.parent.postMessage(JSON.stringify(msg), window.location.href);
+		window.parent.postMessage(msg, window.location.href);
 		
 	}
 	
@@ -50,10 +50,11 @@ export default class NotebookMessenger extends EventEmitter {
 			type: toMessage.type,
 			data: data,
 			sender: this.senderName,
-			uid: toMessage.uid
+			uid: toMessage.uid,
+			ltn: true,
 		};
 		
-		window.parent.postMessage(JSON.stringify(msg), window.location.href);
+		window.parent.postMessage(msg, window.location.href);
 		
 	}
 }

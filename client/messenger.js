@@ -1,4 +1,4 @@
-import EventEmitter from "../utils/EventEmitter";
+import EventEmitter from "../utils/EventEmitter.js";
 
 /**
  * @typedef {Object} IMessage
@@ -6,6 +6,7 @@ import EventEmitter from "../utils/EventEmitter";
  * @property {string} type
  * @property {number} [uid]
  * @property {any} data
+ * @property {boolean} ltn
  * */
 
 let reqUID = 0;
@@ -34,30 +35,25 @@ export default class AppMessenger extends EventEmitter {
 	}
 	
 	/**
-	 * @param {string} str
+	 * @param {IMessage} msg
 	 * */
-	onMessage(str) {
-		try {
-			
-			/** @type {IMessage} */
-			let msg = JSON.parse(str);
-			let sender = this.senders.get(msg.sender);
-			
-			if (!sender) {
-				console.warn(`No such sender name \"${name}\"!`);
-				return;
-			}
-			
-			if (msg.uid != null && this.requests.has(msg.uid)) {
-				this.requests.get(msg.uid)(msg.data);
-				this.requests.delete(msg.uid);
-			}
-			
-			this.emit(typename(msg.sender, msg.type), msg);
-			
-		} catch (e) {
-			console.warn(e);
+	onMessage(msg) {
+		if (!msg.ltn) return;
+		
+		let sender = this.senders.get(msg.sender);
+		
+		if (!sender) {
+			console.warn(`No such sender name \"${msg.sender}\"!`);
+			return;
 		}
+		
+		if (msg.uid != null && this.requests.has(msg.uid)) {
+			this.requests.get(msg.uid)(msg.data);
+			this.requests.delete(msg.uid);
+		}
+		
+		this.emit(typename(msg.sender, msg.type), msg);
+		
 	}
 	
 	/**
@@ -70,7 +66,7 @@ export default class AppMessenger extends EventEmitter {
 		if (!this.senders.has(name)) throw new Error(`Name \"${name}\" not exist!`);
 		let to = this.senders.get(name);
 		
-		to.contentWindow.postMessage(JSON.stringify({type, data}), window.location.href);
+		to.contentWindow.postMessage({type, data, ltn: true}, window.location.href);
 		
 	}
 	
@@ -88,7 +84,7 @@ export default class AppMessenger extends EventEmitter {
 		return new Promise(resolve => {
 			let uid = reqUID++;
 			
-			to.contentWindow.postMessage(JSON.stringify({type, data, uid}), window.location.href);
+			to.contentWindow.postMessage({type, data, uid, ltn: true}, window.location.href);
 			this.requests.set(uid, resolve);
 			
 		});

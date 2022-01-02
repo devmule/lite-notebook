@@ -1,7 +1,6 @@
-import './style/main.css';
 import NotebookScreen from "./screen.js";
-import {loadJson, loadPlugins} from "../utils/files";
-import EnumsMsg from "../utils/EnumsMsg";
+import {loadJson, loadPlugins} from "../utils/files.js";
+import EnumsMsg from "../utils/EnumsMsg.js";
 
 const url = new URL(window.location.href)
 const isEditor = url.searchParams.get('isEditor') === '1';
@@ -17,12 +16,11 @@ const LTN = {
 	
 };
 
-global.LTN = LTN;
+window.LTN = LTN;
 
 
 ((async () => {
-	
-	const config = await loadJson("../config.json");
+	const config = await loadJson("../../config.json");
 	await loadPlugins(config.plugins);
 	
 	LTN.screen = new NotebookScreen(isEditor, senderName, LTN.chunks);

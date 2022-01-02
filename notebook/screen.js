@@ -1,8 +1,7 @@
 import * as elements from "./elements.js";
-import localizations from "../localizations.json";
 import Notebook from "./notebook.js";
-import NotebookMessenger from "./messenger";
-import EnumsMsg from "../utils/EnumsMsg";
+import NotebookMessenger from "./messenger.js";
+import EnumsMsg from "../utils/EnumsMsg.js";
 
 /**
  * @typedef {any} LTNChunkData
@@ -28,7 +27,8 @@ import EnumsMsg from "../utils/EnumsMsg";
  * но, например, сделать определённые фоновые вычисления.
  * */
 
-
+let localizations;
+(async () => localizations = await (await fetch("../../localizations.json")).json())();
 
 
 export default class NotebookScreen extends NotebookMessenger {

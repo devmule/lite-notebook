@@ -64,30 +64,13 @@ export function loadJson(url) {
 
 export function loadPlugins(names) {
 	
-	return new Promise((resolve, reject) => {
-		
-		let count = 0;
+	return new Promise(async (resolve) => {
 		
 		for (let i = 0; i < names.length; i++) {
-			
-			count++;
-			
-			let name = names[i];
-			let url = `../plugins/${name}/index.js`;
-			
-			let scriptTag = document.createElement('script');
-			document.head.appendChild(scriptTag);
-			
-			scriptTag.src = url;
-			scriptTag.async = true;
-			
-			scriptTag.onload = () => {
-				count--;
-				if (count === 0) resolve();
-			};
-			scriptTag.onerror = reject;
-			
+			await import(`../plugins/${names[i]}/index.js`);
 		}
+		
+		resolve();
 		
 	});
 	

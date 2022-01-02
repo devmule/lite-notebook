@@ -166,7 +166,7 @@ export default class Notebook {
 			const aNotebookChunkData = aNotebookData.chunks[i];
 			
 			const handler = this.handlers.find(c => c.name === aNotebookChunkData.name);
-			if (!handler) throw new TypeError(`Unknown handler type \"${aNotebookChunkData.name}\"`)
+			if (!handler) throw new TypeError(`Unknown handler type \"${aNotebookChunkData.name}\"`);
 			
 			/** @type {typeof LTNChunk} */
 			const handlerClass = handler.constructor;
