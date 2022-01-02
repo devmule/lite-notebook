@@ -8,7 +8,7 @@ import EnumsMsg from "../utils/EnumsMsg.js";
  * */
 
 /**
- * @typedef {Class} LTNChunk
+ * @interface LTNChunk
  * @property {string} constructor.title
  *
  * @property {HTMLElement|undefined} block
@@ -19,12 +19,12 @@ import EnumsMsg from "../utils/EnumsMsg.js";
  *
  * @property {function(): Promise.<LTNChunkData>} save
  *
- * @property {function(): Promise.<HTMLElement>} renderEditor
- * При рендере редактора чанк обязан вернуть элемент.
+ * @property {function(): Promise.<HTMLElement>} renderEditor -
+ *  При рендере редактора чанк обязан вернуть элемент.
  *
- * @property {function(): Promise.<HTMLElement|undefined>} renderReport
- * При рендере репорта чанк может не возвращать элемент для визуализации,
- * но, например, сделать определённые фоновые вычисления.
+ * @property {function(): Promise.<HTMLElement|undefined>} renderReport -
+ *  При рендере репорта чанк может не возвращать элемент для визуализации,
+ *  но, например, сделать определённые фоновые вычисления.
  * */
 
 let localizations;
@@ -37,7 +37,7 @@ export default class NotebookScreen extends NotebookMessenger {
 	 * @constructor
 	 * @param {boolean} isEditor
 	 * @param {string} senderName
-	 * @param {Object.<string, LTNChunk>} chunks
+	 * @param {Object.<string, typeof LTNChunk>} chunks
 	 * */
 	constructor(isEditor, senderName, chunks) {
 		super(senderName)

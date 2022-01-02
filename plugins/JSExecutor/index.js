@@ -1,10 +1,14 @@
-import buildEditor from "./build-editor.js";
+import buildEditor from "./build-js-editor.js";
 
 export default class JSExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/
 		this.view = null;
 		this.code = '';
+	}
+	
+	static get title() {
+		return "JavaScript executor";
 	}
 	
 	async init(data) {
@@ -15,17 +19,10 @@ export default class JSExecutor {
 		return {code: this.view.session.getValue()};
 	}
 	
-	static get title() {
-		return "JavaScript executor";
-	}
-	
 	async renderEditor() {
 		
 		this.view = buildEditor();
 		this.view.session.setValue(this.code);
-		this.view.on("change", () => {
-			this.code = this.view.session.getValue();
-		});
 		
 		// возвращаем дом-элемент
 		return this.view.container;

@@ -1,5 +1,10 @@
-import buildEditor from "./build-editor.js";
+import buildEditor from "./build-html-editor.js";
 
+
+/**
+ * @class {HTMLExecutor}
+ * @implements {LTNChunk}
+ * */
 export default class HTMLExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/
@@ -7,25 +12,22 @@ export default class HTMLExecutor {
 		this.doc = '';
 	}
 	
+	static get title() {
+		return "HTML executor";
+	}
+	
 	async init(data) {
-		this.doc = data.code;
+		this.doc = data.doc;
 	}
 	
 	async save() {
-		return {code: this.view.session.getValue()};
-	}
-	
-	static get title() {
-		return "HTML executor";
+		return {doc: this.view.session.getValue()};
 	}
 	
 	async renderEditor() {
 		
 		this.view = buildEditor();
 		this.view.session.setValue(this.doc);
-		this.view.on("change", () => {
-			this.doc = this.view.session.getValue();
-		});
 		
 		// возвращаем дом-элемент
 		return this.view.container;

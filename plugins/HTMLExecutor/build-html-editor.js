@@ -21,7 +21,7 @@ export default function () {
 	editor.setOptions({
 		enableBasicAutocompletion: true,
 		enableSnippets: true,
-		enableLiveAutocompletion: false
+		enableLiveAutocompletion: true
 	});
 	
 	return editor;
