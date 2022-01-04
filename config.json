@@ -5,6 +5,7 @@
     "HTMLExecutor",
     "CSSExecutor",
     "MarkDownExecutor",
-    "LaTeXExecutor"
+    "LaTeXExecutor",
+    "PythonExecutor"
   ]
 }

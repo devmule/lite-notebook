@@ -1,3 +1,5 @@
+import buildConsole from "./build-console.js";
+
 /**
  * @class {HTMLExecutor}
  * @implements {LTNChunk}
@@ -6,7 +8,6 @@ export default class PythonExecutor {
 	constructor() {
 		/**@type {Ace.Editor}*/
 		this.view = null;
-		this.code = '';
 	}
 	
 	static get title() {
@@ -14,19 +15,21 @@ export default class PythonExecutor {
 	}
 	
 	async init(data) {
-		this.code = data.code;
 	}
 	
 	async save() {
-		return {code: this.view.session.getValue()};
+		return {};
 	}
 	
 	async renderEditor() {
 		// todo
+		//  отправляем пустой элемент, никаких настроек не надо.
+		return document.createElement('div');
 	}
 	
 	async renderReport() {
 		// todo
+		return await buildConsole();
 	}
 }
 

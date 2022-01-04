@@ -75,3 +75,17 @@ export function loadPlugins(names) {
 	});
 	
 }
+
+
+export async function fetchCSS(href) {
+	return new Promise(((resolve, reject) => {
+		let style = document.createElement('link');
+		style.rel = "stylesheet";
+		style.href = href;
+		style.onload = resolve;
+		style.onerror = reject;
+		style.onabort = reject;
+		let head = document.head || document.getElementsByTagName('head')[0];
+		head.appendChild(style);
+	}));
+}

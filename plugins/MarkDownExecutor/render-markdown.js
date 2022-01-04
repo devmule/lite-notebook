@@ -6,6 +6,7 @@ import "../../libs/katex/katex.js";
 import "../../libs/mermaid.js"
 
 import renderMathInElement from "./render-math-in-element.js"
+import {fetchCSS} from "../../utils/files.js";
 
 let renderer = false;
 
@@ -17,11 +18,7 @@ export default async function (text) {
 		
 		mermaid.mermaidAPI.initialize({startOnLoad: false});
 		
-		let style = document.createElement('link');
-		style.rel = "stylesheet";
-		style.href = "../libs/katex/katex.css";
-		let head = document.head || document.getElementsByTagName('head')[0];
-		head.appendChild(style);
+		await fetchCSS("../libs/katex/katex.css");
 		
 		renderer = new marked.Renderer();
 		
