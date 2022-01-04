@@ -1,6 +1,6 @@
 .ltn-block {
     max-width: var(--content-max-width);
-    margin: 0 auto;
+    margin: 12px auto;
 }
 
 /* ------------------------------------- */

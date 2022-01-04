@@ -10,6 +10,7 @@ ace.require("ace/ext/language_tools");
 export function editor() {
 	
 	let editorElement = document.createElement('div');
+	editorElement.style.margin = "0";
 	
 	let editor = ace.edit(editorElement, {
 		maxLines: 60,

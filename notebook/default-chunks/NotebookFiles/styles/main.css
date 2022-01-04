@@ -3,7 +3,7 @@
 .notebook-files-file-list {
     width: 100%;
     margin: 0 auto;
-    background-color: var(--notebook-files-top-color);
+    background-color: var(--notebook-files-bg-color);
     color: var(--notebook-files-font-color);
 }
 
@@ -58,4 +58,12 @@
 
 .notebook-files-button-add-new {
     width: 100%;
+}
+
+.notebook-files-line:hover, .notebook-files-button-add-new:hover {
+    background-color: var(--notebook-files-bg-hover-color);
+}
+
+.notebook-files-button:hover {
+    opacity: 0.5;
 }
