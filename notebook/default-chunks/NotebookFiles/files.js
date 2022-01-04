@@ -9,7 +9,7 @@ export const deleteFileChunk = (chunk) => chunks.delete(chunk);
 export const files = {
 	
 	/** @param {string} name
-	 * @return {File} */
+	 * @return {Promise.<File>} */
 	async getFile(name) {
 		
 		let chunks_array = Array.from(chunks);
@@ -30,7 +30,7 @@ export const files = {
 	},
 	
 	/** @param {string} name
-	 * @return {string} */
+	 * @return {Promise.<string>} */
 	async getFileAsText(name) {
 		let file = await this.getFile(name);
 		return new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ export const files = {
 	},
 	
 	/** @param {string} name
-	 * @return {string} */
+	 * @return {Promise.<string>} */
 	async getFileAsDataURL(name) {
 		let file = await this.getFile(name);
 		return new Promise((resolve, reject) => {

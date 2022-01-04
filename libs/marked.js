@@ -2085,23 +2085,23 @@ class Parser {
   /**
    * Static Parse Method
    */
-  static parse(tokens, options) {
+  static async parse(tokens, options) {
     const parser = new Parser(options);
-    return parser.parse(tokens);
+    return await parser.parse(tokens);
   }
 
   /**
    * Static Parse Inline Method
    */
-  static parseInline(tokens, options) {
+  static async parseInline(tokens, options) {
     const parser = new Parser(options);
-    return parser.parseInline(tokens);
+    return await parser.parseInline(tokens);
   }
 
   /**
    * Parse Loop
    */
-  parse(tokens, top = true) {
+  async parse(tokens, top = true) {
     let out = '',
       i,
       j,
@@ -2146,9 +2146,9 @@ class Parser {
         }
         case 'heading': {
           out += this.renderer.heading(
-            this.parseInline(token.tokens),
+            await this.parseInline(token.tokens),
             token.depth,
-            unescape(this.parseInline(token.tokens, this.textRenderer)),
+            unescape(await this.parseInline(token.tokens, this.textRenderer)),
             this.slugger);
           continue;
         }
@@ -2166,7 +2166,7 @@ class Parser {
           l2 = token.header.length;
           for (j = 0; j < l2; j++) {
             cell += this.renderer.tablecell(
-              this.parseInline(token.header[j].tokens),
+               await this.parseInline(token.header[j].tokens),
               { header: true, align: token.align[j] }
             );
           }
@@ -2181,7 +2181,7 @@ class Parser {
             l3 = row.length;
             for (k = 0; k < l3; k++) {
               cell += this.renderer.tablecell(
-                this.parseInline(row[k].tokens),
+                  await this.parseInline(row[k].tokens),
                 { header: false, align: token.align[k] }
               );
             }
@@ -2192,7 +2192,7 @@ class Parser {
           continue;
         }
         case 'blockquote': {
-          body = this.parse(token.tokens);
+          body = await this.parse(token.tokens);
           out += this.renderer.blockquote(body);
           continue;
         }
@@ -2228,7 +2228,7 @@ class Parser {
               }
             }
 
-            itemBody += this.parse(item.tokens, loose);
+            itemBody += await this.parse(item.tokens, loose);
             body += this.renderer.listitem(itemBody, task, checked);
           }
 
@@ -2241,14 +2241,14 @@ class Parser {
           continue;
         }
         case 'paragraph': {
-          out += this.renderer.paragraph(this.parseInline(token.tokens));
+          out += this.renderer.paragraph(await this.parseInline(token.tokens));
           continue;
         }
         case 'text': {
-          body = token.tokens ? this.parseInline(token.tokens) : token.text;
+          body = token.tokens ? await this.parseInline(token.tokens) : token.text;
           while (i + 1 < l && tokens[i + 1].type === 'text') {
             token = tokens[++i];
-            body += '\n' + (token.tokens ? this.parseInline(token.tokens) : token.text);
+            body += '\n' + (token.tokens ? await this.parseInline(token.tokens) : token.text);
           }
           out += top ? this.renderer.paragraph(body) : body;
           continue;
@@ -2272,7 +2272,7 @@ class Parser {
   /**
    * Parse Inline Tokens
    */
-  parseInline(tokens, renderer) {
+  async parseInline(tokens, renderer) {
     renderer = renderer || this.renderer;
     let out = '',
       i,
@@ -2302,19 +2302,19 @@ class Parser {
           break;
         }
         case 'link': {
-          out += renderer.link(token.href, token.title, this.parseInline(token.tokens, renderer));
+          out += await renderer.link(token.href, token.title, await this.parseInline(token.tokens, renderer));
           break;
         }
         case 'image': {
-          out += renderer.image(token.href, token.title, token.text);
+          out += await renderer.image(token.href, token.title, token.text);
           break;
         }
         case 'strong': {
-          out += renderer.strong(this.parseInline(token.tokens, renderer));
+          out += renderer.strong(await this.parseInline(token.tokens, renderer));
           break;
         }
         case 'em': {
-          out += renderer.em(this.parseInline(token.tokens, renderer));
+          out += renderer.em(await this.parseInline(token.tokens, renderer));
           break;
         }
         case 'codespan': {
@@ -2326,7 +2326,7 @@ class Parser {
           break;
         }
         case 'del': {
-          out += renderer.del(this.parseInline(token.tokens, renderer));
+          out += renderer.del(await this.parseInline(token.tokens, renderer));
           break;
         }
         case 'text': {
@@ -2351,7 +2351,7 @@ class Parser {
 /**
  * Marked
  */
-function marked(src, opt, callback) {
+async function marked(src, opt, callback) {
   // throw error in case of non string input
   if (typeof src === 'undefined' || src === null) {
     throw new Error('marked(): input parameter is undefined or null');
@@ -2379,7 +2379,7 @@ function marked(src, opt, callback) {
       return callback(e);
     }
 
-    const done = function(err) {
+    const done = async function(err) {
       let out;
 
       if (!err) {
@@ -2387,7 +2387,7 @@ function marked(src, opt, callback) {
           if (opt.walkTokens) {
             marked.walkTokens(tokens, opt.walkTokens);
           }
-          out = Parser.parse(tokens, opt);
+          out = await Parser.parse(tokens, opt);
         } catch (e) {
           err = e;
         }
@@ -2401,21 +2401,21 @@ function marked(src, opt, callback) {
     };
 
     if (!highlight || highlight.length < 3) {
-      return done();
+      return await done();
     }
 
     delete opt.highlight;
 
-    if (!tokens.length) return done();
+    if (!tokens.length) return await done();
 
     let pending = 0;
     marked.walkTokens(tokens, function(token) {
       if (token.type === 'code') {
         pending++;
         setTimeout(() => {
-          highlight(token.text, token.lang, function(err, code) {
+          highlight(token.text, token.lang, async function(err, code) {
             if (err) {
-              return done(err);
+              return await done(err);
             }
             if (code != null && code !== token.text) {
               token.text = code;
@@ -2424,7 +2424,7 @@ function marked(src, opt, callback) {
 
             pending--;
             if (pending === 0) {
-              done();
+             await done();
             }
           });
         }, 0);
@@ -2432,7 +2432,7 @@ function marked(src, opt, callback) {
     });
 
     if (pending === 0) {
-      done();
+     await done();
     }
 
     return;

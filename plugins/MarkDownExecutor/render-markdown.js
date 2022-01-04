@@ -23,15 +23,19 @@ export default async function (text) {
 		renderer = new marked.Renderer();
 		
 		const originalRendererLink = renderer.link.bind(renderer);
-		renderer.link = (href, title, text) => {
-			if (!href.startsWith('http')) href = LTN.files.getFileAsDataURL(href);
-			return originalRendererLink(href, title, text);
+		renderer.link = async (href, title, text) => {
+			if (!href.startsWith('http')) {
+				href = await LTN.files.getFileAsDataURL(href);
+			}
+			return await originalRendererLink(href, title, text);
 		};
 		
 		const originalRendererImage = renderer.image.bind(renderer);
-		renderer.image = (href, title, text) => {
-			if (!href.startsWith('http')) href = LTN.files.getFileAsDataURL(href);
-			return originalRendererImage(href, title, text);
+		renderer.image = async (href, title, text) => {
+			if (!href.startsWith('http')) {
+				href = await LTN.files.getFileAsDataURL(href);
+			}
+			return await originalRendererImage(href, title, text);
 		};
 		
 		const originalRendererCode = renderer.code.bind(renderer);
@@ -46,7 +50,7 @@ export default async function (text) {
 	}
 	
 	let element = document.createElement('span');
-	element.innerHTML = marked(text, {renderer});
+	element.innerHTML = await marked(text, {renderer});
 	renderMathInElement(element);
 	
 	return element;

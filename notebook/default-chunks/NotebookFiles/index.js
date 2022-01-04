@@ -5,22 +5,27 @@ import buildFilesEditor from "./build-files-editor.js";
  * @property {string} data
  * @property {string} name
  * @property {string} type
+ * @property {"native" | "transparent" | undefined} endings
  * @property {number} lastModified
  * */
 import {applyFileChunk, deleteFileChunk} from "./files.js";
 
-
+/** @param {ArrayBuffer} buf
+ * @return {string} */
 function ab2str(buf) {
-	return String.fromCharCode.apply(null, new Uint16Array(buf));
+	return String.fromCharCode.apply(null, new Uint8Array(buf));
 }
 
+/** @param {string} str
+ * @return {ArrayBuffer} */
 function str2ab(str) {
 	let buf = new ArrayBuffer(str.length * 2);
-	let bufView = new Uint16Array(buf);
-	for (let i = 0, strLen = str.length; i < strLen; i++) bufView[i] = str.charCodeAt(i);
+	let bufView = new Uint8Array(buf);
+	for (let i = 0, strLen = str.length; i < strLen; i++) {
+		bufView[i] = str.charCodeAt(i);
+	}
 	return buf;
 }
-
 
 /**
  * @class {NotebookFiles}
@@ -56,8 +61,9 @@ export class NotebookFiles {
 			
 			/** @type {File} */
 			const file = new File([arrayBuffer], aFileData.name, {
+				lastModified: aFileData.lastModified,
+				endings: aFileData.endings ?? undefined,
 				type: aFileData.type,
-				lastModified: aFileData.lastModified
 			});
 			
 			this.files.push(file);
@@ -65,6 +71,7 @@ export class NotebookFiles {
 	}
 	
 	async save() {
+		
 		let files = [];
 		
 		for (let i = 0; i < this.files.length; i++) {
@@ -83,6 +90,7 @@ export class NotebookFiles {
 				name: file.name,
 				type: file.type,
 				lastModified: file.lastModified,
+				endings: file.endings,
 			};
 			
 			files.push(fileData);
