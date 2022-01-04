@@ -12,3 +12,17 @@ html, body {
     height: 100vh;
     overflow-x: hidden;
 }
+
+body::-webkit-scrollbar {
+    width: 20px;
+}
+
+body::-webkit-scrollbar-track {
+    opacity: 0;
+}
+
+body::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    background-clip: content-box;
+    background-color: #dcdcdc;
+}
