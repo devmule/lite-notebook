@@ -1,7 +1,7 @@
 import buildConsole from "./build-console.js";
 
 /**
- * @class {HTMLExecutor}
+ * @class {PythonExecutor}
  * @implements {LTNChunk}
  * */
 export default class PythonExecutor {
@@ -12,6 +12,9 @@ export default class PythonExecutor {
 	
 	static get title() {
 		return "Python console";
+	}
+	
+	async delete() {
 	}
 	
 	async init(data) {

@@ -1,7 +1,7 @@
 import {editor, render} from "./build-latex-editor.js"
 
 /**
- * @class {HTMLExecutor}
+ * @class {LaTeXExecutor}
  * @implements {LTNChunk}
  * */
 export default class LaTeXExecutor {
@@ -13,6 +13,9 @@ export default class LaTeXExecutor {
 	
 	static get title() {
 		return "LaTeX";
+	}
+	
+	async delete() {
 	}
 	
 	async init(data) {

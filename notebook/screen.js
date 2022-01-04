@@ -19,6 +19,8 @@ import EnumsMsg from "../utils/EnumsMsg.js";
  *
  * @property {function(): Promise.<LTNChunkData>} save
  *
+ * @property {function(): void} delete
+ *
  * @property {function(): Promise.<HTMLElement>} renderEditor -
  *  При рендере редактора чанк обязан вернуть элемент.
  *
@@ -234,6 +236,7 @@ export default class NotebookScreen extends NotebookMessenger {
 		
 		this.notebook.chunks.splice(index, 1);
 		chunk.block.remove();
+		chunk.delete();
 		
 		this.updateBlocksPositions();
 		

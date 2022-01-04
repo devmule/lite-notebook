@@ -5,7 +5,7 @@
  * */
 export function loadFiles(multiple = false, extensions = null) {
 	
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		
 		let exts = '*';
 		if (extensions != null) {
@@ -21,15 +21,25 @@ export function loadFiles(multiple = false, extensions = null) {
 		input.type = 'file';
 		input.multiple = multiple;
 		
-		try {
-			input.click();
-			input.onchange = () => resolve(input.files);
-		} catch (e) {
-			reject();
-		}
+		input.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+		input.onchange = () => resolve(input.files);
 		
 	});
 	
+}
+
+/** @param {File} file */
+export function downloadFile(file) {
+	
+	const data = window.URL.createObjectURL(file);
+	
+	const link = document.createElement('a');
+	
+	link.href = data;
+	link.download = file.name;
+	
+	link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+	setTimeout(() => window.URL.revokeObjectURL(data), 100);
 }
 
 /**

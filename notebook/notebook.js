@@ -12,17 +12,9 @@
  * */
 
 /**
- * @typedef {Object} FileData				- Данные файла в бинарном формате.
- * @property {string} data
- * @property {string} name
- * @property {string} type
- * */
-
-/**
  * @typedef {Object} NotebookData			- Данные ноутбука в сыром виде.
  * @property {number} creationTime			- Timestamp, время создания {@link Notebook}.
  * @property {string} name					- Название этого {@link Notebook}.
- * @property {FileData[]} files				- Файлы, прикреплённые к {@link Notebook} в бинарном формате.
  * @property {NotebookChunkData[]} chunks	- Список чанков в сыром виде.
  * */
 
@@ -63,12 +55,6 @@ export default class Notebook {
 		
 		
 		/**
-		 * @type {File[]}
-		 * */
-		this.files = [];
-		
-		
-		/**
 		 * @type {number}
 		 * @private
 		 * */
@@ -91,30 +77,8 @@ export default class Notebook {
 		const aNotebookData = {
 			creationTime: this.creationTime,
 			name: this.name,
-			files: [],
 			chunks: [],
 		};
-		
-		
-		for (let i = 0; i < this.files.length; i++) {
-			const file = this.files[i];
-			
-			// todo binary zlib?
-			const base64 = await new Promise((resolve) => {
-				const reader = new FileReader();
-				reader.onloadend = () => resolve(reader.result);
-				reader.readAsDataURL(file);
-			})
-			
-			/** @type {FileData} */
-			const fileData = {
-				data: base64,
-				name: file.name,
-				type: file.type
-			};
-			
-			aNotebookData.files.push(fileData);
-		}
 		
 		
 		for (let i = 0; i < this.chunks.length; i++) {
@@ -147,17 +111,6 @@ export default class Notebook {
 	async init(aNotebookData) {
 		this.creationTime = aNotebookData.creationTime;
 		this.name = aNotebookData.name;
-		
-		
-		for (let i = 0; i < aNotebookData.files.length; i++) {
-			/** @type {FileData} */
-			let aFileData = aNotebookData.files[i];
-			
-			/** @type {File} */
-			let file = new File([aFileData.data], aFileData.name, {type: aFileData.type});
-			
-			this.files.push(file);
-		}
 		
 		
 		for (let i = 0; i < aNotebookData.chunks.length; i++) {

@@ -3,7 +3,7 @@ import renderMarkdown from "./render-markdown.js";
 
 
 /**
- * @class {HTMLExecutor}
+ * @class {MarkDownExecutor}
  * @implements {LTNChunk}
  * */
 export default class MarkDownExecutor {
@@ -15,6 +15,9 @@ export default class MarkDownExecutor {
 	
 	static get title() {
 		return "Markdown";
+	}
+	
+	async delete() {
 	}
 	
 	async init(data) {

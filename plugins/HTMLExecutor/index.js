@@ -16,6 +16,9 @@ export default class HTMLExecutor {
 		return "HTML executor";
 	}
 	
+	async delete() {
+	}
+	
 	async init(data) {
 		this.doc = data.doc;
 	}

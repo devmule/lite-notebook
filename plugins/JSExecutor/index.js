@@ -2,7 +2,7 @@ import buildEditor from "./build-js-editor.js";
 
 
 /**
- * @class {HTMLExecutor}
+ * @class {JSExecutor}
  * @implements {LTNChunk}
  * */
 export default class JSExecutor {
@@ -14,6 +14,9 @@ export default class JSExecutor {
 	
 	static get title() {
 		return "JavaScript executor";
+	}
+	
+	async delete() {
 	}
 	
 	async init(data) {

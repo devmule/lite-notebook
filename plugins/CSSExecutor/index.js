@@ -2,7 +2,7 @@ import buildEditor from "./build-css-editor.js";
 
 
 /**
- * @class {HTMLExecutor}
+ * @class {CSSExecutor}
  * @implements {LTNChunk}
  * */
 export default class CSSExecutor {
@@ -14,6 +14,9 @@ export default class CSSExecutor {
 	
 	static get title() {
 		return "CSS executor";
+	}
+	
+	async delete() {
 	}
 	
 	async init(data) {

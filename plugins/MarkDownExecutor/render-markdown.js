@@ -24,17 +24,13 @@ export default async function (text) {
 		
 		const originalRendererLink = renderer.link.bind(renderer);
 		renderer.link = (href, title, text) => {
-			// todo link to file
-			//if (!href.startsWith('http')) href = (() => lite_notebook.root)() + '/' + href;
-			let link = originalRendererLink(href, title, text);
-			//link = link.replace("<a", "<a target='_blank'");
-			return link;
+			if (!href.startsWith('http')) href = LTN.files.getFileAsDataURL(href);
+			return originalRendererLink(href, title, text);
 		};
 		
 		const originalRendererImage = renderer.image.bind(renderer);
 		renderer.image = (href, title, text) => {
-			// todo from file
-			//if (!href.startsWith('http')) href = (() => lite_notebook.root)() + '/' + href;
+			if (!href.startsWith('http')) href = LTN.files.getFileAsDataURL(href);
 			return originalRendererImage(href, title, text);
 		};
 		
