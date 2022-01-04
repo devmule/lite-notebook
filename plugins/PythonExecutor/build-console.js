@@ -12,28 +12,28 @@ export default async function () {
 	}
 	
 	let el = document.createElement('div');
-	el.classList.add('code-output');
+	el.classList.add('python-executor-code-output');
 	
 	let btns_container = document.createElement('div');
-	btns_container.classList.add('code-btn-container');
+	btns_container.classList.add('python-executor-code-btn-container');
 	el.appendChild(btns_container);
 	
 	let btn_run = document.createElement('div');
-	btn_run.classList.add('code-btn');
+	btn_run.classList.add('python-executor-code-btn');
 	btns_container.appendChild(btn_run);
 	btn_run.i = document.createElement('i');
-	btn_run.i.classList.add('btn-glyphicon', 'fas', 'fa-play');
+	btn_run.i.classList.add('python-executor-btn-glyphicon', 'fas', 'fa-play');
 	btn_run.appendChild(btn_run.i);
 	
 	let btn_clear = document.createElement('div');
-	btn_clear.classList.add('code-btn');
+	btn_clear.classList.add('python-executor-code-btn');
 	btns_container.appendChild(btn_clear);
 	btn_clear.i = document.createElement('i');
-	btn_clear.i.classList.add('btn-glyphicon', 'fas', 'fa-trash');
+	btn_clear.i.classList.add('python-executor-btn-glyphicon', 'fas', 'fa-trash');
 	btn_clear.appendChild(btn_clear.i);
 	
 	let output = document.createElement('div');
-	output.classList.add('code-output-text');
+	output.classList.add('python-executor-code-output-text');
 	el.appendChild(output);
 	
 	

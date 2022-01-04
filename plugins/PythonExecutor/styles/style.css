@@ -1,4 +1,4 @@
-.code-btn {
+.python-executor-code-btn {
     width: 24px;
     height: 24px;
     font-size: 18px;
@@ -14,25 +14,25 @@
     color: var(--python-executor-font-color);
 }
 
-.code-btn:hover {
+.python-executor-code-btn:hover {
     opacity: 0.5;
 }
 
-.btn-glyphicon {
+.python-executor-btn-glyphicon {
     position: relative;
     text-align: center;
     vertical-align: middle !important;
     align-items: center;
 }
 
-.btn-glyphicon:before {
+.python-executor-btn-glyphicon:before {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.code-btn-container {
+.python-executor-code-btn-container {
     width: calc(100% - 6px);
     height: 28px;
     display: flex;
@@ -42,7 +42,7 @@
 
 }
 
-.code-output {
+.python-executor-code-output {
     max-width: 800px;
     margin: 16px auto;
     background-color: var(--python-executor-text-output-color);
@@ -51,7 +51,7 @@
     flex-direction: column;
 }
 
-.code-output-text {
+.python-executor-code-output-text {
     width: calc(100% - 8px);
     height: 200px;
     margin-left: 8px;
