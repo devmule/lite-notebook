@@ -1,23 +1,23 @@
-export function worker_api(url) {
+export function worker_api() {
 	return {
-		worker: new Worker(url),
+		worker: new Worker("./plugins/PythonExecutor/worker.js"),
 		listeners: [],
 		
 		context: {
 			events: ['print']
 		},
 		
-		addVariable (name, value) {
+		addVariable(name, value) {
 			this.context.variables[name] = value
 		},
-		addFunction (name) {
+		addFunction(name) {
 			this.context.events.push(name)
 		},
-		addEventListener (type, listener) {
+		addEventListener(type, listener) {
 			this.listeners.push({type, listener});
 		},
 		
-		run (script, onSuccess, onError) {
+		run(script, onSuccess, onError) {
 			this.worker.onerror = onError;
 			this.worker.onmessage = e => {
 				const {error} = e.data;
