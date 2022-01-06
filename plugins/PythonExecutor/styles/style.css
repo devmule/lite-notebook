@@ -1,0 +1,87 @@
+.python-executor-code-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    text-align: center;
+    padding: 0;
+    margin: 2px;
+    cursor: pointer;
+    background-size: 20px;
+    background-position: 2px 2px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--python-executor-font-color);
+}
+
+.python-executor-code-btn:hover {
+    opacity: 0.5;
+}
+
+.python-executor-btn-glyphicon {
+    position: relative;
+    text-align: center;
+    vertical-align: middle !important;
+    align-items: center;
+}
+
+.python-executor-btn-glyphicon:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.python-executor-code-btn-container {
+    width: calc(100% - 6px);
+    height: 28px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 6px;
+    background-color: var(--python-executor-top-color);
+
+}
+
+.python-executor-code-output {
+    max-width: 800px;
+    margin: 16px auto;
+    background-color: var(--python-executor-text-output-color);
+    color: var(--python-executor-font-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.python-executor-code-output-text {
+    width: calc(100% - 8px);
+    height: 200px;
+    margin-left: 8px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.python-executor-editor > textarea {
+
+    font-family: var(--default-font-family);
+    font-size: var(--default-font-size);
+
+    height: var(--settings-size);
+    line-height: var(--settings-size);
+
+    outline: none;
+    border: none;
+    resize: none;
+
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: inherit;
+
+    margin: 0;
+    padding: 0 5px;
+
+    background-image: linear-gradient(var(--hover-color), var(--hover-color));
+    background-position: bottom 2px center;
+    background-size: calc(100% - 10px) 2px;
+    background-repeat: no-repeat;
+    background-color: #fcfcfc;
+
+}

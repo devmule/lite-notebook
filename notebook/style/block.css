@@ -1,0 +1,106 @@
+.ltn-block {
+    max-width: var(--content-max-width);
+    margin: 12px auto;
+}
+
+/* ------------------------------------- */
+
+.ltn-block-header {
+    width: 100%;
+}
+
+.ltn-block-header > textarea {
+
+    font-family: var(--default-font-family);
+    font-size: var(--default-font-size);
+
+    height: var(--settings-size);
+    line-height: var(--settings-size);
+
+    outline: none;
+    border: none;
+    resize: none;
+
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: inherit;
+
+    margin: 0;
+    padding: 0 5px;
+
+    background-image: linear-gradient(var(--hover-color), var(--hover-color));
+    background-position: bottom 2px center;
+    background-size: calc(100% - 10px) 2px;
+    background-repeat: no-repeat;
+    background-color: #fcfcfc;
+
+}
+
+/* ------------------------------------- */
+
+.ltn-block-content {
+    transition: all 0.1s linear
+}
+
+.ltn-block-content.hided {
+    overflow: hidden;
+    min-height: 0;
+    max-height: 0;
+    height: 0;
+}
+
+/* ------------------------------------- */
+
+.ltn-mini-btn {
+    width: var(--settings-size);
+    height: var(--settings-size);
+
+    display: inline-block;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transition: opacity 0.1s linear;
+
+    opacity: 0.15;
+}
+
+.ltn-mini-btn:hover {
+    cursor: pointer;
+    opacity: 0.75 !important;
+}
+
+.ltn-block:hover > .ltn-mini-btn {
+    opacity: 0.35;
+}
+
+.ltn-mini-btn.burger {
+    background-image: var(--svg-icon-burger);
+}
+
+.ltn-mini-btn.plus {
+    background-image: var(--svg-icon-plus);
+}
+
+.ltn-mini-btn.hide {
+    background-image: var(--svg-icon-hide);
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    transition: -webkit-transform 0.1s linear;
+    transition: -moz-transform 0.1s linear;
+    transition: -ms-transform 0.1s linear;
+    transition: -o-transform 0.1s linear;
+    transition: transform 0.1s linear;
+}
+
+.ltn-mini-btn.hide.hided {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+}

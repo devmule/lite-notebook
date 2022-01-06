@@ -2,25 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>notebook</title>
-    <script src="dist/main-bundle.js"></script>
-    <link rel="stylesheet" href="dist/main-style.css">
-
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>lite notebook</title>
+    <link rel="stylesheet" href="./client/style/main.css">
 </head>
-<body onload="main.on_loaded()">
-<div id="menu"></div>
-<iframe id="render-frame" src="frame.html">
-</iframe>
-<div id="loader" class="loader-back">
-    <div class="loader">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
+<body>
+
 </body>
+<script type="module">
+	import "./client/index.js";
+</script>
 </html>

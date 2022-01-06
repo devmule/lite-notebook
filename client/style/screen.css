@@ -1,0 +1,42 @@
+.screen {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    overflow: hidden;
+    left: calc(var(--offset-default) + var(--sidebar-toggle-button-size));
+    width: calc(100% - var(--offset-default) - var(--sidebar-toggle-button-size));
+    height: 100%;
+    transition: left 0.2s ease-in-out, width 0.2s ease-in-out;
+}
+
+#screen-editor, #screen-report {
+    margin: var(--offset-default);
+    top: 0;
+    width: calc(var(--screen-notebook-width) - 2 * var(--offset-default));
+    height: calc(var(--screen-notebook-height) - 2 * var(--offset-default));
+    position: absolute;
+    transition: left 0.2s ease-in-out;
+}
+
+/* ========================================================== */
+/*     приколы для показа    */
+.screen > #screen-editor {
+    left: 0;
+}
+
+.screen > #screen-report {
+    left: var(--screen-notebook-width);
+}
+
+.screen.report > #screen-editor {
+    left: calc(-1 * var(--screen-notebook-width));
+}
+
+.screen.report > #screen-report {
+    left: 0;
+}
+
+.main-outer.sidebar-on > .screen {
+    left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+}

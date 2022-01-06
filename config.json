@@ -1,0 +1,11 @@
+{
+  "version": "2.0.1",
+  "plugins": [
+    "JSExecutor",
+    "HTMLExecutor",
+    "CSSExecutor",
+    "MarkDownExecutor",
+    "LaTeXExecutor",
+    "PythonExecutor"
+  ]
+}
