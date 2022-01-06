@@ -3,7 +3,8 @@ import {fetchCSS} from "../../utils/files.js";
 
 
 let inited = false;
-export default async function () {
+
+export async function buildConsole() {
 	
 	if (!inited) {
 		inited = true;
@@ -48,9 +49,9 @@ export default async function () {
 	el.before_launch = () => null;
 	el.attachEditor = (editor) => {
 		
-		el.addEventListener('onPlay', () => {
+		el.addEventListener('onPlay', async () => {
 			if (!el.py_worker) {
-				el.py_worker = worker_api();
+				el.py_worker = await worker_api();
 				if (el.before_launch instanceof Function) el.before_launch();
 				
 				el.py_worker.addEventListener("print", (m) => {
@@ -100,4 +101,51 @@ export default async function () {
 	// ===================================
 	return el;
 	
+}
+
+export async function buildEditor(id) {
+	
+	if (!inited) {
+		inited = true;
+		await fetchCSS("../plugins/PythonExecutor/styles/main.css");
+		await import("../../libs/fontawesome.js");
+	}
+	
+	let elem = document.createElement("div");
+	elem.classList.add("python-executor-editor");
+	
+	let dispatchId = (id) => {
+		let e = new Event('changed');
+		e.id = id;
+		elem.dispatchEvent(e);
+	}
+	
+	const CHAR_LEN = 24;
+	let idEditor = document.createElement('textarea');
+	idEditor.rows = 1;
+	idEditor.cols = 24;
+	idEditor.charswidth = CHAR_LEN;
+	let prevText = idEditor.value;
+	let onIdChange = () => {
+		let id = idEditor.value.replace(/(\r\n|\n|\r)/gm, "");
+		if (id.length > CHAR_LEN) {
+			id = prevText;
+		} else {
+			prevText = id;
+		}
+		idEditor.value = id;
+		dispatchId(id);
+	};
+	
+	idEditor.addEventListener('change', onIdChange);
+	idEditor.addEventListener('keyup', onIdChange);
+	idEditor.addEventListener('keydown', onIdChange);
+	idEditor.addEventListener('keypress', onIdChange);
+	idEditor.addEventListener('paste', onIdChange);
+	
+	idEditor.value = id;
+	
+	elem.appendChild(idEditor);
+	
+	return elem;
 }

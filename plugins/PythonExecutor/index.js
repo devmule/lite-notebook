@@ -1,4 +1,5 @@
-import buildConsole from "./build-console.js";
+import {buildConsole, buildEditor} from "./build-console.js";
+import {generateId} from "../../utils/crypto.js";
 
 /**
  * @class {PythonExecutor}
@@ -6,8 +7,7 @@ import buildConsole from "./build-console.js";
  * */
 export default class PythonExecutor {
 	constructor() {
-		/**@type {Ace.Editor}*/
-		this.view = null;
+		this.id = "console_" + generateId(5);
 	}
 	
 	static get title() {
@@ -18,21 +18,25 @@ export default class PythonExecutor {
 	}
 	
 	async init(data) {
+		this.id = data.id;
 	}
 	
 	async save() {
-		return {};
+		return {
+			id: this.id
+		};
 	}
 	
 	async renderEditor() {
-		// todo
-		//  отправляем пустой элемент, никаких настроек не надо.
-		return document.createElement('div');
+		let elem = await buildEditor(this.id);
+		elem.addEventListener('changed', (e) => this.id = e.id);
+		return elem;
 	}
 	
 	async renderReport() {
-		// todo
-		return await buildConsole();
+		let elem = await buildConsole();
+		elem.id = this.id;
+		return elem;
 	}
 }
 

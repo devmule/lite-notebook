@@ -1,10 +1,12 @@
-export function worker_api() {
+export async function worker_api() {
+	
 	return {
-		worker: new Worker("./plugins/PythonExecutor/worker.js"),
+		worker: new Worker("../plugins/PythonExecutor/worker.js"),
 		listeners: [],
 		
 		context: {
-			events: ['print']
+			events: ['print'],
+			variables: {},
 		},
 		
 		addVariable(name, value) {
@@ -18,7 +20,7 @@ export function worker_api() {
 		},
 		
 		run(script, onSuccess, onError) {
-			this.worker.onerror = onError;
+			this.worker.onerror = (e) => onError(e.message)
 			this.worker.onmessage = e => {
 				const {error} = e.data;
 				for (let i = 0; i < this.listeners.length; i++) {

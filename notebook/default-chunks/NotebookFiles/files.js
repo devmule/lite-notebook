@@ -12,6 +12,8 @@ export const files = {
 	 * @return {Promise.<File>} */
 	async getFile(name) {
 		
+		name = name.split("?")[0];
+		
 		let chunks_array = Array.from(chunks);
 		
 		for (let i = 0; i < chunks_array.length; i++) {
