@@ -3,6 +3,7 @@
 @import "buttons.css";
 @import "utils.css";
 @import "variables.css";
+@import "loader.css";
 
 html, body, .main-outer {
     margin: 0;

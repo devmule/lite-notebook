@@ -6,30 +6,13 @@ const FILE_EXT = ".ltn";
 
 
 export class AppScreen extends AppMessenger {
+	
 	constructor() {
 		super();
 		
 		/** @type {HTMLDivElement} */
 		this.element = document.createElement('div');
 		
-	}
-	
-	async loadReportFromUrl(url) {
-		await this.sidebarOff();
-		this.showReportScreen();
-		return new Promise((resolve, reject) => {
-			let xhr = new XMLHttpRequest();
-			xhr.responseType = "text";
-			xhr.onload = async () => {
-				let /**@type {NotebookData} */ aNotebookData = JSON.parse(xhr.responseText);
-				await this.initNotebookOnScreen('report', aNotebookData);
-				await this.initNotebookOnScreen('editor', aNotebookData);
-				resolve();
-			};
-			xhr.onerror = reject;
-			xhr.open("GET", url, true);
-			xhr.send(null);
-		});
 	}
 	
 	async init() {
@@ -42,8 +25,17 @@ export class AppScreen extends AppMessenger {
 		 * @type {HTMLDivElement} */
 		this._screensContainer = this.element.querySelector('.screen');
 		
+		/** @private
+		 * @type {HTMLDivElement} */
 		this._sidebar = this.element.children[0];
+		
+		/** @private
+		 * @const */
 		this._sidebar_on_class = 'sidebar-on';
+		
+		/** @private
+		 * @type {HTMLDivElement} */
+		this._loader = this.element.querySelector('#loader');
 		
 		/** @private
 		 * @type {HTMLDivElement} */
@@ -83,23 +75,7 @@ export class AppScreen extends AppMessenger {
 		
 	}
 	
-	async sidebarToggle() {
-		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
-		if (wasOpened) this._sidebar.classList.remove(this._sidebar_on_class);
-		else this._sidebar.classList.add(this._sidebar_on_class);
-	}
-	
-	async sidebarOff() {
-		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
-		if (!wasOpened) return;
-		this._sidebar.classList.remove(this._sidebar_on_class);
-	}
-	
-	async sidebarOn() {
-		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
-		if (wasOpened) return;
-		this._sidebar.classList.add(this._sidebar_on_class);
-	}
+	// =================================================================================================================
 	
 	async loadNotebook() {
 		
@@ -124,7 +100,7 @@ export class AppScreen extends AppMessenger {
 		const aNotebookData = await this.getNotebookFromScreen('editor');
 		
 		const filename = aNotebookData.name + FILE_EXT;
-		const data = JSON.stringify(aNotebookData);  // todo zlib
+		const data = JSON.stringify(aNotebookData);
 		
 		const blob = new Blob([data], {type: 'octet/stream'});
 		
@@ -135,9 +111,33 @@ export class AppScreen extends AppMessenger {
 		
 	}
 	
+	// =================================================================================================================
+	
+	async loadReportFromUrl(url) {
+		this.loading = true;
+		await this.sidebarOff();
+		this.showReportScreen();
+		await new Promise((resolve, reject) => {
+			let xhr = new XMLHttpRequest();
+			xhr.responseType = "text";
+			xhr.onload = async () => {
+				let /**@type {NotebookData} */ aNotebookData = JSON.parse(xhr.responseText);
+				await this.initNotebookOnScreen('report', aNotebookData);
+				await this.initNotebookOnScreen('editor', aNotebookData);
+				resolve();
+			};
+			xhr.onerror = reject;
+			xhr.open("GET", url, true);
+			xhr.send(null);
+		});
+		this.loading = false;
+	}
+	
 	async reloadReport() {
+		this.loading = true;
 		let aNotebookData = await this.getNotebookFromScreen('editor');
 		await this.initNotebookOnScreen('report', aNotebookData);
+		this.loading = false;
 	}
 	
 	/**
@@ -170,5 +170,36 @@ export class AppScreen extends AppMessenger {
 	
 	showReportScreen() {
 		this._screensContainer.classList.add('report');
+	}
+	
+	// =================================================================================================================
+	
+	async sidebarToggle() {
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (wasOpened) this._sidebar.classList.remove(this._sidebar_on_class);
+		else this._sidebar.classList.add(this._sidebar_on_class);
+	}
+	
+	async sidebarOff() {
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (!wasOpened) return;
+		this._sidebar.classList.remove(this._sidebar_on_class);
+	}
+	
+	async sidebarOn() {
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (wasOpened) return;
+		this._sidebar.classList.add(this._sidebar_on_class);
+	}
+	
+	// =================================================================================================================
+	
+	get loading() {
+		return !this._loader.classList.contains("loader-hidden");
+	}
+	
+	set loading(val) {
+		if (val) this._loader.classList.remove("loader-hidden");
+		else this._loader.classList.add("loader-hidden");
 	}
 }
