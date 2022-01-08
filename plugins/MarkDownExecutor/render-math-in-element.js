@@ -25,7 +25,7 @@ function renderMathInText(text, delimiters) {
 			let span = document.createElement("span");
 			let math = data[i].data;
 			try {
-				katex.render(math, span, {displayMode: data[i].display});
+				katex.render(math, span, {displayMode: data[i].display, strict: "ignore"});
 			} catch (e) {
 				if (!(e instanceof katex.ParseError)) throw e;
 				span.appendChild(document.createTextNode(data[i].rawData));
