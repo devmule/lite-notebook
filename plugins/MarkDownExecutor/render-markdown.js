@@ -1,7 +1,7 @@
 /* global katex */
 /* global mermaid */
 
-import {marked} from "../../libs/marked.js";
+import {marked} from "../../libs/marked/marked.js";
 import "../../libs/katex/katex.js";
 import "../../libs/mermaid.js"
 
@@ -19,6 +19,7 @@ export default async function (text) {
 		mermaid.mermaidAPI.initialize({startOnLoad: false});
 		
 		await fetchCSS("../libs/katex/katex.css");
+		await fetchCSS("../libs/marked/styles.css");
 		
 		renderer = new marked.Renderer();
 		
@@ -32,10 +33,13 @@ export default async function (text) {
 		
 		const originalRendererImage = renderer.image.bind(renderer);
 		renderer.image = async (href, title, text) => {
+			
+			let centered = false;
 			if (!href.startsWith('http')) {
+				centered = (new URL("http://" + href)).searchParams.get("style") === "center";
 				href = await LTN.files.getFileAsDataURL(href);
 			}
-			return await originalRendererImage(href, title, text);
+			return await originalRendererImage(href, title, text, centered);
 		};
 		
 		const originalRendererCode = renderer.code.bind(renderer);
@@ -52,6 +56,8 @@ export default async function (text) {
 	let element = document.createElement('span');
 	element.innerHTML = await marked(text, {renderer});
 	renderMathInElement(element);
+	
+	element.classList.add("markdown-body");
 	
 	return element;
 	
