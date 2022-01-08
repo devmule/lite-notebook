@@ -15,14 +15,14 @@ export class AppScreen extends AppMessenger {
 	}
 	
 	async loadReportFromUrl(url) {
-		await this.sidebarToggle();
+		await this.sidebarOff();
+		this.showReportScreen();
 		return new Promise((resolve, reject) => {
 			let xhr = new XMLHttpRequest();
 			xhr.responseType = "text";
 			xhr.onload = async () => {
-				let /**@type {NotebookData}  */ aNotebookData = JSON.parse(xhr.responseText);
+				let /**@type {NotebookData} */ aNotebookData = JSON.parse(xhr.responseText);
 				await this.initNotebookOnScreen('report', aNotebookData);
-				this.showReportScreen();
 				await this.initNotebookOnScreen('editor', aNotebookData);
 				resolve();
 			};
@@ -41,6 +41,9 @@ export class AppScreen extends AppMessenger {
 		/** @private
 		 * @type {HTMLDivElement} */
 		this._screensContainer = this.element.querySelector('.screen');
+		
+		this._sidebar = this.element.children[0];
+		this._sidebar_on_class = 'sidebar-on';
 		
 		/** @private
 		 * @type {HTMLDivElement} */
@@ -81,11 +84,21 @@ export class AppScreen extends AppMessenger {
 	}
 	
 	async sidebarToggle() {
-		let outer = this.element.children[0]
-		let sidebar_on_class = 'sidebar-on';
-		let wasOpened = outer.classList.contains(sidebar_on_class);
-		if (wasOpened) outer.classList.remove(sidebar_on_class);
-		else outer.classList.add(sidebar_on_class);
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (wasOpened) this._sidebar.classList.remove(this._sidebar_on_class);
+		else this._sidebar.classList.add(this._sidebar_on_class);
+	}
+	
+	async sidebarOff() {
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (!wasOpened) return;
+		this._sidebar.classList.remove(this._sidebar_on_class);
+	}
+	
+	async sidebarOn() {
+		let wasOpened = this._sidebar.classList.contains(this._sidebar_on_class);
+		if (wasOpened) return;
+		this._sidebar.classList.add(this._sidebar_on_class);
 	}
 	
 	async loadNotebook() {
