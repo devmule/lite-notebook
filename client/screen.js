@@ -73,6 +73,8 @@ export class AppScreen extends AppMessenger {
 		save_notebook.innerHTML = "<i class=\"fas fa-download\"></i> " + localizations.button_screen_save_notebook;
 		save_notebook.addEventListener('click', this.saveNotebook.bind(this));
 		
+		this.loading = false;
+		
 	}
 	
 	// =================================================================================================================
