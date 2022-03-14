@@ -28,7 +28,7 @@ export default async function (text) {
 			if (!href.startsWith('http')) {
 				href = await LTN.files.getFileAsDataURL(href);
 			}
-			return await originalRendererLink(href, title, text);
+			return await originalRendererLink(href, title, text, '_blank');
 		};
 		
 		const originalRendererImage = renderer.image.bind(renderer);

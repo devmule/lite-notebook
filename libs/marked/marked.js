@@ -1943,7 +1943,7 @@ class Renderer {
     return '<del>' + text + '</del>';
   }
 
-  link(href, title, text) {
+  link(href, title, text, target) {
     href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
     if (href === null) {
       return text;
@@ -1951,6 +1951,9 @@ class Renderer {
     let out = '<a href="' + escape(href) + '"';
     if (title) {
       out += ' title="' + title + '"';
+    }
+    if (target) {
+      out += ' target="' + target + '"';
     }
     out += '>' + text + '</a>';
     return out;
