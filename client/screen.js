@@ -17,9 +17,9 @@ export class AppScreen extends AppMessenger {
 	
 	async init() {
 		
-		let localizations = await (await fetch("/localizations.json")).json();
+		let localizations = await (await fetch("./localizations.json")).json();
 		
-		this.element.innerHTML = await (await fetch("/client/screen.html")).text();
+		this.element.innerHTML = await (await fetch("./client/screen.html")).text();
 		
 		/** @private
 		 * @type {HTMLDivElement} */
