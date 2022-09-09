@@ -30,7 +30,7 @@ import EnumsMsg from "../utils/EnumsMsg.js";
  * */
 
 let localizations;
-(async () => localizations = await (await fetch("../../localizations.json")).json())();
+(async () => localizations = await (await fetch("../localizations.json")).json())();
 
 
 export default class NotebookScreen extends NotebookMessenger {

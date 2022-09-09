@@ -24,7 +24,7 @@ window.LTN = LTN;
 
 
 ((async () => {
-	const config = await loadJson("../../config.json");
+	const config = await loadJson("../config.json");
 	await loadPlugins(config.plugins);
 	
 	LTN.screen = new NotebookScreen(isEditor, senderName, LTN.chunks);
